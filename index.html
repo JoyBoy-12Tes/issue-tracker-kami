@@ -61,19 +61,19 @@
       background: yellow;
     }
 
-    /* COPYRIGHT */
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+    }
+
+    /* FOOTER COPYRIGHT */
     .footer {
       margin-top: 30px;
       padding: 15px 0;
       text-align: center;
       font-size: 14px;
       color: #1e90ff; /* biru terang */
-    }
-
-    @media (max-width: 600px) {
-      body {
-        padding: 10px;
-      }
     }
   </style>
 </head>
@@ -91,15 +91,24 @@
 
   <div id="list"></div>
 
+  <!-- FOOTER COPYRIGHT -->
   <footer class="footer">
     © <span id="year"></span> Helpdesk Team
   </footer>
 
+  <!-- PapaParse -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+
   <script>
     // =========================
-    // URL GOOGLE APPS SCRIPT
+    // KONFIGURASI GOOGLE SHEET (CSV LINK BARU)
     // =========================
-    const url = "PASTE_URL_WEB_APP_GOOGLE_APPS_SCRIPT_DI_SINI";
+    const sheetUrl =
+      "https://docs.google.com/spreadsheets/d/e/2PACX-1vQTWo0gRTTnJbNfx20pAkIQI7z6o4jW-TPjgv2mNYJjunjy1ndViQtOhkEuLk2h7Lw15BtdK5lJmsHl/pub?gid=0&single=true&output=csv";
+
+    const url =
+      "https://api.allorigins.win/raw?url=" +
+      encodeURIComponent(sheetUrl + "&t=" + Date.now());
 
     let dataArticles = [];
     let activeIndex = null;
@@ -162,30 +171,44 @@
     }
 
     // =========================
-    // FETCH DATA DARI APPS SCRIPT
+    // LOAD CSV
     // =========================
     function fetchData() {
-      fetch(url)
-        .then(res => res.json())
-        .then(results => {
-          dataArticles = results.map(row => ({
-            judul: row.judul || "",
-            isi: row.isi || ""
-          }));
+      Papa.parse(url, {
+        download: true,
+        header: true,
+        skipEmptyLines: true,
+        complete: function (results) {
+          dataArticles = results.data.map(row => {
+            const clean = {};
+            Object.keys(row).forEach(
+              k => (clean[k.trim().toLowerCase()] = row[k])
+            );
+            return {
+              judul: clean.judul || "",
+              isi: clean.isi || ""
+            };
+          });
 
+          // Render ulang jika ada keyword di search
           const currentKeyword = document.getElementById("search").value;
           if (currentKeyword.trim() !== "") {
             renderArticles(currentKeyword);
           }
-        })
-        .catch(err => console.error("Gagal memuat data saat auto-refresh", err));
+        },
+        error: function () {
+          console.error("Gagal memuat data saat auto-refresh");
+        }
+      });
     }
 
     // Initial load
     fetchData();
 
-    // Auto refresh setiap 5 menit
-    setInterval(fetchData, 300000); // 5 menit
+    // =========================
+    // AUTO REFRESH DATA SETIAP 5 MENIT
+    // =========================
+    setInterval(fetchData, 300000); // 300000 ms = 5 menit
 
     // =========================
     // SEARCH EVENT
@@ -200,7 +223,6 @@
     // =========================
     document.getElementById("year").textContent =
       new Date().getFullYear();
-
   </script>
 
 </body>
