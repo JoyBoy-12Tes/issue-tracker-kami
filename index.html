@@ -61,7 +61,7 @@
       background: yellow;
     }
 
-    /* FOOTER */
+    /* COPYRIGHT */
     .footer {
       margin-top: 30px;
       padding: 15px 0;
@@ -81,6 +81,7 @@
 <body>
 
   <h2>📚 Issue Tracker Helpdesk</h2>
+
   <input
     type="text"
     id="search"
@@ -90,7 +91,6 @@
 
   <div id="list"></div>
 
-  <!-- FOOTER -->
   <footer class="footer">
     © <span id="year"></span> Helpdesk Team
   </footer>
@@ -103,9 +103,8 @@
     // KONFIGURASI GOOGLE SHEET
     // =========================
     const sheetUrl =
-      "https://docs.google.com/spreadsheets/d/e/2PACX-1vQTWo0gRTTnJbNfx20pAkIQI7z6o4jW-TPjgv2mNYJjunjy1ndViQtOhkEuLk2h7Lw15BtdK5lJmsHl/pub?gid=0&single=true&output=csv";
+      "https://docs.google.com/spreadsheets/d/e/2PACX-1vSItc43UUq-pbnwE3NemKnaHcGt9XLVQm5GiZmucVDh-ndQ8Rs2UonaRccJpnWdnV0KwV_vZKhxjc6i/pub?gid=0&single=true&output=csv";
 
-    // Anti-cache (pakai AllOrigins)
     const url =
       "https://api.allorigins.win/raw?url=" +
       encodeURIComponent(sheetUrl + "&t=" + Date.now());
@@ -114,7 +113,7 @@
     let activeIndex = null;
 
     // =========================
-    // FUNGSI HIGHLIGHT
+    // HIGHLIGHT KEYWORD
     // =========================
     function highlight(text, keyword) {
       if (!keyword) return text;
@@ -156,7 +155,7 @@
     }
 
     // =========================
-    // TOGGLE ISI ARTIKEL
+    // TOGGLE ARTIKEL
     // =========================
     function toggle(index) {
       if (activeIndex !== null && activeIndex !== index) {
@@ -173,31 +172,45 @@
     // =========================
     // LOAD CSV
     // =========================
-    Papa.parse(url, {
-      download: true,
-      header: true,
-      skipEmptyLines: true,
-      complete: function (results) {
-        dataArticles = results.data.map(row => {
-          const clean = {};
-          Object.keys(row).forEach(
-            k => (clean[k.trim().toLowerCase()] = row[k])
-          );
-          return {
-            judul: clean.judul || "",
-            isi: clean.isi || ""
-          };
-        });
-      },
-      error: function (err) {
-        console.error("Gagal load CSV:", err);
-        document.getElementById("list").innerHTML =
-          "<p>Gagal memuat data.</p>";
-      }
-    });
+    function fetchData() {
+      Papa.parse(url, {
+        download: true,
+        header: true,
+        skipEmptyLines: true,
+        complete: function (results) {
+          dataArticles = results.data.map(row => {
+            const clean = {};
+            Object.keys(row).forEach(
+              k => (clean[k.trim().toLowerCase()] = row[k])
+            );
+            return {
+              judul: clean.judul || "",
+              isi: clean.isi || ""
+            };
+          });
+
+          // Render ulang jika ada keyword di search
+          const currentKeyword = document.getElementById("search").value;
+          if (currentKeyword.trim() !== "") {
+            renderArticles(currentKeyword);
+          }
+        },
+        error: function () {
+          console.error("Gagal memuat data saat auto-refresh");
+        }
+      });
+    }
+
+    // Initial load
+    fetchData();
 
     // =========================
-    // EVENT SEARCH
+    // AUTO REFRESH DATA SETIAP 5 MENIT
+    // =========================
+    setInterval(fetchData, 300000); // 300000 ms = 5 menit
+
+    // =========================
+    // SEARCH EVENT
     // =========================
     document.getElementById("search").addEventListener("keyup", e => {
       activeIndex = null;
@@ -205,10 +218,11 @@
     });
 
     // =========================
-    // AUTO TAHUN FOOTER
+    // AUTO TAHUN COPYRIGHT
     // =========================
     document.getElementById("year").textContent =
       new Date().getFullYear();
+
   </script>
 
 </body>
