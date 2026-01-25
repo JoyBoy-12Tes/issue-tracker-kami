@@ -2,12 +2,12 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Issue & Solusi</title>
+<title>Issue Tracker Helpdesk</title>
 
 <style>
 body {
   font-family: Arial, sans-serif;
-  background: #f6f7f9;
+  background: #f4f6f8;
   margin: 0;
   padding: 0;
 }
@@ -17,9 +17,29 @@ body {
   margin: 40px auto;
   background: #fff;
   padding: 30px;
-  border-radius: 8px;
+  border-radius: 10px;
 }
 
+/* Header */
+.header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.header .icon {
+  font-size: 48px;
+}
+
+.header h1 {
+  margin: 10px 0 5px;
+}
+
+.header p {
+  color: #666;
+  font-size: 14px;
+}
+
+/* Search */
 input {
   width: 100%;
   padding: 14px;
@@ -29,29 +49,58 @@ input {
   margin-bottom: 20px;
 }
 
+/* Issue list */
+.issue-item {
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 15px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.issue-item:hover {
+  background: #f9fafb;
+}
+
 .issue-title {
-  font-size: 22px;
   font-weight: bold;
-  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+/* Detail */
+.issue-detail {
+  display: none;
+  margin-top: 12px;
+  border-top: 1px dashed #ddd;
+  padding-top: 12px;
 }
 
 .section {
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .section h4 {
-  margin-bottom: 6px;
+  margin: 0 0 5px;
 }
 
 img {
   max-width: 100%;
-  border-radius: 6px;
   margin-top: 10px;
+  border-radius: 6px;
 }
 
 .not-found {
   color: #999;
   margin-top: 20px;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  margin-top: 40px;
+  color: #777;
+  font-size: 13px;
 }
 </style>
 </head>
@@ -59,61 +108,102 @@ img {
 <body>
 <div class="container">
 
+  <!-- HEADER -->
+  <div class="header">
+    <div class="icon">📘</div>
+    <h1>Issue Tracker Helpdesk</h1>
+    <p>Pusat solusi & panduan penanganan issue</p>
+  </div>
+
+  <!-- SEARCH -->
   <input id="search" placeholder="Cari issue..." />
 
-  <div id="result"></div>
+  <!-- LIST -->
+  <div id="list"></div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    © <span id="year"></span> Helpdesk
+  </div>
 
 </div>
 
 <script>
-const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQTWo0gRTTnJbNfx20pAkIQI7z6o4jW-TPjgv2mNYJjunjy1ndViQtOhkEuLk2h7Lw15BtdK5lJmsHl/pub?gid=0&single=true&output=csv";
+/* Auto year */
+document.getElementById("year").textContent = new Date().getFullYear();
+
+/* Sheet URL (NO CACHE) */
+const SHEET_URL =
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vQTWo0gRTTnJbNfx20pAkIQI7z6o4jW-TPjgv2mNYJjunjy1ndViQtOhkEuLk2h7Lw15BtdK5lJmsHl/pub?gid=0&single=true&output=csv&t=" + new Date().getTime();
+
 let issues = [];
 
+/* Fetch data */
 fetch(SHEET_URL)
   .then(res => res.text())
   .then(csv => {
-    const rows = csv.split("\n").slice(1);
-    rows.forEach(r => {
-      const [issue, solusi, langkah, image_id] = r.split(",");
-      issues.push({ issue, solusi, langkah, image_id });
+    const rows = csv.trim().split("\n").slice(1);
+    issues = rows.map(r => {
+      const cols = r.split(",");
+      return {
+        issue: cols[0]?.trim() || "",
+        solusi: cols[1]?.trim() || "",
+        langkah: cols[2]?.trim() || "",
+        image_id: cols[3]?.trim() || ""
+      };
     });
+    renderList(issues);
   });
 
-document.getElementById("search").addEventListener("input", function () {
-  const keyword = this.value.toLowerCase();
-  const result = document.getElementById("result");
-  result.innerHTML = "";
+/* Render list */
+function renderList(data) {
+  const list = document.getElementById("list");
+  list.innerHTML = "";
 
-  if (!keyword) return;
-
-  const found = issues.find(i =>
-    i.issue.toLowerCase().includes(keyword)
-  );
-
-  if (!found) {
-    result.innerHTML = `<div class="not-found">Issue tidak ditemukan</div>`;
+  if (data.length === 0) {
+    list.innerHTML = `<div class="not-found">Issue tidak ditemukan</div>`;
     return;
   }
 
-  const imgHTML = found.image_id
-    ? `<img src="https://drive.google.com/uc?id=${found.image_id}">`
-    : "";
+  data.forEach((item, index) => {
+    const imgHTML = item.image_id
+      ? `<img src="https://drive.google.com/uc?id=${item.image_id}">`
+      : "";
 
-  result.innerHTML = `
-    <div class="issue-title">${found.issue}</div>
+    const div = document.createElement("div");
+    div.className = "issue-item";
+    div.innerHTML = `
+      <div class="issue-title">${item.issue}</div>
+      <div class="issue-detail">
+        <div class="section">
+          <h4>Solusi</h4>
+          <p>${item.solusi}</p>
+        </div>
+        <div class="section">
+          <h4>Langkah-langkah</h4>
+          <p>${item.langkah}</p>
+        </div>
+        ${imgHTML}
+      </div>
+    `;
 
-    <div class="section">
-      <h4>Solusi</h4>
-      <p>${found.solusi}</p>
-    </div>
+    div.onclick = () => {
+      const detail = div.querySelector(".issue-detail");
+      detail.style.display =
+        detail.style.display === "block" ? "none" : "block";
+    };
 
-    <div class="section">
-      <h4>Langkah-langkah</h4>
-      <p>${found.langkah}</p>
-    </div>
+    list.appendChild(div);
+  });
+}
 
-    ${imgHTML}
-  `;
+/* Search */
+document.getElementById("search").addEventListener("input", function () {
+  const keyword = this.value.toLowerCase();
+  const filtered = issues.filter(i =>
+    i.issue.toLowerCase().includes(keyword)
+  );
+  renderList(filtered);
 });
 </script>
 
