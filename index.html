@@ -53,11 +53,22 @@ body{
  animation:spin 2.5s linear infinite;
 }
 
-/* ANIMATIONS */
+/* ANIMASI */
 
-@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
-@keyframes floatBook{0%{transform:translateY(0)}50%{transform:translateY(-6px)}100%{transform:translateY(0)}}
-@keyframes glow{0%{box-shadow:0 0 10px rgba(255,255,255,.3)}50%{box-shadow:0 0 25px rgba(255,255,255,.6)}100%{box-shadow:0 0 10px rgba(255,255,255,.3)}}
+@keyframes spin{
+ from{transform:rotate(0)}
+ to{transform:rotate(360deg)}
+}
+
+@keyframes floatBook{
+ 0%,100%{transform:translateY(0)}
+ 50%{transform:translateY(-6px)}
+}
+
+@keyframes glow{
+ 0%,100%{box-shadow:0 0 10px rgba(255,255,255,.3)}
+ 50%{box-shadow:0 0 25px rgba(255,255,255,.6)}
+}
 
 /* INPUT */
 
@@ -76,7 +87,6 @@ input{
  border:1px solid #e0e0e0;
  border-radius:10px;
  margin-bottom:14px;
- overflow:hidden;
 }
 
 .issue-header{
@@ -92,7 +102,8 @@ input{
 .issue-detail{
  display:none;
  padding:16px;
- border-top:1px dashed #cfd8dc;
+ border-top:1px dashed #ccc;
+ line-height:1.6;
 }
 
 .section{margin-bottom:14px}
@@ -100,11 +111,6 @@ input{
 .section h4{
  margin:0 0 6px;
  color:#1565c0;
-}
-
-.issue-detail p{
- white-space:pre-wrap;
- line-height:1.6;
 }
 
 img{
@@ -127,20 +133,21 @@ img{
 <div class="container">
 
 <div class="header">
- <div class="icon-wrap">
-  <span class="book">📘</span>
-  <span class="gear">⚙️</span>
- </div>
-
- <h1>Issue Tracker Helpdesk</h1>
- <p>Pusat solusi internal</p>
+<div class="icon-wrap">
+ <span class="book">📘</span>
+ <span class="gear">⚙️</span>
+</div>
+<h1>Issue Tracker Helpdesk</h1>
+<p>Pusat solusi internal</p>
 </div>
 
 <input id="search" placeholder="Cari issue...">
 
 <div id="list"></div>
 
-<div class="footer">© <span id="year"></span></div>
+<div class="footer">
+© Helpdesk <span id="year"></span>
+</div>
 
 </div>
 
@@ -156,22 +163,19 @@ Papa.parse(SHEET_URL,{
  download:true,
  header:true,
  skipEmptyLines:true,
- complete:function(res){
-
-  issues=res.data.map(r=>({
-   issue:r.issue?.trim()||"",
-   solusi:r.solusi||"",
-   langkah:r.langkah||"",
-   image_id:r.image_id||""
+ complete:r=>{
+  issues=r.data.map(x=>({
+   issue:x.issue||"",
+   solusi:x.solusi||"",
+   langkah:x.langkah||"",
+   image_id:x.image_id||""
   })).filter(i=>i.issue);
-
-  render([]); // kosong dulu
  }
 });
 
-/* LINKIFY */
-function linkify(text){
- return text.replace(/(https?:\/\/[^\s]+)/g,'<a href="$1" target="_blank">$1</a>');
+/* convert newline sheet -> html */
+function nl(t){
+ return t.replace(/\n/g,"<br>");
 }
 
 function render(data){
@@ -180,7 +184,7 @@ function render(data){
  list.innerHTML="";
 
  if(!data.length){
-  list.innerHTML="";
+  list.innerHTML="<div style='color:#999'>Issue tidak ditemukan</div>";
   return;
  }
 
@@ -189,52 +193,49 @@ function render(data){
   const wrap=document.createElement("div");
   wrap.className="issue-item";
 
-  const header=document.createElement("div");
-  header.className="issue-header";
-  header.textContent=item.issue;
+  const h=document.createElement("div");
+  h.className="issue-header";
+  h.textContent=item.issue;
 
-  const detail=document.createElement("div");
-  detail.className="issue-detail";
+  const d=document.createElement("div");
+  d.className="issue-detail";
 
-  detail.innerHTML=`
-   <div class="section">
-    <h4>Solusi</h4>
-    <p>${linkify(item.solusi)}</p>
-   </div>
+  d.innerHTML=`
+<div class="section">
+<h4>Solusi</h4>
+${nl(item.solusi)||"-"}
+</div>
 
-   <div class="section">
-    <h4>Langkah</h4>
-    <p>${linkify(item.langkah)}</p>
-   </div>
+<div class="section">
+<h4>Langkah</h4>
+${nl(item.langkah)||"-"}
+</div>
 
-   ${
-    item.image_id && item.image_id!=="kosong"
-    ? `<img src="https://drive.google.com/uc?id=${item.image_id}">`
-    : ""
-   }
-  `;
+${item.image_id && item.image_id!=="kosong"
+?`<img src="https://drive.google.com/uc?id=${item.image_id}">`
+:""}
+`;
 
-  header.onclick=()=>{
-   if(opened && opened!==detail) opened.style.display="none";
-   detail.style.display=detail.style.display==="block"?"none":"block";
-   opened=detail.style.display==="block"?detail:null;
+  h.onclick=()=>{
+   if(opened && opened!==d) opened.style.display="none";
+   d.style.display=d.style.display==="block"?"none":"block";
+   opened=d.style.display==="block"?d:null;
   };
 
-  wrap.appendChild(header);
-  wrap.appendChild(detail);
+  wrap.appendChild(h);
+  wrap.appendChild(d);
   list.appendChild(wrap);
  });
 }
 
-/* SEARCH ONLY ISSUE */
+/* SEARCH ONLY */
+
 document.getElementById("search").addEventListener("input",e=>{
  const k=e.target.value.toLowerCase().trim();
-
  if(!k){
-  render([]);
+  document.getElementById("list").innerHTML="";
   return;
  }
-
  render(issues.filter(i=>i.issue.toLowerCase().includes(k)));
 });
 </script>
