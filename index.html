@@ -7,7 +7,7 @@
 <style>
 body {
   font-family: Arial, sans-serif;
-  background: #f4f6f8;
+  background: linear-gradient(90deg, #e3f2fd, #ffffff, #e3f2fd);
   margin: 0;
   padding: 0;
 }
@@ -17,26 +17,32 @@ body {
   margin: 40px auto;
   background: #fff;
   padding: 30px;
-  border-radius: 10px;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
 }
 
 /* Header */
 .header {
   text-align: center;
   margin-bottom: 30px;
+  padding: 25px 15px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #42a5f5, #64b5f6);
+  color: #fff;
 }
 
 .header .icon {
-  font-size: 48px;
+  font-size: 60px;
+  margin-bottom: 10px;
 }
 
 .header h1 {
-  margin: 10px 0 5px;
+  margin: 10px 0 6px;
 }
 
 .header p {
-  color: #666;
   font-size: 14px;
+  opacity: 0.95;
 }
 
 /* Search */
@@ -44,35 +50,37 @@ input {
   width: 100%;
   padding: 14px;
   font-size: 16px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  margin-bottom: 20px;
+  border: 1px solid #d0e2f2;
+  border-radius: 10px;
+  margin-bottom: 22px;
 }
 
 /* Issue list */
 .issue-item {
   border: 1px solid #e0e0e0;
-  border-radius: 6px;
-  padding: 15px;
-  margin-bottom: 12px;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 14px;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.2s;
 }
 
 .issue-item:hover {
-  background: #f9fafb;
+  background: #f1f8ff;
+  border-color: #90caf9;
 }
 
 .issue-title {
   font-weight: bold;
   font-size: 16px;
+  color: #1976d2;
 }
 
 /* Detail */
 .issue-detail {
   display: none;
   margin-top: 12px;
-  border-top: 1px dashed #ddd;
+  border-top: 1px dashed #cfd8dc;
   padding-top: 12px;
 }
 
@@ -81,18 +89,15 @@ input {
 }
 
 .section h4 {
-  margin: 0 0 5px;
+  margin: 0 0 6px;
+  color: #1565c0;
 }
 
 img {
   max-width: 100%;
   margin-top: 10px;
-  border-radius: 6px;
-}
-
-.not-found {
-  color: #999;
-  margin-top: 20px;
+  border-radius: 10px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
 }
 
 /* Footer */
@@ -110,7 +115,7 @@ img {
 
   <!-- HEADER -->
   <div class="header">
-    <div class="icon">📘</div>
+    <div class="icon">📚✨</div>
     <h1>Issue Tracker Helpdesk</h1>
     <p>Pusat solusi & panduan penanganan issue</p>
   </div>
@@ -129,12 +134,13 @@ img {
 </div>
 
 <script>
-/* Auto year */
+/* Tahun otomatis */
 document.getElementById("year").textContent = new Date().getFullYear();
 
-/* Sheet URL (NO CACHE) */
+/* Sheet URL (ANTI CACHE) */
 const SHEET_URL =
-  "https://docs.google.com/spreadsheets/d/e/2PACX-1vQCLXvz4_F7EfUppPoKWSKQawlesCjiYHhceQCIEDoV8ntbDjFrvKUorP416AGydpWYmxWlOLA3b1JL/pub?gid=0&single=true&output=csv" + new Date().getTime();
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vQCLXvz4_F7EfUppPoKWSKQawlesCjiYHhceQCIEDoV8ntbDjFrvKUorP416AGydpWYmxWlOLA3b1JL/pub?gid=0&single=true&output=csv&t="
+  + new Date().getTime();
 
 let issues = [];
 
@@ -144,28 +150,27 @@ fetch(SHEET_URL)
   .then(csv => {
     const rows = csv.trim().split("\n").slice(1);
     issues = rows.map(r => {
-      const cols = r.split(",");
+      const cols = r.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g) || [];
       return {
-        issue: cols[0]?.trim() || "",
-        solusi: cols[1]?.trim() || "",
-        langkah: cols[2]?.trim() || "",
-        image_id: cols[3]?.trim() || ""
+        issue: cols[0]?.replace(/"/g,"").trim() || "",
+        solusi: cols[1]?.replace(/"/g,"").trim() || "",
+        langkah: cols[2]?.replace(/"/g,"").trim() || "",
+        image_id: cols[3]?.replace(/"/g,"").trim() || ""
       };
     });
     renderList(issues);
   });
 
-/* Render list */
 function renderList(data) {
   const list = document.getElementById("list");
   list.innerHTML = "";
 
   if (data.length === 0) {
-    list.innerHTML = `<div class="not-found">Issue tidak ditemukan</div>`;
+    list.innerHTML = "<div style='color:#999'>Issue tidak ditemukan</div>";
     return;
   }
 
-  data.forEach((item, index) => {
+  data.forEach(item => {
     const imgHTML = item.image_id
       ? `<img src="https://drive.google.com/uc?id=${item.image_id}">`
       : "";
@@ -200,10 +205,9 @@ function renderList(data) {
 /* Search */
 document.getElementById("search").addEventListener("input", function () {
   const keyword = this.value.toLowerCase();
-  const filtered = issues.filter(i =>
-    i.issue.toLowerCase().includes(keyword)
+  renderList(
+    issues.filter(i => i.issue.toLowerCase().includes(keyword))
   );
-  renderList(filtered);
 });
 </script>
 
