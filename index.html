@@ -11,11 +11,6 @@
       padding: 20px;
       background: #f9f9f9;
     }
-
-    h2 {
-      margin-bottom: 10px;
-    }
-
     input {
       width: 100%;
       padding: 10px;
@@ -24,7 +19,6 @@
       border-radius: 5px;
       border: 1px solid #ccc;
     }
-
     .article {
       background: white;
       border-radius: 6px;
@@ -32,153 +26,121 @@
       border: 1px solid #ddd;
       overflow: hidden;
     }
-
     .article h3 {
       margin: 0;
       padding: 12px;
       cursor: pointer;
       background: #f1f1f1;
     }
-
-    .article h3:hover {
-      background: #eaeaea;
-    }
-
     .content {
       max-height: 0;
       overflow: hidden;
       transition: max-height 0.4s ease, padding 0.3s ease;
       padding: 0 12px;
     }
-
     .content.open {
       padding: 12px;
       max-height: 1000px;
     }
-
     .content img {
       max-width: 100%;
       border-radius: 6px;
       margin-bottom: 10px;
     }
-
     mark {
       background: yellow;
-    }
-
-    .loading {
-      color: #777;
-      font-style: italic;
     }
   </style>
 </head>
 
 <body>
 
-  <h2>📚 Issue Tracker Helpdesk</h2>
+<h2>📚 Issue Tracker Helpdesk</h2>
 
-  <input
-    type="text"
-    id="search"
-    placeholder="Cari judul artikel..."
-    autocomplete="off"
-  />
+<input id="search" placeholder="Cari judul artikel..." />
 
-  <div id="list">
-    <p class="loading">Memuat data...</p>
-  </div>
+<div id="list"><p>Memuat data...</p></div>
 
-  <script>
-    // =========================
-    // KONFIGURASI GOOGLE SHEETS API
-    // =========================
-    const API_KEY = "API_KEY_KAMU";
-    const SHEET_ID = "AIzaSyCP1doJdwsMteYt1pylBjOWnRMAsZ5o4IU";
-    const SHEET_NAME = "Sheet1";
+<script>
+  const API_KEY = "AIzaSyCP1doJdwsMteYt1pylBjOWnRMAsZ5o4IU";
+  const SHEET_ID = "1DGR6pjJvvasX9OO0W5TuEhyatDAe7vjtnmfeubBZ65E";
+  const SHEET_NAME = "Sheet1";
 
-    const apiUrl =
-      `https://docs.google.com/spreadsheets/d/1DGR6pjJvvasX9OO0W5TuEhyatDAe7vjtnmfeubBZ65E/edit?gid=0
-${SHEET_ID}/values/${SHEET_NAME}?key=${API_KEY}`;
+  const apiUrl =
+    `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_NAME}?key=${API_KEY}`;
 
-    let dataArticles = [];
-    let activeIndex = null;
+  let dataArticles = [];
+  let activeIndex = null;
 
-    function highlight(text, keyword) {
-      if (!keyword) return text;
-      const safe = keyword.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      const regex = new RegExp(`(${safe})`, "gi");
-      return text.replace(regex, "<mark>$1</mark>");
+  function highlight(text, keyword) {
+    if (!keyword) return text;
+    const regex = new RegExp(`(${keyword})`, "gi");
+    return text.replace(regex, "<mark>$1</mark>");
+  }
+
+  function toggle(index) {
+    if (activeIndex !== null && activeIndex !== index) {
+      document.getElementById("content-" + activeIndex)?.classList.remove("open");
+    }
+    const el = document.getElementById("content-" + index);
+    el.classList.toggle("open");
+    activeIndex = el.classList.contains("open") ? index : null;
+  }
+
+  function renderArticles(keyword) {
+    const list = document.getElementById("list");
+    list.innerHTML = "";
+
+    const filtered = dataArticles.filter(item =>
+      item.judul.toLowerCase().includes(keyword.toLowerCase())
+    );
+
+    if (!filtered.length) {
+      list.innerHTML = "<p>Tidak ada artikel ditemukan.</p>";
+      return;
     }
 
-    function renderArticles(keyword = "") {
-      const list = document.getElementById("list");
-      list.innerHTML = "";
-
-      if (!keyword.trim()) return;
-
-      const filtered = dataArticles.filter(item =>
-        item.judul.toLowerCase().includes(keyword.toLowerCase())
-      );
-
-      if (!filtered.length) {
-        list.innerHTML = "<p>Tidak ada artikel ditemukan.</p>";
-        return;
-      }
-
-      filtered.forEach((item, index) => {
-        list.innerHTML += `
-          <div class="article">
-            <h3 onclick="toggle(${index})">
-              ${highlight(item.judul, keyword)}
-            </h3>
-            <div class="content" id="content-${index}">
-              ${item.gambar ? `<img src="${item.gambar}" alt="Gambar">` : ""}
-              <div>${item.isi}</div>
-            </div>
+    filtered.forEach((item, index) => {
+      list.innerHTML += `
+        <div class="article">
+          <h3 onclick="toggle(${index})">
+            ${highlight(item.judul, keyword)}
+          </h3>
+          <div class="content" id="content-${index}">
+            ${item.gambar ? `<img src="${item.gambar}">` : ""}
+            <div>${item.isi}</div>
           </div>
-        `;
-      });
-    }
-
-    function toggle(index) {
-      if (activeIndex !== null && activeIndex !== index) {
-        document.getElementById("content-" + activeIndex)?.classList.remove("open");
-      }
-
-      const el = document.getElementById("content-" + index);
-      el.classList.toggle("open");
-      activeIndex = el.classList.contains("open") ? index : null;
-    }
-
-    // =========================
-    // LOAD DATA
-    // =========================
-    fetch(apiUrl)
-      .then(res => res.json())
-      .then(data => {
-        const rows = data.values;
-        rows.shift(); // hapus header
-
-        dataArticles = rows.map(row => ({
-          judul: row[0] || "",
-          isi: row[1] || "",
-          gambar: row[2] || ""
-        }));
-
-        document.getElementById("list").innerHTML =
-          "<p>Ketik kata kunci untuk mencari artikel.</p>";
-      })
-      .catch(err => {
-        console.error(err);
-        document.getElementById("list").innerHTML =
-          "<p>Gagal memuat data.</p>";
-      });
-
-    document.getElementById("search").addEventListener("keyup", e => {
-      activeIndex = null;
-      renderArticles(e.target.value);
+        </div>
+      `;
     });
-  </script>
+  }
+
+  fetch(apiUrl)
+    .then(res => res.json())
+    .then(data => {
+      const rows = data.values;
+      rows.shift();
+
+      dataArticles = rows.map(r => ({
+        judul: r[0] || "",
+        isi: r[1] || "",
+        gambar: r[2] || ""
+      }));
+
+      document.getElementById("list").innerHTML =
+        "<p>Ketik kata kunci untuk mencari artikel.</p>";
+    })
+    .catch(err => {
+      console.error(err);
+      document.getElementById("list").innerHTML =
+        "<p>Gagal memuat data</p>";
+    });
+
+  document.getElementById("search").addEventListener("keyup", e => {
+    activeIndex = null;
+    renderArticles(e.target.value);
+  });
+</script>
 
 </body>
 </html>
