@@ -4,203 +4,244 @@
 <meta charset="UTF-8">
 <title>Issue Tracker Helpdesk</title>
 
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+
 <style>
-body {
-  font-family: Arial, sans-serif;
-  background: linear-gradient(90deg, #e3f2fd, #ffffff, #e3f2fd);
-  margin: 0;
+body{
+ font-family:Arial,sans-serif;
+ background:linear-gradient(90deg,#e3f2fd,#fff,#e3f2fd);
+ margin:0;
 }
 
-.container {
-  max-width: 900px;
-  margin: 40px auto;
-  background: #fff;
-  padding: 30px;
-  border-radius: 14px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+.container{
+ max-width:900px;
+ margin:40px auto;
+ background:#fff;
+ padding:30px;
+ border-radius:14px;
+ box-shadow:0 10px 30px rgba(0,0,0,.08);
 }
 
 /* HEADER */
-.header {
-  text-align: center;
-  padding: 25px;
-  margin-bottom: 30px;
-  border-radius: 12px;
-  background: linear-gradient(135deg, #42a5f5, #64b5f6);
-  color: #fff;
+
+.header{
+ text-align:center;
+ padding:25px;
+ margin-bottom:30px;
+ border-radius:12px;
+ background:linear-gradient(135deg,#42a5f5,#64b5f6);
+ color:#fff;
+ animation:glow 4s infinite;
 }
 
-.header .icon {
-  font-size: 56px;
-  margin-bottom: 6px;
+.icon-wrap{
+ position:relative;
+ display:inline-block;
+ margin-bottom:10px;
 }
 
-/* SEARCH */
-input {
-  width: 100%;
-  padding: 14px;
-  font-size: 16px;
-  border-radius: 10px;
-  border: 1px solid #cfd8dc;
-  margin-bottom: 24px;
+/* BOOK */
+.book{
+ font-size:56px;
+ display:inline-block;
+ animation:floatBook 3s ease-in-out infinite;
+ text-shadow:0 4px 8px rgba(0,0,0,.25);
+}
+
+/* GEAR */
+.gear{
+ position:absolute;
+ right:-28px;
+ bottom:-10px;
+ font-size:34px;
+ animation:spin 2.5s linear infinite;
+ filter:drop-shadow(0 2px 4px rgba(0,0,0,.3));
+}
+
+/* ANIMATIONS */
+
+@keyframes spin{
+ from{transform:rotate(0deg);}
+ to{transform:rotate(360deg);}
+}
+
+@keyframes floatBook{
+ 0%{transform:translateY(0);}
+ 50%{transform:translateY(-6px);}
+ 100%{transform:translateY(0);}
+}
+
+@keyframes glow{
+ 0%{box-shadow:0 0 10px rgba(255,255,255,.3);}
+ 50%{box-shadow:0 0 25px rgba(255,255,255,.6);}
+ 100%{box-shadow:0 0 10px rgba(255,255,255,.3);}
+}
+
+/* INPUT */
+
+input{
+ width:100%;
+ padding:14px;
+ font-size:16px;
+ border-radius:10px;
+ border:1px solid #cfd8dc;
+ margin-bottom:24px;
 }
 
 /* LIST */
-.issue-item {
-  border: 1px solid #e0e0e0;
-  border-radius: 10px;
-  margin-bottom: 14px;
-  overflow: hidden;
+
+.issue-item{
+ border:1px solid #e0e0e0;
+ border-radius:10px;
+ margin-bottom:14px;
+ overflow:hidden;
 }
 
-.issue-header {
-  padding: 16px;
-  font-weight: bold;
-  color: #1976d2;
-  cursor: pointer;
-  background: #fafafa;
+.issue-header{
+ padding:16px;
+ font-weight:bold;
+ color:#1976d2;
+ cursor:pointer;
+ background:#fafafa;
 }
 
-.issue-header:hover {
-  background: #f1f8ff;
+.issue-header:hover{
+ background:#f1f8ff;
 }
 
-.issue-detail {
-  display: none;
-  padding: 16px;
-  background: #fff;
-  border-top: 1px dashed #cfd8dc;
+.issue-detail{
+ display:none;
+ padding:16px;
+ border-top:1px dashed #cfd8dc;
 }
 
-.section {
-  margin-bottom: 14px;
+.section{margin-bottom:14px;}
+
+.section h4{
+ margin:0 0 6px;
+ color:#1565c0;
 }
 
-.section h4 {
-  margin: 0 0 6px;
-  color: #1565c0;
+img{
+ max-width:100%;
+ border-radius:10px;
+ margin-top:10px;
 }
 
-img {
-  max-width: 100%;
-  border-radius: 10px;
-  margin-top: 10px;
-}
-
-/* FOOTER */
-.footer {
-  text-align: center;
-  margin-top: 40px;
-  color: #777;
-  font-size: 13px;
+.footer{
+ text-align:center;
+ margin-top:40px;
+ color:#777;
+ font-size:13px;
 }
 </style>
 </head>
 
 <body>
+
 <div class="container">
 
-  <div class="header">
-    <div class="icon">📘💡</div>
-    <h1>Issue Tracker Helpdesk</h1>
-    <p>Pusat solusi & panduan penanganan issue</p>
-  </div>
+<div class="header">
 
-  <input id="search" placeholder="Cari issue..." />
+<div class="icon-wrap">
+ <span class="book">📘</span>
+ <span class="gear">⚙️</span>
+</div>
 
-  <div id="list"></div>
+<h1>Issue Tracker Helpdesk</h1>
+<p>Pusat solusi internal</p>
 
-  <div class="footer">
-    © <span id="year"></span> Helpdesk
-  </div>
+</div>
+
+<input id="search" placeholder="Cari issue...">
+
+<div id="list"></div>
+
+<div class="footer">© <span id="year"></span></div>
 
 </div>
 
 <script>
-document.getElementById("year").textContent = new Date().getFullYear();
+document.getElementById("year").textContent=new Date().getFullYear();
 
-/* SHEET URL (ANTI CACHE) */
-const SHEET_URL =
-  "https://docs.google.com/spreadsheets/d/e/2PACX-1vQCLXvz4_F7EfUppPoKWSKQawlesCjiYHhceQCIEDoV8ntbDjFrvKUorP416AGydpWYmxWlOLA3b1JL/pub?gid=0&single=true&output=csv&t="
-  + Date.now();
+const SHEET_URL=
+"https://docs.google.com/spreadsheets/d/e/2PACX-1vQCLXvz4_F7EfUppPoKWSKQawlesCjiYHhceQCIEDoV8ntbDjFrvKUorP416AGydpWYmxWlOLA3b1JL/pub?gid=0&single=true&output=csv&t="+Date.now();
 
-let issues = [];
-let opened = null;
+let issues=[];
+let opened=null;
 
-/* FETCH */
-fetch(SHEET_URL)
-  .then(r => r.text())
-  .then(csv => {
-    const rows = csv.trim().split("\n").slice(1);
-    issues = rows.map(r => {
-      const c = r.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g) || [];
-      return {
-        issue: c[0]?.replace(/"/g,"").trim(),
-        solusi: c[1]?.replace(/"/g,"").trim(),
-        langkah: c[2]?.replace(/"/g,"").trim(),
-        image_id: c[3]?.replace(/"/g,"").trim()
-      };
-    });
-    render(issues);
-  });
+Papa.parse(SHEET_URL,{
+ download:true,
+ header:true,
+ skipEmptyLines:true,
+ complete:function(res){
 
-function render(data) {
-  const list = document.getElementById("list");
-  list.innerHTML = "";
+  issues=res.data.map(r=>({
+   issue:r.issue?.trim()||"",
+   solusi:r.solusi?.trim()||"",
+   langkah:r.langkah?.trim()||"",
+   image_id:r.image_id?.trim()||""
+  })).filter(i=>i.issue);
 
-  if (!data.length) {
-    list.innerHTML = "<div style='color:#999'>Issue tidak ditemukan</div>";
-    return;
-  }
+  render(issues);
+ }
+});
 
-  data.forEach(item => {
-    const wrap = document.createElement("div");
-    wrap.className = "issue-item";
+function render(data){
 
-    const detail = document.createElement("div");
-    detail.className = "issue-detail";
+ const list=document.getElementById("list");
+ list.innerHTML="";
 
-    detail.innerHTML = `
-      <div class="section">
-        <h4>Solusi</h4>
-        <p>${item.solusi}</p>
-      </div>
-      <div class="section">
-        <h4>Langkah-langkah</h4>
-        <p>${item.langkah}</p>
-      </div>
-      ${
-        item.image_id && item.image_id !== "kosong"
-          ? `<img src="https://drive.google.com/uc?id=${item.image_id}">`
-          : ""
-      }
-    `;
+ if(!data.length){
+  list.innerHTML="<div style='color:#999'>Issue tidak ditemukan</div>";
+  return;
+ }
 
-    const header = document.createElement("div");
-    header.className = "issue-header";
-    header.textContent = item.issue;
+ data.forEach(item=>{
 
-    header.onclick = () => {
-      if (opened && opened !== detail) {
-        opened.style.display = "none";
-      }
-      detail.style.display =
-        detail.style.display === "block" ? "none" : "block";
-      opened = detail.style.display === "block" ? detail : null;
-    };
+  const wrap=document.createElement("div");
+  wrap.className="issue-item";
 
-    wrap.appendChild(header);
-    wrap.appendChild(detail);
-    list.appendChild(wrap);
-  });
+  const header=document.createElement("div");
+  header.className="issue-header";
+  header.textContent=item.issue;
+
+  const detail=document.createElement("div");
+  detail.className="issue-detail";
+
+  detail.innerHTML=`
+   <div class="section">
+    <h4>Solusi</h4>
+    <p>${item.solusi||"-"}</p>
+   </div>
+
+   <div class="section">
+    <h4>Langkah</h4>
+    <p>${item.langkah||"-"}</p>
+   </div>
+
+   ${
+    item.image_id && item.image_id!=="kosong"
+    ? `<img src="https://drive.google.com/uc?id=${item.image_id}">`
+    : ""
+   }
+  `;
+
+  header.onclick=()=>{
+   if(opened && opened!==detail) opened.style.display="none";
+   detail.style.display=detail.style.display==="block"?"none":"block";
+   opened=detail.style.display==="block"?detail:null;
+  };
+
+  wrap.appendChild(header);
+  wrap.appendChild(detail);
+  list.appendChild(wrap);
+ });
 }
 
-/* SEARCH → ISSUE ONLY */
-document.getElementById("search").addEventListener("input", e => {
-  const key = e.target.value.toLowerCase();
-  render(
-    issues.filter(i => i.issue.toLowerCase().includes(key))
-  );
+document.getElementById("search").addEventListener("input",e=>{
+ const k=e.target.value.toLowerCase();
+ render(issues.filter(i=>i.issue.toLowerCase().includes(k)));
 });
 </script>
 
