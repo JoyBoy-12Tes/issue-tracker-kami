@@ -4,239 +4,223 @@
 <meta charset="UTF-8">
 <title>Issue Tracker Helpdesk</title>
 
-<!-- GOOGLE FONTS -->
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-
-<!-- PAPAPARSE -->
-<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+<!-- FONT (SAMA SEPERTI CONTOH) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-/* ================= ROOT ================= */
-:root{
-  --blue-dark:#1e3a8a;
-  --blue:#3b82f6;
-  --blue-light:#60a5fa;
-  --bg:#f8fafc;
-  --soft:#f1f5f9;
-  --text:#334155;
-  --dark:#020617;
-}
-
+/* ================= GLOBAL ================= */
 *{box-sizing:border-box}
-
 body{
   margin:0;
-  font-family:"Inter",sans-serif;
-  background:linear-gradient(135deg,#e0f2fe,#f8fafc);
-  color:var(--text);
+  font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
+  background:#eef3fb;
+  color:#1e293b;
   display:flex;
 }
 
 /* ================= SIDEBAR ================= */
 .sidebar{
   width:280px;
-  background:linear-gradient(180deg,#1e3a8a,#1d4ed8);
+  background:linear-gradient(180deg,#1e40af,#1e3a8a);
   color:#fff;
-  padding:28px 22px;
-  position:fixed;
-  inset:0 auto 0 0;
-  box-shadow:8px 0 30px rgba(0,0,0,.35);
+  padding:28px 20px;
 }
 
 .sidebar h3{
-  font-family:"Space Grotesk",sans-serif;
-  font-size:13px;
+  font-size:14px;
   letter-spacing:.6px;
-  margin-bottom:18px;
-  opacity:.9;
+  margin:0 0 20px;
+  opacity:.85;
 }
 
 .sidebar a{
-  display:block;
-  padding:14px 16px;
-  margin-bottom:10px;
-  border-radius:12px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:12px 14px;
+  border-radius:10px;
   color:#fff;
   text-decoration:none;
-  font-size:14px;
-  background:rgba(255,255,255,.12);
+  font-weight:500;
+  margin-bottom:8px;
   transition:.3s;
 }
 
 .sidebar a:hover{
-  background:rgba(255,255,255,.25);
-  transform:translateX(6px);
+  background:rgba(255,255,255,.18);
+  transform:translateX(4px);
+}
+
+.sidebar .ppt{
+  background:rgba(34,197,94,.25);
 }
 
 /* ================= MAIN ================= */
 .main{
-  margin-left:280px;
-  width:100%;
-  padding:36px;
-}
-
-/* ================= CONTAINER ================= */
-.container{
-  max-width:1100px;
-  margin:auto;
-  background:#fff;
-  border-radius:26px;
-  padding:34px;
-  box-shadow:0 30px 70px rgba(2,6,23,.18);
+  flex:1;
+  padding:30px;
 }
 
 /* ================= HEADER ================= */
 .header{
-  position:relative;
+  background:linear-gradient(135deg,#3b82f6,#60a5fa);
   border-radius:22px;
-  padding:40px 20px 36px;
-  background:
-    linear-gradient(180deg,var(--blue-light),var(--blue)),
-    radial-gradient(circle at top,rgba(255,255,255,.35),transparent 60%);
-  color:#fff;
+  padding:34px;
   text-align:center;
-  font-family:"Space Grotesk",sans-serif;
+  color:#fff;
+  position:relative;
+  box-shadow:0 30px 70px rgba(0,0,0,.18);
   overflow:hidden;
 }
 
-/* ICON STACK */
-.icon-wrap{
-  display:flex;
-  justify-content:center;
-  margin-bottom:14px;
-}
-
-.icon-stack{
+.logo-wrap{
   position:relative;
-  width:130px;
-  height:110px;
+  width:140px;
+  margin:0 auto 12px;
 }
 
-/* BOOK */
-.book{
-  width:120px;
-  height:auto;
-  animation:float 4s ease-in-out infinite;
+.logo-wrap img{
+  width:140px;
+  filter:drop-shadow(0 14px 24px rgba(0,0,0,.35));
 }
 
 /* GEAR */
 .gear{
   position:absolute;
+  width:30px;
+  height:30px;
   top:-6px;
-  right:-6px;
-  width:32px;
-  height:32px;
-  stroke:white;
-  opacity:.95;
-  animation:spin 5s linear infinite;
+  right:-8px;
+  stroke:#fff;
+  animation:spin 3s linear infinite;
+  filter:drop-shadow(0 4px 8px rgba(0,0,0,.4));
 }
 
-/* ANIMATIONS */
 @keyframes spin{
-  from{transform:rotate(0deg)}
   to{transform:rotate(360deg)}
-}
-@keyframes float{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-6px)}
 }
 
 .header h1{
-  margin:8px 0 4px;
-  font-size:34px;
+  margin:14px 0 6px;
+  font-size:36px;
+  font-weight:800;
+  letter-spacing:-.5px;
 }
 
 .header p{
   margin:0;
-  opacity:.9;
+  font-size:18px;
+  font-weight:500;
+  opacity:.95;
 }
 
 .datetime{
-  margin-top:10px;
-  font-size:14px;
-  opacity:.85;
+  margin-top:14px;
+  font-size:15px;
+  opacity:.9;
 }
 
 /* ================= SEARCH ================= */
-.search-wrap{
-  margin:34px 0;
+.search{
+  margin:34px auto;
+  max-width:520px;
 }
 
-.search-wrap input{
+.search input{
   width:100%;
-  padding:18px 22px;
-  border-radius:18px;
-  border:1px solid #bfdbfe;
+  padding:16px 20px;
+  border-radius:14px;
+  border:1px solid #c7d2fe;
   font-size:15px;
   outline:none;
 }
 
-.search-wrap input:focus{
-  border-color:var(--blue);
-  box-shadow:0 0 0 5px rgba(59,130,246,.25);
+.search input:focus{
+  border-color:#3b82f6;
+  box-shadow:0 0 0 4px rgba(59,130,246,.25);
 }
 
 /* ================= ISSUE ================= */
-.issue-item{
-  margin-bottom:22px;
-  border-radius:20px;
-  background:#fff;
-  box-shadow:0 14px 30px rgba(2,6,23,.12);
-  overflow:hidden;
-}
-
-.issue-header{
-  padding:22px 26px;
-  cursor:pointer;
-  font-weight:600;
-  color:var(--dark);
-}
-
-.issue-header:hover{
-  background:var(--soft);
-}
-
-.issue-detail{
-  display:none;
-  padding:26px;
-  background:#f8fbff;
-  border-top:1px dashed #bae6fd;
-  line-height:1.8;
-}
-
-.section h4{
-  margin:0 0 10px;
-  font-family:"Space Grotesk",sans-serif;
-  color:var(--blue-dark);
-}
-
-.issue-detail img{
-  width:100%;
-  border-radius:18px;
-  margin-top:18px;
-  box-shadow:0 14px 32px rgba(2,6,23,.25);
-}
-
-/* EMPTY */
-.empty{
+.issue-hint{
   text-align:center;
   color:#64748b;
-  padding:36px;
+  margin-bottom:22px;
 }
 
-/* FOOTER */
+.issue-list{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:22px;
+}
+
+.issue-item{
+  background:#fff;
+  border-radius:18px;
+  padding:18px;
+  cursor:pointer;
+  position:relative;
+  overflow:hidden;
+  box-shadow:0 14px 30px rgba(0,0,0,.1);
+  transition:.35s;
+}
+
+.issue-item h4{
+  margin:0 0 8px;
+  font-size:17px;
+  font-weight:700;
+  color:#1e40af;
+}
+
+.issue-item span{
+  font-size:14px;
+  color:#475569;
+}
+
+/* ===== ANIMASI KLIK SAJA ===== */
+.issue-item::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle at center,
+    rgba(59,130,246,.35),
+    transparent 70%);
+  opacity:0;
+  transition:.4s;
+}
+
+.issue-item.clicked{
+  transform:translateY(-6px) scale(1.03);
+  box-shadow:0 28px 55px rgba(0,0,0,.2);
+}
+
+.issue-item.clicked::after{
+  opacity:1;
+}
+
+/* Ripple */
+.ripple{
+  position:absolute;
+  width:20px;
+  height:20px;
+  background:rgba(59,130,246,.5);
+  border-radius:50%;
+  transform:translate(-50%,-50%);
+  animation:ripple .6s ease-out;
+}
+
+@keyframes ripple{
+  from{opacity:.6; transform:translate(-50%,-50%) scale(1)}
+  to{opacity:0; transform:translate(-50%,-50%) scale(14)}
+}
+
+/* ================= FOOTER ================= */
 .footer{
   text-align:center;
-  margin-top:48px;
+  margin-top:40px;
   font-size:13px;
   color:#64748b;
-}
-
-/* RESPONSIVE */
-@media(max-width:900px){
-  body{flex-direction:column}
-  .sidebar{position:relative;width:100%}
-  .main{margin-left:0}
 }
 </style>
 </head>
@@ -246,135 +230,95 @@ body{
 <!-- SIDEBAR -->
 <div class="sidebar">
   <h3>DOKUMENTASI & REPORT</h3>
-  <a href="https://developers.facebook.com/docs/marketing-api/error-reference?locale=id_ID" target="_blank">Marketing API Error</a>
-  <a href="https://developers.facebook.com/docs/whatsapp/on-premises/sunset" target="_blank">WhatsApp On-Prem API</a>
-  <a href="https://developers.facebook.com/docs/graph-api/guides/error-handling" target="_blank">Graph API Error Handling</a>
-  <a href="https://developers.facebook.com/docs/messenger-platform/error-codes/" target="_blank">Messenger Error Codes</a>
-  <a href="https://developers.facebook.com/documentation/business-messaging/whatsapp/support/error-codes" target="_blank">Cloud API WhatsApp</a>
-  <a href="https://docs.google.com/presentation/d/11juAD4KUHTNJ78kRXdotFl3rBwXIyRRU/edit?usp=sharing" target="_blank">📊 Report PPT</a>
+  <a href="#">Marketing API Error</a>
+  <a href="#">WhatsApp On-Prem API</a>
+  <a href="#">Graph API Error Handling</a>
+  <a href="#">Messenger Error Codes</a>
+  <a href="#">Cloud API WhatsApp</a>
+  <a class="ppt" href="#">📊 Report PPT</a>
 </div>
 
 <!-- MAIN -->
 <div class="main">
-<div class="container">
 
-<!-- HEADER -->
-<div class="header">
-
-  <div class="icon-wrap">
-    <div class="icon-stack">
+  <div class="header">
+    <div class="logo-wrap">
 
       <!-- GEAR -->
       <svg class="gear" viewBox="0 0 24 24" fill="none">
         <path d="M12 8a4 4 0 100 8 4 4 0 000-8z" stroke-width="1.6"/>
-        <path d="M19.4 15a7.8 7.8 0 000-6l1.8-1.2-2-3.4-2.1.8a8 8 0 00-5.2-3L11 2H9l-.9 2.2a8 8 0 00-5.2 3l-2.1-.8-2 3.4L4.6 9a7.8 7.8 0 000 6l-1.8 1.2 2 3.4 2.1-.8a8 8 0 005.2 3L9 22h2l.9-2.2a8 8 0 005.2-3l2.1.8 2-3.4L19.4 15z" stroke-width="1.2"/>
+        <path d="M19.4 15a7.8 7.8 0 000-6l1.8-1.2-2-3.4-2.1.8a8 8 0 00-5.2-3L11 2H9l-.9 2.2a8 8 0 00-5.2 3l-2.1-.8-2 3.4L4.6 9a7.8 7.8 0 000 6l-1.8 1.2 2 3.4 2.1-.8a8 8 0 005.2 3L9 22h2l.9-2.2a8 8 0 005.2-3l2.1.8 2-3.4L19.4 15z"
+              stroke-width="1.2"/>
       </svg>
 
-      <!-- BOOK STACK -->
-      <svg class="book" viewBox="0 0 200 160">
-        <rect x="28" y="92" rx="10" ry="10" width="144" height="26" fill="#ef4444"/>
-        <rect x="24" y="62" rx="10" ry="10" width="152" height="28" fill="#3b82f6"/>
-        <rect x="20" y="32" rx="10" ry="10" width="160" height="28" fill="#facc15"/>
-      </svg>
-
+      <!-- BOOK -->
+      <img src="book.png" alt="Book Logo">
     </div>
+
+    <h1>Issue Tracker Helpdesk</h1>
+    <p>Pusat Solusi Internal</p>
+    <div class="datetime" id="datetime"></div>
   </div>
 
-  <h1>Issue Tracker Helpdesk</h1>
-  <p>Pusat Solusi Internal</p>
-  <div class="datetime" id="datetime"></div>
-</div>
+  <div class="search">
+    <input placeholder="Cari issue atau error...">
+  </div>
 
-<!-- SEARCH -->
-<div class="search-wrap">
-  <input id="search" placeholder="Cari issue atau error...">
-</div>
+  <div class="issue-hint">Ketik kata kunci untuk mencari issue</div>
 
-<div id="list" class="empty">
-  Ketik kata kunci untuk mencari issue
-</div>
+  <div class="issue-list" id="issueList"></div>
 
-<div class="footer">
-  © Helpdesk <span id="year"></span>
-</div>
-
-</div>
+  <div class="footer">© Helpdesk 2024</div>
 </div>
 
 <script>
-document.getElementById("year").textContent=new Date().getFullYear();
-
-/* TIME WIB */
+/* ===== WAKTU ===== */
 function updateTime(){
-  document.getElementById("datetime").textContent=
+  document.getElementById("datetime").textContent =
     new Date().toLocaleString("id-ID",{
-      weekday:"long",year:"numeric",month:"long",day:"numeric",
-      hour:"2-digit",minute:"2-digit",second:"2-digit",
-      timeZone:"Asia/Jakarta"
+      weekday:"long",
+      year:"numeric",
+      month:"long",
+      day:"numeric",
+      hour:"2-digit",
+      minute:"2-digit",
+      second:"2-digit"
     })+" WIB";
 }
-setInterval(updateTime,1000);updateTime();
+setInterval(updateTime,1000);
+updateTime();
 
-/* GOOGLE SHEET CSV (TIDAK DIKOSONGKAN) */
-const SHEET_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vQCLXvz4_F7EfUppPoKWSKQawlesCjiYHhceQCIEDoV8ntbDjFrvKUorP416AGydpWYmxWlOLA3b1JL/pub?gid=0&single=true&output=csv";
+/* ===== DATA ISSUE ===== */
+const issues=[
+  {t:"Login gagal",d:"User tidak bisa masuk ke sistem"},
+  {t:"Email error",d:"SMTP timeout saat kirim email"},
+  {t:"Error 403",d:"Akses ditolak pada admin"},
+  {t:"Upload lambat",d:"File besar terlalu lama"},
+  {t:"Data mismatch",d:"Data tidak sinkron"}
+];
 
-let issues=[];
-
-Papa.parse(SHEET_URL,{
-  download:true,
-  header:true,
-  complete:r=>{
-    issues=r.data
-      .map(x=>({
-        issue:(x.issue||"").trim(),
-        solusi:(x.solusi||"").trim(),
-        image_id:(x.image_id||"").trim()
-      }))
-      .filter(i=>i.issue);
-  }
+const list=document.getElementById("issueList");
+issues.forEach(i=>{
+  const el=document.createElement("div");
+  el.className="issue-item";
+  el.innerHTML=`<h4>${i.t}</h4><span>${i.d}</span>`;
+  list.appendChild(el);
 });
 
-const nl=t=>t.replace(/\n/g,"<br>");
+/* ===== ANIMASI KLIK ===== */
+document.querySelectorAll(".issue-item").forEach(item=>{
+  item.addEventListener("click",e=>{
+    item.classList.remove("clicked");
+    void item.offsetWidth;
+    item.classList.add("clicked");
 
-function render(data){
-  const list=document.getElementById("list");
-  list.innerHTML="";
-  if(!data.length){
-    list.innerHTML="<div class='empty'>Issue tidak ditemukan</div>";
-    return;
-  }
-  data.forEach(item=>{
-    const wrap=document.createElement("div");
-    wrap.className="issue-item";
-    wrap.innerHTML=`
-      <div class="issue-header">${item.issue}</div>
-      <div class="issue-detail">
-        <div class="section">
-          <h4>Solusi</h4>
-          ${nl(item.solusi)}
-        </div>
-        ${item.image_id && item.image_id!=="kosong"
-          ? `<img src="https://drive.google.com/thumbnail?id=${item.image_id}&sz=w1200">`
-          : ""}
-      </div>`;
-    wrap.querySelector(".issue-header").onclick=()=>{
-      document.querySelectorAll(".issue-detail").forEach(d=>{
-        if(d!==wrap.querySelector(".issue-detail")) d.style.display="none";
-      });
-      const d=wrap.querySelector(".issue-detail");
-      d.style.display=d.style.display==="block"?"none":"block";
-    };
-    list.appendChild(wrap);
+    const r=document.createElement("span");
+    r.className="ripple";
+    r.style.left=e.offsetX+"px";
+    r.style.top=e.offsetY+"px";
+    item.appendChild(r);
+    setTimeout(()=>r.remove(),600);
   });
-}
-
-document.getElementById("search").addEventListener("input",e=>{
-  const k=e.target.value.toLowerCase().trim();
-  if(!k){
-    document.getElementById("list").innerHTML="<div class='empty'>Ketik kata kunci untuk mencari issue</div>";
-    return;
-  }
-  render(issues.filter(i=>i.issue.toLowerCase().includes(k)));
 });
 </script>
 
