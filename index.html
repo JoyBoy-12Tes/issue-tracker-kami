@@ -234,12 +234,14 @@ body{
 <!-- HEADER -->
 <div class="header">
 
-  <!-- LOGO DARI FILE LOKAL -->
-  <img src="logo.png" alt="Logo" class="header-logo">
+<!-- LOGO DRIVE (SATU-SATUNYA PERUBAHAN) -->
+<img src="https://drive.google.com/uc?export=view&id=1SINqv3envug8sIa6E9wtBMTZSF-NkaxY"
+     alt="Logo" class="header-logo">
 
-  <h1>Issue Tracker Helpdesk</h1>
-  <p>Pusat Solusi Internal</p>
-  <div class="datetime" id="datetime"></div>
+<h1>Issue Tracker Helpdesk</h1>
+<p>Pusat Solusi Internal</p>
+<div class="datetime" id="datetime"></div>
+
 </div>
 
 <!-- SEARCH -->
@@ -261,7 +263,6 @@ body{
 <script>
 document.getElementById("year").textContent=new Date().getFullYear();
 
-/* TIME WIB */
 function updateTime(){
   document.getElementById("datetime").textContent=
     new Date().toLocaleString("id-ID",{
@@ -272,7 +273,6 @@ function updateTime(){
 }
 setInterval(updateTime,1000);updateTime();
 
-/* GOOGLE SHEET CSV */
 const SHEET_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vQCLXvz4_F7EfUppPoKWSKQawlesCjiYHhceQCIEDoV8ntbDjFrvKUorP416AGydpWYmxWlOLA3b1JL/pub?gid=0&single=true&output=csv";
 
 let issues=[];
