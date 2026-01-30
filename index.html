@@ -9,21 +9,18 @@
 
 <style>
 :root{
-  --blue-dark:#1e40af;
-  --blue:#2563eb;
-  --blue-light:#60a5fa;
-  --soft:#eef2ff;
-  --text:#334155;
-  --dark:#020617;
+--blue:#2563eb;
+--blue2:#3b82f6;
+--glass:rgba(255,255,255,.15);
+--text:#0f172a;
 }
 
 *{box-sizing:border-box}
 
 body{
 margin:0;
-font-family:"Inter",sans-serif;
+font-family:Inter;
 background:linear-gradient(135deg,#dbeafe,#f8fafc);
-color:var(--text);
 display:flex;
 }
 
@@ -31,146 +28,127 @@ display:flex;
 .sidebar{
 width:280px;
 background:linear-gradient(180deg,#1e3a8a,#2563eb);
-color:#fff;
-padding:28px 22px;
+padding:30px 22px;
 position:fixed;
-inset:0 auto 0 0;
-box-shadow:8px 0 30px rgba(0,0,0,.35);
-}
-
-.sidebar h3{
-font-family:"Space Grotesk",sans-serif;
-font-size:13px;
-letter-spacing:.6px;
-margin-bottom:18px;
-opacity:.9;
+height:100vh;
+color:#fff;
 }
 
 .sidebar a{
 display:block;
-padding:14px 16px;
-margin-bottom:12px;
+padding:15px;
 border-radius:14px;
-color:#fff;
-text-decoration:none;
-font-size:14px;
+margin-bottom:12px;
 background:rgba(255,255,255,.18);
+text-decoration:none;
+color:#fff;
 transition:.25s;
-box-shadow:inset 0 0 0 1px rgba(255,255,255,.15);
 }
 
 .sidebar a:hover{
+transform:translateX(6px);
 background:rgba(255,255,255,.35);
-transform:translateX(6px) scale(1.03);
 }
 
 /* MAIN */
 .main{
 margin-left:280px;
+padding:40px;
 width:100%;
-padding:36px;
 }
 
+/* CONTAINER */
 .container{
+background:#fff;
+border-radius:28px;
+padding:40px;
+box-shadow:0 40px 90px rgba(0,0,0,.15);
 max-width:1100px;
 margin:auto;
-background:#fff;
-border-radius:26px;
-padding:34px;
-box-shadow:0 30px 70px rgba(2,6,23,.18);
 }
 
 /* HEADER */
 .header{
-border-radius:22px;
-padding:40px 20px 36px;
-background:linear-gradient(135deg,#60a5fa,#3b82f6,#2563eb);
-color:#fff;
+padding:70px 30px 60px;
+border-radius:24px;
+background:
+linear-gradient(135deg,#60a5fa,#3b82f6,#2563eb);
 text-align:center;
-font-family:"Space Grotesk",sans-serif;
-box-shadow:0 25px 60px rgba(37,99,235,.45);
+color:white;
+position:relative;
+overflow:hidden;
 }
 
+/* BIG LOGO */
 .header-logo{
-width:200px;
-margin-bottom:6px;
-animation:floatRotateLogo 4s ease-in-out infinite;
-filter:drop-shadow(0 10px 25px rgba(0,0,0,.35));
+width:340px;
+max-width:90%;
+margin-bottom:12px;
+animation:float 4s ease-in-out infinite;
+filter:drop-shadow(0 20px 40px rgba(0,0,0,.35));
 }
 
-@keyframes floatRotateLogo{
-0%,100%{transform:translateY(0)}
-50%{transform:translateY(-10px)}
+@keyframes float{
+50%{transform:translateY(-12px)}
 }
 
 .header h1{
-margin-top:6px;
-font-size:34px;
+margin:0;
+font-size:38px;
 }
 
 .datetime{opacity:.85}
 
 /* SEARCH */
-.search-wrap{margin:34px 0}
+.search-wrap{margin:40px 0}
 
 .search-wrap input{
 width:100%;
-padding:18px 22px;
+padding:20px;
 border-radius:18px;
 border:1px solid #bfdbfe;
-font-size:15px;
-}
-
-.search-wrap input:focus{
-border-color:var(--blue);
-box-shadow:0 0 0 5px rgba(59,130,246,.25);
+font-size:16px;
 }
 
 /* ISSUE */
 .issue-item{
-margin-bottom:22px;
-border-radius:20px;
 background:#fff;
-box-shadow:0 14px 30px rgba(2,6,23,.12);
-overflow:hidden;
-transition:.25s;
+border-radius:22px;
+margin-bottom:26px;
+box-shadow:0 18px 45px rgba(0,0,0,.1);
+transition:.3s;
 }
 
 .issue-item:hover{
-transform:translateY(-4px);
-box-shadow:0 20px 40px rgba(2,6,23,.18);
+transform:translateY(-6px);
 }
 
 .issue-header{
-padding:22px 26px;
-cursor:pointer;
+padding:26px;
 font-weight:600;
+cursor:pointer;
 }
-
-.issue-header:hover{background:var(--soft)}
 
 .issue-detail{
 display:none;
 padding:26px;
 background:#f8fbff;
-border-top:1px dashed #bae6fd;
-line-height:1.8;
+border-top:1px dashed #c7d2fe;
 }
 
 .issue-detail img{
 width:100%;
-border-radius:18px;
-margin-top:18px;
-box-shadow:0 14px 32px rgba(2,6,23,.25);
+margin-top:20px;
+border-radius:16px;
 }
 
-.empty{text-align:center;color:#64748b;padding:36px}
-.footer{text-align:center;margin-top:48px;font-size:13px;color:#64748b}
+.empty{text-align:center;color:#64748b;padding:40px}
+.footer{text-align:center;margin-top:50px;color:#64748b}
 
 @media(max-width:900px){
-body{flex-direction:column}
 .sidebar{position:relative;width:100%}
 .main{margin-left:0}
+body{flex-direction:column}
 }
 </style>
 </head>
@@ -178,7 +156,6 @@ body{flex-direction:column}
 <body>
 
 <div class="sidebar">
-<h3>DOKUMENTASI & REPORT</h3>
 <a href="https://developers.facebook.com/docs/marketing-api/error-reference?locale=id_ID" target="_blank">Marketing API Error</a>
 <a href="https://developers.facebook.com/docs/whatsapp/on-premises/sunset" target="_blank">WhatsApp On-Prem API</a>
 <a href="https://developers.facebook.com/docs/graph-api/guides/error-handling" target="_blank">Graph API Error Handling</a>
@@ -191,10 +168,10 @@ body{flex-direction:column}
 <div class="container">
 
 <div class="header">
-<img src="https://drive.google.com/thumbnail?id=1SINqv3envug8sIa6E9wtBMTZSF-NkaxY&sz=w400" class="header-logo">
+<img src="https://drive.google.com/thumbnail?id=1SINqv3envug8sIa6E9wtBMTZSF-NkaxY&sz=w600" class="header-logo">
 <h1>Issue Tracker Helpdesk</h1>
 <p>Pusat Solusi Internal</p>
-<div class="datetime" id="datetime"></div>
+<div id="datetime" class="datetime"></div>
 </div>
 
 <div class="search-wrap">
@@ -212,14 +189,14 @@ body{flex-direction:column}
 document.getElementById("year").textContent=new Date().getFullYear();
 
 function updateTime(){
-document.getElementById("datetime").textContent=
-new Date().toLocaleString("id-ID",{weekday:"long",year:"numeric",month:"long",day:"numeric",hour:"2-digit",minute:"2-digit",second:"2-digit",timeZone:"Asia/Jakarta"})+" WIB";
+datetime.textContent=new Date().toLocaleString("id-ID",{weekday:"long",year:"numeric",month:"long",day:"numeric",hour:"2-digit",minute:"2-digit",second:"2-digit",timeZone:"Asia/Jakarta"})+" WIB";
 }
 setInterval(updateTime,1000);updateTime();
 
 const SHEET_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vQCLXvz4_F7EfUppPoKWSKQawlesCjiYHhceQCIEDoV8ntbDjFrvKUorP416AGydpWYmxWlOLA3b1JL/pub?gid=0&single=true&output=csv";
 
 let issues=[];
+
 Papa.parse(SHEET_URL,{
 download:true,
 header:true,
@@ -235,7 +212,6 @@ image_id:(x.image_id||"").trim()
 const nl=t=>t.replace(/\n/g,"<br>");
 
 function render(data){
-const list=document.getElementById("list");
 list.innerHTML="";
 if(!data.length){list.innerHTML="<div class='empty'>Issue tidak ditemukan</div>";return;}
 data.forEach(item=>{
@@ -244,7 +220,6 @@ wrap.className="issue-item";
 wrap.innerHTML=`
 <div class="issue-header">${item.issue}</div>
 <div class="issue-detail">
-<h4>Solusi</h4>
 ${nl(item.solusi)}
 ${item.image_id&&item.image_id!=="kosong"?`<img src="https://drive.google.com/thumbnail?id=${item.image_id}&sz=w1200">`:""}
 </div>`;
@@ -257,9 +232,9 @@ list.appendChild(wrap);
 });
 }
 
-document.getElementById("search").addEventListener("input",e=>{
+search.addEventListener("input",e=>{
 const k=e.target.value.toLowerCase().trim();
-if(!k){document.getElementById("list").innerHTML="<div class='empty'>Ketik kata kunci untuk mencari issue</div>";return;}
+if(!k){list.innerHTML="<div class='empty'>Ketik kata kunci untuk mencari issue</div>";return;}
 render(issues.filter(i=>i.issue.toLowerCase().includes(k)));
 });
 </script>
