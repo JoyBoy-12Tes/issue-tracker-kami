@@ -4,158 +4,155 @@
 <meta charset="UTF-8">
 <title>Issue Tracker Helpdesk</title>
 
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 
 <style>
 :root{
- --primary:#1e88e5;
- --secondary:#42a5f5;
- --soft:#f5f9ff;
- --dark:#0d47a1;
+ --primary:#4f46e5;
+ --secondary:#6366f1;
+ --bg:#f4f6ff;
+ --soft:#eef2ff;
+ --dark:#1e1b4b;
+ --text:#334155;
 }
 
 *{box-sizing:border-box}
 
 body{
- font-family:"Inter",Arial,sans-serif;
- background:linear-gradient(135deg,#e3f2fd,#ffffff,#e3f2fd);
  margin:0;
- color:#333;
+ font-family:"Inter",sans-serif;
+ background:var(--bg);
+ color:var(--text);
+ display:flex;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar{
+ width:300px;
+ background:linear-gradient(180deg,var(--primary),var(--secondary));
+ color:#fff;
+ padding:26px 22px;
+ position:fixed;
+ top:0;
+ bottom:0;
+ overflow-y:auto;
+}
+
+.sidebar h3{
+ font-family:"Poppins",sans-serif;
+ font-size:16px;
+ margin:0 0 16px;
+ opacity:.9;
+}
+
+.sidebar a{
+ display:block;
+ padding:12px 14px;
+ margin-bottom:10px;
+ background:rgba(255,255,255,.12);
+ border-radius:12px;
+ color:#fff;
+ text-decoration:none;
+ font-size:14px;
+ line-height:1.4;
+ transition:.3s;
+}
+
+.sidebar a:hover{
+ background:rgba(255,255,255,.22);
+ transform:translateX(4px);
+}
+
+/* ===== MAIN ===== */
+.main{
+ margin-left:300px;
+ width:100%;
+ padding:36px;
 }
 
 /* CONTAINER */
 .container{
- max-width:980px;
- margin:40px auto;
- padding:28px;
- background:rgba(255,255,255,.88);
- backdrop-filter:blur(12px);
- border-radius:18px;
- box-shadow:0 20px 40px rgba(0,0,0,.12);
+ max-width:1000px;
+ margin:auto;
+ background:#fff;
+ border-radius:22px;
+ padding:34px;
+ box-shadow:0 30px 60px rgba(0,0,0,.12);
 }
 
 /* HEADER */
 .header{
  text-align:center;
- padding:34px 20px;
- border-radius:18px;
+ padding:36px 20px;
+ border-radius:20px;
  background:linear-gradient(135deg,var(--primary),var(--secondary));
  color:#fff;
- position:relative;
- overflow:hidden;
-}
-
-.header::after{
- content:"";
- position:absolute;
- inset:0;
- background:radial-gradient(circle at top,rgba(255,255,255,.35),transparent 60%);
+ font-family:"Poppins",sans-serif;
 }
 
 .icon-wrap{
- position:relative;
- z-index:2;
+ font-size:62px;
  margin-bottom:10px;
 }
 
-.book{
- font-size:60px;
- animation:float 3s ease-in-out infinite;
-}
-
-.gear{
- position:absolute;
- right:-30px;
- bottom:-10px;
- font-size:34px;
- animation:spin 3s linear infinite;
-}
-
-@keyframes spin{
- from{transform:rotate(0)}
- to{transform:rotate(360deg)}
-}
-
-@keyframes float{
- 0%,100%{transform:translateY(0)}
- 50%{transform:translateY(-6px)}
+.datetime{
+ margin-top:14px;
+ font-size:14px;
+ opacity:.9;
 }
 
 /* SEARCH */
 .search-wrap{
- margin:30px 0;
+ margin:32px 0;
  position:relative;
 }
 
 .search-wrap input{
  width:100%;
- padding:16px 52px 16px 18px;
- border-radius:14px;
- border:1px solid #d0ddee;
- font-size:16px;
+ padding:16px 54px 16px 20px;
+ border-radius:16px;
+ border:1px solid #dbeafe;
+ font-size:15px;
  outline:none;
  transition:.3s;
 }
 
 .search-wrap input:focus{
  border-color:var(--primary);
- box-shadow:0 0 0 4px rgba(30,136,229,.15);
+ box-shadow:0 0 0 4px rgba(79,70,229,.2);
 }
 
-.search-icon{
- position:absolute;
- right:16px;
- top:50%;
- transform:translateY(-50%);
- font-size:20px;
- color:#999;
-}
-
-/* ISSUE CARD */
+/* ISSUE */
 .issue-item{
- margin-bottom:18px;
- border-radius:16px;
+ margin-bottom:20px;
+ border-radius:18px;
  background:#fff;
- box-shadow:0 12px 26px rgba(0,0,0,.08);
+ box-shadow:0 14px 30px rgba(0,0,0,.08);
  overflow:hidden;
- animation:fadeUp .4s ease;
-}
-
-@keyframes fadeUp{
- from{opacity:0;transform:translateY(8px)}
- to{opacity:1;transform:none}
 }
 
 .issue-header{
- padding:18px 22px;
+ padding:20px 24px;
  cursor:pointer;
  display:flex;
  justify-content:space-between;
  align-items:center;
  font-weight:600;
  color:var(--dark);
- transition:.3s;
 }
 
 .issue-header:hover{
  background:var(--soft);
 }
 
-.arrow{
- font-size:20px;
- transition:.3s;
-}
-
-.issue-item.open .arrow{
- transform:rotate(90deg);
-}
-
-/* DETAIL */
 .issue-detail{
  display:none;
- padding:22px;
- border-top:1px dashed #cfd8dc;
- background:#fbfdff;
+ padding:24px;
+ border-top:1px dashed #c7d2fe;
+ background:#f8faff;
  line-height:1.7;
 }
 
@@ -167,15 +164,14 @@ body{
 
 img{
  width:100%;
- border-radius:14px;
- margin-top:14px;
- box-shadow:0 10px 24px rgba(0,0,0,.15);
+ border-radius:16px;
+ margin-top:16px;
+ box-shadow:0 12px 28px rgba(0,0,0,.18);
 }
 
-/* EMPTY */
 .empty{
- color:#999;
  text-align:center;
+ color:#94a3b8;
  padding:30px;
 }
 
@@ -184,53 +180,106 @@ img{
  text-align:center;
  margin-top:40px;
  font-size:13px;
- color:#777;
+ color:#94a3b8;
+}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+ body{flex-direction:column}
+ .sidebar{
+  position:relative;
+  width:100%;
+ }
+ .main{
+  margin-left:0;
+  padding:20px;
+ }
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<!-- SIDEBAR -->
+<div class="sidebar">
+ <h3>📚 Dokumentasi Referensi</h3>
 
- <div class="header">
-  <div class="icon-wrap">
-   <span class="book">📘</span>
-   <span class="gear">⚙️</span>
+ <a href="https://developers.facebook.com/docs/marketing-api/error-reference?locale=id_ID" target="_blank">
+  Kode Kesalahan<br><small>Marketing API</small>
+ </a>
+
+ <a href="https://developers.facebook.com/docs/whatsapp/on-premises/sunset" target="_blank">
+  Catatan Perubahan<br><small>On-Premises API</small>
+ </a>
+
+ <a href="https://developers.facebook.com/docs/graph-api/guides/error-handling" target="_blank">
+  Penanganan Kesalahan<br><small>Graph API</small>
+ </a>
+
+ <a href="https://developers.facebook.com/docs/messenger-platform/error-codes/" target="_blank">
+  Error Code<br><small>Platform Messenger</small>
+ </a>
+
+ <a href="https://developers.facebook.com/documentation/business-messaging/whatsapp/support/error-codes" target="_blank">
+  Kode Kesalahan<br><small>Cloud API WhatsApp</small>
+ </a>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+ <div class="container">
+
+  <div class="header">
+   <div class="icon-wrap">📘⚙️</div>
+   <h1>Issue Tracker Helpdesk</h1>
+   <p>Pusat solusi internal</p>
+   <div class="datetime" id="datetime"></div>
   </div>
-  <h1>Issue Tracker Helpdesk</h1>
-  <p>Pusat solusi internal</p>
- </div>
 
- <div class="search-wrap">
-  <input id="search" placeholder="Cari issue atau error...">
-  <div class="search-icon">🔍</div>
- </div>
+  <div class="search-wrap">
+   <input id="search" placeholder="Cari issue atau error...">
+  </div>
 
- <div id="list" class="empty">
-  Ketik kata kunci untuk mencari issue
- </div>
+  <div id="list" class="empty">
+   Ketik kata kunci untuk mencari issue
+  </div>
 
- <div class="footer">
-  © Helpdesk <span id="year"></span>
- </div>
+  <div class="footer">
+   © Helpdesk <span id="year"></span>
+  </div>
 
+ </div>
 </div>
 
 <script>
 document.getElementById("year").textContent=new Date().getFullYear();
 
-/* GOOGLE SHEET CSV */
-const SHEET_URL =
-"https://docs.google.com/spreadsheets/d/e/2PACX-1vQCLXvz4_F7EfUppPoKWSKQawlesCjiYHhceQCIEDoV8ntbDjFrvKUorP416AGydpWYmxWlOLA3b1JL/pub?gid=0&single=true&output=csv&t="+Date.now();
+/* DATETIME JAKARTA */
+function updateTime(){
+ const now=new Date();
+ document.getElementById("datetime").textContent=
+  now.toLocaleString("id-ID",{
+   weekday:"long",
+   year:"numeric",
+   month:"long",
+   day:"numeric",
+   hour:"2-digit",
+   minute:"2-digit",
+   second:"2-digit",
+   timeZone:"Asia/Jakarta"
+  })+" WIB";
+}
+setInterval(updateTime,1000);
+updateTime();
+
+/* GOOGLE SHEET */
+const SHEET_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vQCLXvz4_F7EfUppPoKWSKQawlesCjiYHhceQCIEDoV8ntbDjFrvKUorP416AGydpWYmxWlOLA3b1JL/pub?gid=0&single=true&output=csv&t="+Date.now();
 
 let issues=[];
 
-/* LOAD DATA */
 Papa.parse(SHEET_URL,{
  download:true,
  header:true,
- skipEmptyLines:true,
  complete:r=>{
   issues=r.data.map(x=>({
    issue:(x.issue||"").trim(),
@@ -240,63 +289,47 @@ Papa.parse(SHEET_URL,{
  }
 });
 
-/* newline -> <br> */
 const nl=t=>t.replace(/\n/g,"<br>");
 
-/* RENDER */
 function render(data){
  const list=document.getElementById("list");
  list.innerHTML="";
-
  if(!data.length){
   list.innerHTML="<div class='empty'>Issue tidak ditemukan</div>";
   return;
  }
-
  data.forEach(item=>{
   const wrap=document.createElement("div");
   wrap.className="issue-item";
 
-  const h=document.createElement("div");
-  h.className="issue-header";
-  h.innerHTML=`${item.issue}<span class="arrow">›</span>`;
-
-  const d=document.createElement("div");
-  d.className="issue-detail";
-  d.innerHTML=`
-   <div class="section">
-    <h4>Solusi</h4>
-    ${nl(item.solusi)||"-"}
+  wrap.innerHTML=`
+   <div class="issue-header">${item.issue}</div>
+   <div class="issue-detail">
+    <div class="section">
+     <h4>Solusi</h4>
+     ${nl(item.solusi)}
+    </div>
+    ${
+     item.image_id && item.image_id!=="kosong"
+     ?`<img src="https://drive.google.com/thumbnail?id=${item.image_id}&sz=w1200">`
+     :""
+    }
    </div>
-   ${
-    item.image_id && item.image_id!=="kosong"
-    ?`<img src="https://drive.google.com/thumbnail?id=${item.image_id}&sz=w1200">`
-    :""
-   }
   `;
 
-  h.onclick=()=>{
-   document.querySelectorAll(".issue-item").forEach(i=>{
-    i.classList.remove("open");
-    i.querySelector(".issue-detail").style.display="none";
-   });
-
-   wrap.classList.add("open");
-   d.style.display="block";
+  wrap.querySelector(".issue-header").onclick=()=>{
+   const d=wrap.querySelector(".issue-detail");
+   d.style.display=d.style.display==="block"?"none":"block";
   };
 
-  wrap.appendChild(h);
-  wrap.appendChild(d);
   list.appendChild(wrap);
  });
 }
 
-/* SEARCH */
 document.getElementById("search").addEventListener("input",e=>{
  const k=e.target.value.toLowerCase().trim();
  if(!k){
-  document.getElementById("list").innerHTML=
-   "<div class='empty'>Ketik kata kunci untuk mencari issue</div>";
+  document.getElementById("list").innerHTML="<div class='empty'>Ketik kata kunci untuk mencari issue</div>";
   return;
  }
  render(issues.filter(i=>i.issue.toLowerCase().includes(k)));
