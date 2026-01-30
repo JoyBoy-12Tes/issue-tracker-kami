@@ -4,20 +4,15 @@
 <meta charset="UTF-8">
 <title>Issue Tracker Helpdesk</title>
 
-<!-- GOOGLE FONTS -->
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-
-<!-- PAPAPARSE -->
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 
 <style>
-/* ================= ROOT ================= */
 :root{
-  --blue-dark:#1e3a8a;
-  --blue:#3b82f6;
+  --blue-dark:#1e40af;
+  --blue:#2563eb;
   --blue-light:#60a5fa;
-  --bg:#f8fafc;
-  --soft:#f1f5f9;
+  --soft:#eef2ff;
   --text:#334155;
   --dark:#020617;
 }
@@ -25,237 +20,190 @@
 *{box-sizing:border-box}
 
 body{
-  margin:0;
-  font-family:"Inter",sans-serif;
-  background:linear-gradient(135deg,#e0f2fe,#f8fafc);
-  color:var(--text);
-  display:flex;
+margin:0;
+font-family:"Inter",sans-serif;
+background:linear-gradient(135deg,#dbeafe,#f8fafc);
+color:var(--text);
+display:flex;
 }
 
-/* ================= SIDEBAR ================= */
+/* SIDEBAR */
 .sidebar{
-  width:280px;
-  background:linear-gradient(180deg,#1e3a8a,#1d4ed8);
-  color:#fff;
-  padding:28px 22px;
-  position:fixed;
-  inset:0 auto 0 0;
-  box-shadow:8px 0 30px rgba(0,0,0,.35);
+width:280px;
+background:linear-gradient(180deg,#1e3a8a,#2563eb);
+color:#fff;
+padding:28px 22px;
+position:fixed;
+inset:0 auto 0 0;
+box-shadow:8px 0 30px rgba(0,0,0,.35);
 }
 
 .sidebar h3{
-  font-family:"Space Grotesk",sans-serif;
-  font-size:13px;
-  letter-spacing:.6px;
-  margin-bottom:18px;
-  opacity:.9;
+font-family:"Space Grotesk",sans-serif;
+font-size:13px;
+letter-spacing:.6px;
+margin-bottom:18px;
+opacity:.9;
 }
 
 .sidebar a{
-  display:block;
-  padding:14px 16px;
-  margin-bottom:10px;
-  border-radius:12px;
-  color:#fff;
-  text-decoration:none;
-  font-size:14px;
-  background:rgba(255,255,255,.12);
-  transition:.3s;
+display:block;
+padding:14px 16px;
+margin-bottom:12px;
+border-radius:14px;
+color:#fff;
+text-decoration:none;
+font-size:14px;
+background:rgba(255,255,255,.18);
+transition:.25s;
+box-shadow:inset 0 0 0 1px rgba(255,255,255,.15);
 }
 
 .sidebar a:hover{
-  background:rgba(255,255,255,.25);
-  transform:translateX(6px);
+background:rgba(255,255,255,.35);
+transform:translateX(6px) scale(1.03);
 }
 
-/* ================= MAIN ================= */
+/* MAIN */
 .main{
-  margin-left:280px;
-  width:100%;
-  padding:36px;
+margin-left:280px;
+width:100%;
+padding:36px;
 }
 
-/* ================= CONTAINER ================= */
 .container{
-  max-width:1100px;
-  margin:auto;
-  background:#fff;
-  border-radius:26px;
-  padding:34px;
-  box-shadow:0 30px 70px rgba(2,6,23,.18);
+max-width:1100px;
+margin:auto;
+background:#fff;
+border-radius:26px;
+padding:34px;
+box-shadow:0 30px 70px rgba(2,6,23,.18);
 }
 
-/* ================= HEADER ================= */
+/* HEADER */
 .header{
-  position:relative;
-  border-radius:22px;
-  padding:40px 20px 36px;
-  background:
-    linear-gradient(180deg,var(--blue-light),var(--blue)),
-    radial-gradient(circle at top,rgba(255,255,255,.35),transparent 60%);
-  color:#fff;
-  text-align:center;
-  font-family:"Space Grotesk",sans-serif;
-  overflow:hidden;
+border-radius:22px;
+padding:40px 20px 36px;
+background:linear-gradient(135deg,#60a5fa,#3b82f6,#2563eb);
+color:#fff;
+text-align:center;
+font-family:"Space Grotesk",sans-serif;
+box-shadow:0 25px 60px rgba(37,99,235,.45);
 }
 
-/* ================= LOGO HEADER ================= */
 .header-logo{
-  width:200px;
-  height:auto;
-  margin-bottom:16px;
-  animation: floatRotateLogo 4s ease-in-out infinite;
+width:200px;
+margin-bottom:6px;
+animation:floatRotateLogo 4s ease-in-out infinite;
+filter:drop-shadow(0 10px 25px rgba(0,0,0,.35));
 }
 
 @keyframes floatRotateLogo{
-  0%,100%{ transform: translateY(0) rotate(0deg);}
-  25%{ transform: translateY(-5px) rotate(-2deg);}
-  50%{ transform: translateY(-10px) rotate(3deg);}
-  75%{ transform: translateY(-5px) rotate(-1deg);}
+0%,100%{transform:translateY(0)}
+50%{transform:translateY(-10px)}
 }
 
 .header h1{
-  margin:8px 0 4px;
-  font-size:34px;
+margin-top:6px;
+font-size:34px;
 }
 
-.header p{
-  margin:0;
-  opacity:.9;
-}
+.datetime{opacity:.85}
 
-.datetime{
-  margin-top:10px;
-  font-size:14px;
-  opacity:.85;
-}
-
-/* ================= SEARCH ================= */
-.search-wrap{
-  margin:34px 0;
-}
+/* SEARCH */
+.search-wrap{margin:34px 0}
 
 .search-wrap input{
-  width:100%;
-  padding:18px 22px;
-  border-radius:18px;
-  border:1px solid #bfdbfe;
-  font-size:15px;
-  outline:none;
+width:100%;
+padding:18px 22px;
+border-radius:18px;
+border:1px solid #bfdbfe;
+font-size:15px;
 }
 
 .search-wrap input:focus{
-  border-color:var(--blue);
-  box-shadow:0 0 0 5px rgba(59,130,246,.25);
+border-color:var(--blue);
+box-shadow:0 0 0 5px rgba(59,130,246,.25);
 }
 
-/* ================= ISSUE ================= */
+/* ISSUE */
 .issue-item{
-  margin-bottom:22px;
-  border-radius:20px;
-  background:#fff;
-  box-shadow:0 14px 30px rgba(2,6,23,.12);
-  overflow:hidden;
+margin-bottom:22px;
+border-radius:20px;
+background:#fff;
+box-shadow:0 14px 30px rgba(2,6,23,.12);
+overflow:hidden;
+transition:.25s;
+}
+
+.issue-item:hover{
+transform:translateY(-4px);
+box-shadow:0 20px 40px rgba(2,6,23,.18);
 }
 
 .issue-header{
-  padding:22px 26px;
-  cursor:pointer;
-  font-weight:600;
-  color:var(--dark);
+padding:22px 26px;
+cursor:pointer;
+font-weight:600;
 }
 
-.issue-header:hover{
-  background:var(--soft);
-}
+.issue-header:hover{background:var(--soft)}
 
 .issue-detail{
-  display:none;
-  padding:26px;
-  background:#f8fbff;
-  border-top:1px dashed #bae6fd;
-  line-height:1.8;
-}
-
-.section h4{
-  margin:0 0 10px;
-  font-family:"Space Grotesk",sans-serif;
-  color:var(--blue-dark);
+display:none;
+padding:26px;
+background:#f8fbff;
+border-top:1px dashed #bae6fd;
+line-height:1.8;
 }
 
 .issue-detail img{
-  width:100%;
-  border-radius:18px;
-  margin-top:18px;
-  box-shadow:0 14px 32px rgba(2,6,23,.25);
+width:100%;
+border-radius:18px;
+margin-top:18px;
+box-shadow:0 14px 32px rgba(2,6,23,.25);
 }
 
-/* EMPTY */
-.empty{
-  text-align:center;
-  color:#64748b;
-  padding:36px;
-}
+.empty{text-align:center;color:#64748b;padding:36px}
+.footer{text-align:center;margin-top:48px;font-size:13px;color:#64748b}
 
-/* FOOTER */
-.footer{
-  text-align:center;
-  margin-top:48px;
-  font-size:13px;
-  color:#64748b;
-}
-
-/* RESPONSIVE */
 @media(max-width:900px){
-  body{flex-direction:column}
-  .sidebar{position:relative;width:100%}
-  .main{margin-left:0}
+body{flex-direction:column}
+.sidebar{position:relative;width:100%}
+.main{margin-left:0}
 }
 </style>
 </head>
 
 <body>
 
-<!-- SIDEBAR -->
 <div class="sidebar">
-  <h3>DOKUMENTASI & REPORT</h3>
-  <a href="https://developers.facebook.com/docs/marketing-api/error-reference?locale=id_ID" target="_blank">Marketing API Error</a>
-  <a href="https://developers.facebook.com/docs/whatsapp/on-premises/sunset" target="_blank">WhatsApp On-Prem API</a>
-  <a href="https://developers.facebook.com/docs/graph-api/guides/error-handling" target="_blank">Graph API Error Handling</a>
-  <a href="https://developers.facebook.com/docs/messenger-platform/error-codes/" target="_blank">Messenger Error Codes</a>
-  <a href="https://developers.facebook.com/documentation/business-messaging/whatsapp/support/error-codes" target="_blank">Cloud API WhatsApp</a>
-  <a href="https://docs.google.com/presentation/d/11juAD4KUHTNJ78kRXdotFl3rBwXIyRRU/edit?usp=sharing" target="_blank">📊 Report PPT</a>
+<h3>DOKUMENTASI & REPORT</h3>
+<a href="https://developers.facebook.com/docs/marketing-api/error-reference?locale=id_ID" target="_blank">Marketing API Error</a>
+<a href="https://developers.facebook.com/docs/whatsapp/on-premises/sunset" target="_blank">WhatsApp On-Prem API</a>
+<a href="https://developers.facebook.com/docs/graph-api/guides/error-handling" target="_blank">Graph API Error Handling</a>
+<a href="https://developers.facebook.com/docs/messenger-platform/error-codes/" target="_blank">Messenger Error Codes</a>
+<a href="https://developers.facebook.com/documentation/business-messaging/whatsapp/support/error-codes" target="_blank">Cloud API WhatsApp</a>
+<a href="https://docs.google.com/presentation/d/11juAD4KUHTNJ78kRXdotFl3rBwXIyRRU/edit?usp=sharing" target="_blank">📊 Report PPT</a>
 </div>
 
-<!-- MAIN -->
 <div class="main">
 <div class="container">
 
-<!-- HEADER -->
 <div class="header">
-
-<!-- LOGO DRIVE (SATU-SATUNYA PERUBAHAN) -->
-<img src="https://drive.google.com/thumbnail?id=1SINqv3envug8sIa6E9wtBMTZSF-NkaxY&sz=w400"
-     alt="Logo" class="header-logo">
-
+<img src="https://drive.google.com/thumbnail?id=1SINqv3envug8sIa6E9wtBMTZSF-NkaxY&sz=w400" class="header-logo">
 <h1>Issue Tracker Helpdesk</h1>
 <p>Pusat Solusi Internal</p>
 <div class="datetime" id="datetime"></div>
-
 </div>
 
-<!-- SEARCH -->
 <div class="search-wrap">
-  <input id="search" placeholder="Cari issue atau error...">
+<input id="search" placeholder="Cari issue atau error...">
 </div>
 
-<div id="list" class="empty">
-  Ketik kata kunci untuk mencari issue
-</div>
+<div id="list" class="empty">Ketik kata kunci untuk mencari issue</div>
 
-<div class="footer">
-  © Helpdesk <span id="year"></span>
-</div>
+<div class="footer">© Helpdesk <span id="year"></span></div>
 
 </div>
 </div>
@@ -264,74 +212,55 @@ body{
 document.getElementById("year").textContent=new Date().getFullYear();
 
 function updateTime(){
-  document.getElementById("datetime").textContent=
-    new Date().toLocaleString("id-ID",{
-      weekday:"long",year:"numeric",month:"long",day:"numeric",
-      hour:"2-digit",minute:"2-digit",second:"2-digit",
-      timeZone:"Asia/Jakarta"
-    })+" WIB";
+document.getElementById("datetime").textContent=
+new Date().toLocaleString("id-ID",{weekday:"long",year:"numeric",month:"long",day:"numeric",hour:"2-digit",minute:"2-digit",second:"2-digit",timeZone:"Asia/Jakarta"})+" WIB";
 }
 setInterval(updateTime,1000);updateTime();
 
 const SHEET_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vQCLXvz4_F7EfUppPoKWSKQawlesCjiYHhceQCIEDoV8ntbDjFrvKUorP416AGydpWYmxWlOLA3b1JL/pub?gid=0&single=true&output=csv";
 
 let issues=[];
-
 Papa.parse(SHEET_URL,{
-  download:true,
-  header:true,
-  complete:r=>{
-    issues=r.data
-      .map(x=>({
-        issue:(x.issue||"").trim(),
-        solusi:(x.solusi||"").trim(),
-        image_id:(x.image_id||"").trim()
-      }))
-      .filter(i=>i.issue);
-  }
+download:true,
+header:true,
+complete:r=>{
+issues=r.data.map(x=>({
+issue:(x.issue||"").trim(),
+solusi:(x.solusi||"").trim(),
+image_id:(x.image_id||"").trim()
+})).filter(i=>i.issue);
+}
 });
 
 const nl=t=>t.replace(/\n/g,"<br>");
 
 function render(data){
-  const list=document.getElementById("list");
-  list.innerHTML="";
-  if(!data.length){
-    list.innerHTML="<div class='empty'>Issue tidak ditemukan</div>";
-    return;
-  }
-  data.forEach(item=>{
-    const wrap=document.createElement("div");
-    wrap.className="issue-item";
-    wrap.innerHTML=`
-      <div class="issue-header">${item.issue}</div>
-      <div class="issue-detail">
-        <div class="section">
-          <h4>Solusi</h4>
-          ${nl(item.solusi)}
-        </div>
-        ${item.image_id && item.image_id!=="kosong"
-          ? `<img src="https://drive.google.com/thumbnail?id=${item.image_id}&sz=w1200">`
-          : ""}
-      </div>`;
-    wrap.querySelector(".issue-header").onclick=()=>{
-      document.querySelectorAll(".issue-detail").forEach(d=>{
-        if(d!==wrap.querySelector(".issue-detail")) d.style.display="none";
-      });
-      const d=wrap.querySelector(".issue-detail");
-      d.style.display=d.style.display==="block"?"none":"block";
-    };
-    list.appendChild(wrap);
-  });
+const list=document.getElementById("list");
+list.innerHTML="";
+if(!data.length){list.innerHTML="<div class='empty'>Issue tidak ditemukan</div>";return;}
+data.forEach(item=>{
+const wrap=document.createElement("div");
+wrap.className="issue-item";
+wrap.innerHTML=`
+<div class="issue-header">${item.issue}</div>
+<div class="issue-detail">
+<h4>Solusi</h4>
+${nl(item.solusi)}
+${item.image_id&&item.image_id!=="kosong"?`<img src="https://drive.google.com/thumbnail?id=${item.image_id}&sz=w1200">`:""}
+</div>`;
+wrap.querySelector(".issue-header").onclick=()=>{
+document.querySelectorAll(".issue-detail").forEach(d=>{if(d!==wrap.querySelector(".issue-detail"))d.style.display="none"});
+const d=wrap.querySelector(".issue-detail");
+d.style.display=d.style.display==="block"?"none":"block";
+};
+list.appendChild(wrap);
+});
 }
 
 document.getElementById("search").addEventListener("input",e=>{
-  const k=e.target.value.toLowerCase().trim();
-  if(!k){
-    document.getElementById("list").innerHTML="<div class='empty'>Ketik kata kunci untuk mencari issue</div>";
-    return;
-  }
-  render(issues.filter(i=>i.issue.toLowerCase().includes(k)));
+const k=e.target.value.toLowerCase().trim();
+if(!k){document.getElementById("list").innerHTML="<div class='empty'>Ketik kata kunci untuk mencari issue</div>";return;}
+render(issues.filter(i=>i.issue.toLowerCase().includes(k)));
 });
 </script>
 
