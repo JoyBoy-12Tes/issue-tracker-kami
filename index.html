@@ -10,9 +10,10 @@
     <style>
         :root {
             --primary: #0ea5e9;
-            --sidebar-bg: #2d3748;
-            --body-bg: #ebf1f5;
-            --text-main: #2d3748;
+            --primary-dark: #0369a1;
+            --sidebar-bg: #1e293b;
+            --body-bg: #f1f5f9;
+            --text-main: #1e293b;
             --accent-green: #10b981;
         }
 
@@ -24,7 +25,6 @@
             background: var(--body-bg);
             display: flex;
             color: var(--text-main);
-            min-height: 100vh; /* Pastikan body mengisi tinggi viewport */
         }
 
         /* --- SIDEBAR --- */
@@ -37,15 +37,17 @@
             z-index: 100;
             display: flex;
             flex-direction: column;
+            box-shadow: 4px 0 10px rgba(0,0,0,0.05);
         }
 
         .sidebar h3 {
             font-size: 11px;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: #a0aec0;
+            letter-spacing: 2px;
+            color: var(--primary);
             margin-bottom: 25px;
             padding-left: 15px;
+            font-weight: 700;
         }
 
         .sidebar a {
@@ -54,19 +56,20 @@
             margin-bottom: 8px;
             border-radius: 10px;
             text-decoration: none;
-            color: #cbd5e1;
+            color: #94a3b8;
             font-size: 13px;
-            transition: 0.3s;
+            transition: 0.3s ease;
         }
 
         .sidebar a:hover {
-            background: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.05);
             color: white;
+            transform: translateX(5px);
         }
 
         .ppt-link {
-            margin-top: auto; /* Dorong ke bawah */
-            background: rgba(16, 185, 129, 0.1);
+            margin-top: auto;
+            background: rgba(16, 185, 129, 0.1) !important;
             color: var(--accent-green) !important;
             border: 1px solid rgba(16, 185, 129, 0.3);
             font-weight: 600;
@@ -78,7 +81,7 @@
             color: white !important;
         }
 
-        /* --- MAIN CONTENT AREA --- */
+        /* --- MAIN --- */
         .main {
             margin-left: 260px;
             width: 100%;
@@ -93,15 +96,13 @@
         /* --- HEADER CARD --- */
         .header-card {
             background: white;
-            border-radius: 20px;
-            padding: 40px;
+            border-radius: 24px;
+            padding: 50px 40px;
             text-align: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.05), 0 10px 10px -5px rgba(0,0,0,0.01);
             margin-bottom: 30px;
             position: relative;
-            display: flex; /* Menggunakan flexbox untuk layout di dalam header-card */
-            flex-direction: column; /* Tata elemen secara kolom */
-            align-items: center; /* Pusatkan horizontal */
+            border: 1px solid rgba(255,255,255,0.8);
         }
 
         .datetime {
@@ -109,144 +110,132 @@
             top: 20px;
             right: 30px;
             font-size: 11px;
-            color: #a0aec0;
+            color: #94a3b8;
+            font-weight: 500;
         }
 
-        /* LOGO BARU (tanpa rotasi) */
-        .header-logo-container {
-            position: relative;
-            width: 150px; /* Atur lebar container logo */
-            height: 120px; /* Atur tinggi container logo */
-            margin-bottom: 10px; /* Jarak antara logo dan judul */
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        /* TYPOGRAPHY UPGRADE */
+        .header-card h1 { 
+            font-size: 42px; 
+            margin: 0; 
+            font-weight: 700;
+            letter-spacing: -1.5px;
+            /* Gradient Text */
+            background: linear-gradient(135deg, #0ea5e9 0%, #1e293b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.1;
         }
 
-        .header-logo {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            /* Tidak ada animasi atau clip-path karena tidak berputar */
+        .header-card p { 
+            color: #64748b; 
+            margin: 12px 0 0; 
+            font-size: 16px; 
+            font-weight: 400;
+            letter-spacing: 0.2px;
         }
 
-        /* Posisi teks judul dan deskripsi */
-        .header-text {
-            text-align: center;
+        .logo-under-text {
+            width: 200px;
+            height: auto;
+            margin: 30px auto 0;
+            display: block;
+            filter: drop-shadow(0 10px 15px rgba(14, 165, 233, 0.2));
+            transition: transform 0.3s ease;
         }
-
-        .header-card h1 {
-            font-size: 32px;
-            margin: 0; /* Hapus margin atas/bawah default */
-            color: #1a202c;
-            line-height: 1.2;
-        }
-
-        .header-card p {
-            color: #718096;
-            margin: 5px 0 0;
-            font-size: 14px;
+        
+        .logo-under-text:hover {
+            transform: translateY(-5px);
         }
 
         /* --- SEARCH BOX --- */
         .search-container {
             background: white;
-            border-radius: 12px;
+            border-radius: 16px;
             display: flex;
             align-items: center;
-            padding: 5px 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-            margin-bottom: 30px;
+            padding: 5px 25px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            margin-bottom: 35px;
+            border: 2px solid transparent;
+            transition: 0.3s;
+        }
+
+        .search-container:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.1);
         }
 
         .search-container input {
             border: none;
-            padding: 15px;
+            padding: 18px 10px;
             width: 100%;
-            font-size: 15px;
+            font-size: 16px;
             outline: none;
-            color: #4a5568;
+            background: transparent;
+            font-family: 'Poppins', sans-serif;
         }
 
         /* --- ISSUE LIST --- */
-        #list {
-            margin-top: 20px; /* Jarak dari search box */
-        }
         .issue-card {
             background: white;
-            border-radius: 12px;
-            margin-bottom: 15px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            border-radius: 16px;
+            margin-bottom: 16px;
             overflow: hidden;
-            border: 1px solid #edf2f7;
+            border: 1px solid #e2e8f0;
+            transition: 0.2s ease;
+        }
+
+        .issue-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);
         }
 
         .issue-trigger {
-            padding: 20px 25px;
+            padding: 22px 25px;
             cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
             font-weight: 600;
-            background: white;
-            transition: 0.2s;
-        }
-
-        .issue-trigger:hover {
-            background: #f7fafc;
-        }
-
-        .issue-trigger span:last-child {
-            color: #a0aec0;
-            font-size: 12px;
+            color: #334155;
         }
 
         .issue-content {
             max-height: 0;
             overflow: hidden;
-            transition: 0.3s ease-out;
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             padding: 0 25px;
-            background: #fdfdfd;
+            background: #f8fafc;
         }
 
         .issue-card.open .issue-content {
-            max-height: 1200px; /* Cukup besar untuk menampung konten */
-            padding: 20px 25px 30px;
-            border-top: 1px solid #edf2f7;
+            max-height: 1500px;
+            padding: 25px;
+            border-top: 1px solid #e2e8f0;
         }
 
-        .solusi-title {
-            color: var(--primary);
-            font-size: 11px;
+        .solusi-badge {
+            display: inline-block;
+            background: #e0f2fe;
+            color: var(--primary-dark);
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 10px;
             font-weight: 700;
             text-transform: uppercase;
-            margin-bottom: 10px;
-            display: block;
+            margin-bottom: 15px;
         }
 
-        .empty-state {
-            text-align: center;
-            padding: 50px;
-            color: #a0aec0;
-            font-size: 14px;
-        }
+        .empty-state { text-align: center; padding: 60px; color: #94a3b8; font-size: 15px; }
+        .footer { text-align: center; font-size: 12px; color: #94a3b8; margin: 50px 0; }
 
-        .footer {
-            text-align: center;
-            font-size: 12px;
-            color: #a0aec0;
-            margin-top: 40px;
-            padding-bottom: 30px;
-        }
-
-        /* --- MEDIA QUERIES --- */
         @media (max-width: 900px) {
             body { flex-direction: column; }
-            .sidebar { position: relative; width: 100%; height: auto; padding: 20px; }
+            .sidebar { position: relative; width: 100%; height: auto; }
             .main { margin-left: 0; padding: 20px; }
-            .header-card { padding: 30px 15px; }
-            .header-card h1 { font-size: 28px; }
-            .header-logo-container { width: 120px; height: 90px; }
+            .header-card h1 { font-size: 32px; }
         }
     </style>
 </head>
@@ -270,37 +259,32 @@
             <div class="header-card">
                 <div class="datetime" id="datetime"></div>
                 
-                <div class="header-logo-container">
-                    <img src="https://drive.google.com/thumbnail?id=1o9R9cPxRc_D3x1AeWsoiCxi4gnlKk_Ut&sz=w1000" class="header-logo">
-                </div>
+                <h1>Issue Tracker<br>Helpdesk</h1>
+                <p>Solusi Cepat & Panduan Teknis Kendala Sistem</p>
 
-                <div class="header-text">
-                    <h1>Issue Tracker Helpdesk</h1>
-                    <p>Pusat Solusi Teknis & Kendala Sistem</p>
-                </div>
+                <img src="https://drive.google.com/thumbnail?id=1o9R9cPxRc_D3x1AeWsoiCxi4gnlKk_Ut&sz=w1000" class="logo-under-text">
             </div>
 
             <div class="search-container">
-                <span style="color: #a0aec0; margin-right: 10px;">🔍</span>
-                <input id="search" placeholder="Cari masalah...">
+                <span style="font-size: 18px;">🔍</span>
+                <input id="search" placeholder="Cari solusi masalah Anda...">
             </div>
 
             <div id="list">
-                <div class="empty-state">Masukkan kata kunci untuk mencari database issue.</div>
+                <div class="empty-state">Ketik kata kunci (misal: "API" atau "Error") untuk memulai pencarian.</div>
             </div>
 
             <div class="footer">
-                &copy; <span id="year"></span> Helpdesk Portal System
+                &copy; <span id="year"></span> <b>Helpdesk Portal System</b> • Version 2.0
             </div>
         </div>
     </div>
 
     <script>
         document.getElementById("year").textContent = new Date().getFullYear();
-        
         function updateTime() {
             document.getElementById("datetime").textContent = new Date().toLocaleString("id-ID", {
-                weekday: "short", day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit", timeZone: "Asia/Jakarta"
+                weekday: "long", day: "2-digit", month: "long", hour: "2-digit", minute: "2-digit", timeZone: "Asia/Jakarta"
             }) + " WIB";
         }
         setInterval(updateTime, 1000); updateTime();
@@ -323,7 +307,7 @@
             const list = document.getElementById("list");
             list.innerHTML = "";
             if (!data.length) {
-                list.innerHTML = "<div class='empty-state'>Maaf, data tidak ditemukan.</div>";
+                list.innerHTML = "<div class='empty-state'>Maaf, kami tidak menemukan solusi untuk kata kunci tersebut.</div>";
                 return;
             }
             data.forEach(item => {
@@ -332,13 +316,17 @@
                 wrap.innerHTML = `
                     <div class="issue-trigger"><span>${item.issue}</span><span>▼</span></div>
                     <div class="issue-content">
-                        <span style="color:var(--primary); font-size:11px; font-weight:700; text-transform:uppercase;">Langkah Penyelesaian</span>
-                        <div style="line-height:1.7; font-size:14px; color:#4a5568; margin-top:10px;">
+                        <span class="solusi-badge">Panduan Solusi</span>
+                        <div style="line-height:1.8; font-size:14px; color:#475569;">
                             ${item.solusi.replace(/\n/g, "<br>")}
                         </div>
-                        ${item.image_id ? `<img src="https://drive.google.com/thumbnail?id=${item.image_id}&sz=w1200" style="width:100%; border-radius:10px; margin-top:20px; border:1px solid #edf2f7;">` : ""}
+                        ${item.image_id ? `<img src="https://drive.google.com/thumbnail?id=${item.image_id}&sz=w1200" style="width:100%; border-radius:12px; margin-top:20px; border:1px solid #e2e8f0; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">` : ""}
                     </div>`;
-                wrap.querySelector(".issue-trigger").onclick = () => wrap.classList.toggle("open");
+                wrap.querySelector(".issue-trigger").onclick = () => {
+                    const isOpen = wrap.classList.contains("open");
+                    document.querySelectorAll(".issue-card").forEach(c => c.classList.remove("open"));
+                    if (!isOpen) wrap.classList.add("open");
+                };
                 list.appendChild(wrap);
             });
         }
@@ -346,7 +334,7 @@
         document.getElementById("search").addEventListener("input", e => {
             const k = e.target.value.toLowerCase();
             if (!k) {
-                document.getElementById("list").innerHTML = "<div class='empty-state'>Masukkan kata kunci untuk mencari database issue.</div>";
+                document.getElementById("list").innerHTML = "<div class='empty-state'>Ketik kata kunci (misal: \"API\" atau \"Error\") untuk memulai pencarian.</div>";
                 return;
             }
             render(issues.filter(i => i.issue.toLowerCase().includes(k) || i.solusi.toLowerCase().includes(k)));
