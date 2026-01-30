@@ -9,14 +9,6 @@
 
 <style>
 
-:root{
---primary:#1fb6b2;
---dark:#0f766e;
---soft:#e6fffa;
-}
-
-*{box-sizing:border-box}
-
 body{
 margin:0;
 font-family:Poppins,sans-serif;
@@ -28,34 +20,20 @@ display:flex;
 
 .sidebar{
 width:260px;
-background:linear-gradient(180deg,#1fb6b2,#0d9488);
+background:linear-gradient(180deg,#21c7bd,#0fa5a0);
 padding:26px 20px;
 position:fixed;
 height:100%;
-color:white;
-}
-
-.sidebar h3{
-font-size:12px;
-opacity:.8;
-margin-bottom:14px;
 }
 
 .sidebar a{
 display:block;
-padding:12px 14px;
+padding:12px;
 margin-bottom:10px;
-border-radius:12px;
-text-decoration:none;
-color:#064e4b;
+border-radius:10px;
 background:white;
-transition:.3s;
-font-size:14px;
-}
-
-.sidebar a:hover{
-background:#ccfbf1;
-transform:translateX(5px);
+text-decoration:none;
+color:#0f766e;
 }
 
 /* MAIN */
@@ -63,7 +41,7 @@ transform:translateX(5px);
 .main{
 margin-left:260px;
 width:100%;
-padding:28px;
+padding:25px;
 }
 
 .container{
@@ -74,39 +52,31 @@ margin:auto;
 /* HEADER */
 
 .header{
-background:linear-gradient(135deg,#1fb6b2,#5eead4);
-border-radius:26px;
-padding:30px 20px 26px;
+background:#25cfc6;
+border-radius:24px;
+padding:18px 20px 18px; /* DIPERKECIL */
 text-align:center;
 color:white;
-position:relative;
-box-shadow:0 15px 40px rgba(0,0,0,.15);
-}
-
-.datetime{
-position:absolute;
-top:16px;
-right:20px;
-font-size:12px;
-opacity:.9;
+box-shadow:0 15px 35px rgba(0,0,0,.15);
 }
 
 /* LOGO */
 
 .header-logo{
-width:220px;
-margin-bottom:6px;   /* DIPERKECIL */
+width:240px;
+margin-bottom:4px; /* SUPER MEPEPET */
 }
 
+/* TITLE */
+
 .header h1{
-margin:4px 0 0;     /* DIPERKECIL */
+margin:0; /* HAPUS DEFAULT */
 font-size:30px;
 font-weight:700;
-letter-spacing:.5px;
 }
 
 .header p{
-margin-top:4px;
+margin:2px 0 0; /* DIPEPET */
 font-size:14px;
 opacity:.9;
 }
@@ -114,65 +84,50 @@ opacity:.9;
 /* SEARCH */
 
 .search-wrap{
-margin:25px 0;
+margin:20px 0;
 }
 
 .search-wrap input{
 width:100%;
-padding:15px 18px;
-border-radius:16px;
+padding:14px;
+border-radius:14px;
 border:1px solid #ccfbf1;
-font-size:14px;
-}
-
-.search-wrap input:focus{
-outline:none;
-box-shadow:0 0 0 3px rgba(31,182,178,.3);
 }
 
 /* ISSUE */
 
 .issue-item{
 background:white;
-border-radius:16px;
-margin-bottom:16px;
-box-shadow:0 8px 20px rgba(0,0,0,.08);
+border-radius:14px;
+margin-bottom:14px;
+box-shadow:0 6px 18px rgba(0,0,0,.08);
 overflow:hidden;
 }
 
 .issue-header{
-padding:16px 20px;
+padding:14px 18px;
 font-weight:600;
 cursor:pointer;
 color:#0f766e;
 }
 
-.issue-header:hover{
-background:#ecfeff;
-}
-
 .issue-detail{
 max-height:0;
 overflow:hidden;
-transition:.4s ease;
+transition:.4s;
+padding:0 18px;
 background:#f8fffd;
-padding:0 20px;
 }
 
 .issue-item.open .issue-detail{
-padding:20px;
+padding:18px;
 max-height:800px;
 }
 
 .issue-detail img{
 width:100%;
-border-radius:14px;
-margin-top:12px;
-}
-
-.section h4{
-margin:0 0 6px;
-color:#0f766e;
+border-radius:12px;
+margin-top:10px;
 }
 
 .empty{
@@ -183,7 +138,7 @@ color:#64748b;
 
 .footer{
 text-align:center;
-margin-top:40px;
+margin-top:30px;
 font-size:12px;
 color:#64748b;
 }
@@ -203,15 +158,11 @@ body{flex-direction:column}
 
 <div class="sidebar">
 
-<h3>DOKUMENTASI</h3>
-
-<a href="https://developers.facebook.com/docs/marketing-api/error-reference?locale=id_ID" target="_blank">Marketing API</a>
-<a href="https://developers.facebook.com/docs/whatsapp/on-premises/sunset" target="_blank">WhatsApp</a>
-<a href="https://developers.facebook.com/docs/graph-api/guides/error-handling" target="_blank">Graph API</a>
-<a href="https://developers.facebook.com/docs/messenger-platform/error-codes/" target="_blank">Messenger</a>
-<a href="https://developers.facebook.com/documentation/business-messaging/whatsapp/support/error-codes" target="_blank">Cloud API</a>
-
-<a href="https://docs.google.com/presentation/d/11juAD4KUHTNJ78kRXdotFl3rBwXIyRRU/edit?usp=sharing" target="_blank">📊 Report PPT</a>
+<a href="#">Marketing API</a>
+<a href="#">WhatsApp</a>
+<a href="#">Graph API</a>
+<a href="#">Messenger</a>
+<a href="#">Cloud API</a>
 
 </div>
 
@@ -219,8 +170,6 @@ body{flex-direction:column}
 <div class="container">
 
 <div class="header">
-
-<div class="datetime" id="datetime"></div>
 
 <img src="https://drive.google.com/thumbnail?id=1SINqv3envug8sIa6E9wtBMTZSF-NkaxY&sz=w600" class="header-logo">
 
@@ -238,25 +187,13 @@ Ketik kata kunci untuk mencari issue
 </div>
 
 <div class="footer">
-© Helpdesk <span id="year"></span>
+© Helpdesk
 </div>
 
 </div>
 </div>
 
 <script>
-
-document.getElementById("year").textContent=new Date().getFullYear();
-
-function updateTime(){
-document.getElementById("datetime").textContent=
-new Date().toLocaleString("id-ID",{
-weekday:"short",day:"2-digit",month:"short",
-hour:"2-digit",minute:"2-digit",
-timeZone:"Asia/Jakarta"
-})+" WIB";
-}
-setInterval(updateTime,1000);updateTime();
 
 const SHEET_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vQCLXvz4_F7EfUppPoKWSKQawlesCjiYHhceQCIEDoV8ntbDjFrvKUorP416AGydpWYmxWlOLA3b1JL/pub?gid=0&single=true&output=csv";
 
@@ -267,14 +204,12 @@ download:true,
 header:true,
 complete:r=>{
 issues=r.data.map(x=>({
-issue:(x.issue||"").trim(),
-solusi:(x.solusi||"").trim(),
-image_id:(x.image_id||"").trim()
+issue:x.issue||"",
+solusi:x.solusi||"",
+image_id:x.image_id||""
 })).filter(i=>i.issue);
 }
 });
-
-const nl=t=>t.replace(/\n/g,"<br>");
 
 function render(data){
 
@@ -294,10 +229,7 @@ wrap.className="issue-item";
 wrap.innerHTML=`
 <div class="issue-header">${item.issue}</div>
 <div class="issue-detail">
-<div class="section">
-<h4>Solusi</h4>
-${nl(item.solusi)}
-</div>
+${item.solusi.replace(/\n/g,"<br>")}
 ${item.image_id?`<img src="https://drive.google.com/thumbnail?id=${item.image_id}&sz=w1200">`:""}
 </div>`;
 
@@ -312,10 +244,6 @@ list.appendChild(wrap);
 
 document.getElementById("search").addEventListener("input",e=>{
 const k=e.target.value.toLowerCase();
-if(!k){
-document.getElementById("list").innerHTML="<div class='empty'>Ketik kata kunci untuk mencari issue</div>";
-return;
-}
 render(issues.filter(i=>i.issue.toLowerCase().includes(k)));
 });
 
