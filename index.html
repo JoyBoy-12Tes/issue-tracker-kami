@@ -9,11 +9,11 @@
 
     <style>
         :root {
-            --primary: #0f172a;    /* Navy Gelap */
-            --accent: #38bdf8;     /* Sky Blue */
-            --sidebar-bg: #1e293b; /* Dark Slate */
-            --body-bg: #f8fafc;    /* Off-White */
-            --text-main: #334155;
+            --primary: #0284c7;    /* Biru Cerah */
+            --bg-body: #f1f5f9;    /* Abu muda sangat cerah */
+            --sidebar-bg: #ffffff; /* Putih bersih */
+            --text-main: #1e293b;  /* Biru gelap solid */
+            --text-muted: #64748b;
         }
 
         * { box-sizing: border-box; }
@@ -21,47 +21,46 @@
         body {
             margin: 0;
             font-family: 'Poppins', sans-serif;
-            background: var(--body-bg);
+            background: var(--bg-body);
             display: flex;
             color: var(--text-main);
         }
 
-        /* --- SIDEBAR --- */
+        /* --- SIDEBAR (Putih & Minimalis) --- */
         .sidebar {
             width: 260px;
             background: var(--sidebar-bg);
             padding: 30px 20px;
             position: fixed;
             height: 100%;
-            box-shadow: 4px 0 20px rgba(0,0,0,0.1);
+            box-shadow: 2px 0 10px rgba(0,0,0,0.03);
             z-index: 100;
+            border-right: 1px solid #e2e8f0;
         }
 
         .sidebar h3 {
-            font-size: 11px;
-            letter-spacing: 1.2px;
-            color: var(--accent);
-            opacity: 0.8;
-            margin-bottom: 20px;
-            padding-left: 10px;
+            font-size: 12px;
+            letter-spacing: 1px;
+            color: var(--primary);
+            margin-bottom: 25px;
+            font-weight: 700;
         }
 
         .sidebar a {
             display: block;
-            padding: 12px 15px;
+            padding: 12px 16px;
             margin-bottom: 8px;
-            border-radius: 10px;
+            border-radius: 12px;
             text-decoration: none;
-            color: #cbd5e1;
+            color: var(--text-muted);
             font-size: 14px;
-            transition: 0.3s;
-            border: 1px solid transparent;
+            font-weight: 500;
+            transition: 0.2s;
         }
 
         .sidebar a:hover {
-            background: rgba(56, 189, 248, 0.1);
-            color: white;
-            border-color: rgba(56, 189, 248, 0.3);
+            background: #f0f9ff;
+            color: var(--primary);
             transform: translateX(5px);
         }
 
@@ -69,7 +68,7 @@
         .main {
             margin-left: 260px;
             width: 100%;
-            padding: 30px;
+            padding: 40px;
         }
 
         .container {
@@ -77,26 +76,14 @@
             margin: auto;
         }
 
-        /* --- HEADER (Ramping & Elegan) --- */
+        /* --- HEADER (Biru Langit & Pendek) --- */
         .header {
             position: relative;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            background: linear-gradient(135deg, #0ea5e9 0%, #38bdf8 100%);
             border-radius: 24px;
-            padding: 25px 20px; /* Padding diperkecil */
+            padding: 20px; /* Diperkecil sesuai request */
             text-align: center;
-            box-shadow: 0 15px 35px rgba(15, 23, 42, 0.15);
-            overflow: hidden;
-        }
-
-        /* Efek hiasan cahaya di header */
-        .header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(56,189,248,0.1) 0%, transparent 70%);
+            box-shadow: 0 10px 25px rgba(14, 165, 233, 0.15);
         }
 
         .datetime {
@@ -104,145 +91,151 @@
             top: 15px;
             right: 20px;
             font-size: 11px;
-            color: var(--accent);
+            color: white;
             font-weight: 500;
+            background: rgba(255,255,255,0.2);
+            padding: 4px 10px;
+            border-radius: 20px;
         }
 
         .header-logo {
-            width: 140px; /* Diperkecil agar proporsional */
-            margin-bottom: -5px; /* Mendekatkan ke tulisan */
-            filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.2));
-            animation: float 4s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
+            width: 110px; /* Lebih kecil & proporsional */
+            margin-bottom: 2px; /* Jarak sangat dekat ke tulisan */
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
         }
 
         .header h1 {
             margin: 0;
-            font-size: 26px;
+            font-size: 24px;
             font-weight: 700;
             color: white;
-            letter-spacing: -0.5px;
         }
 
         .header p {
-            margin: 2px 0 0;
-            color: #94a3b8;
+            margin: 0;
+            color: white;
+            opacity: 0.9;
             font-size: 13px;
+            font-weight: 400;
         }
 
-        /* --- SEARCH --- */
+        /* --- SEARCH BAR --- */
         .search-wrap {
             margin: 25px 0;
         }
 
         .search-wrap input {
             width: 100%;
-            padding: 16px 25px;
-            border-radius: 15px;
-            border: 1px solid #e2e8f0;
+            padding: 18px 25px;
+            border-radius: 18px;
+            border: 2px solid #e2e8f0;
             font-size: 15px;
             background: white;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
             transition: 0.3s;
+            font-family: inherit;
         }
 
         .search-wrap input:focus {
             outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.1);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.1);
         }
 
         /* --- ISSUE CARD --- */
         .issue-item {
             background: white;
-            border-radius: 16px;
-            margin-bottom: 15px;
-            border: 1px solid #f1f5f9;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-            transition: 0.3s;
+            border-radius: 18px;
+            margin-bottom: 12px;
+            border: 1px solid #e2e8f0;
+            overflow: hidden;
+            transition: 0.2s;
+        }
+
+        .issue-item:hover {
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
 
         .issue-header {
-            padding: 18px 22px;
+            padding: 20px 25px;
             font-weight: 600;
             cursor: pointer;
-            color: #1e293b;
+            color: var(--text-main);
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .issue-header:hover {
-            background: #f8fafc;
-            color: var(--accent);
-        }
-
         .issue-header::after {
-            content: '+';
-            font-size: 20px;
-            color: #94a3b8;
+            content: '→';
+            font-size: 18px;
+            color: var(--primary);
+            transition: 0.3s;
         }
 
         .issue-item.open .issue-header::after {
-            content: '−';
-            color: var(--accent);
+            transform: rotate(90deg);
         }
 
-        /* --- DETAIL --- */
+        /* --- DETAIL (Teks Tegak / Tidak Miring) --- */
         .issue-detail {
             max-height: 0;
             overflow: hidden;
-            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            background: #fff;
-            padding: 0 22px;
+            transition: 0.3s ease-out;
+            background: #fcfdfe;
+            padding: 0 25px;
+            font-style: normal; /* Memastikan tidak miring */
         }
 
         .issue-item.open .issue-detail {
-            padding: 0 22px 22px;
-            max-height: 1000px;
+            padding: 0 25px 25px;
+            max-height: 1200px;
             border-top: 1px solid #f1f5f9;
         }
 
         .issue-detail img {
             width: 100%;
-            border-radius: 12px;
-            margin-top: 15px;
+            border-radius: 16px;
+            margin-top: 20px;
             border: 1px solid #e2e8f0;
         }
 
         .section h4 {
-            margin: 15px 0 8px;
+            margin: 20px 0 10px;
             color: var(--primary);
-            font-size: 14px;
+            font-size: 13px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
+        }
+
+        .section div {
+            font-style: normal; /* Teks solusi tegak */
+            line-height: 1.7;
+            font-size: 14px;
+            color: #475569;
         }
 
         .empty {
             text-align: center;
-            padding: 60px 20px;
-            color: #94a3b8;
-            font-style: italic;
+            padding: 80px 20px;
+            color: var(--text-muted);
+            font-style: normal; /* Tidak miring */
+            font-size: 15px;
         }
 
         .footer {
             text-align: center;
-            margin-top: 40px;
+            margin-top: 50px;
             font-size: 12px;
-            color: #94a3b8;
-            padding-bottom: 20px;
+            color: var(--text-muted);
+            padding-bottom: 30px;
         }
 
-        /* --- MOBILE RESPONSIVE --- */
+        /* --- MOBILE --- */
         @media (max-width: 900px) {
             body { flex-direction: column; }
-            .sidebar { position: relative; width: 100%; height: auto; padding: 20px; }
+            .sidebar { position: relative; width: 100%; height: auto; border-right: none; border-bottom: 1px solid #e2e8f0; }
             .main { margin-left: 0; padding: 20px; }
-            .header { border-radius: 20px; }
         }
     </style>
 </head>
@@ -257,7 +250,7 @@
         <a href="https://developers.facebook.com/docs/messenger-platform/error-codes/" target="_blank">Messenger</a>
         <a href="https://developers.facebook.com/documentation/business-messaging/whatsapp/support/error-codes" target="_blank">Cloud API</a>
         
-        <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.05);">
+        <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #f1f5f9;">
             <a href="https://docs.google.com/presentation/d/11juAD4KUHTNJ78kRXdotFl3rBwXIyRRU/edit?usp=sharing" target="_blank">📊 Report PPT</a>
         </div>
     </div>
@@ -268,19 +261,19 @@
                 <div class="datetime" id="datetime"></div>
                 <img src="https://drive.google.com/thumbnail?id=1SINqv3envug8sIa6E9wtBMTZSF-NkaxY&sz=w600" class="header-logo">
                 <h1>Issue Tracker Helpdesk</h1>
-                <p>Pusat Solusi Internal</p>
+                <p>Pusat Solusi Internal Ivosights</p>
             </div>
 
             <div class="search-wrap">
-                <input id="search" placeholder="Cari masalah atau kode error...">
+                <input id="search" placeholder="Cari issue atau solusi...">
             </div>
 
             <div id="list" class="empty">
-                Silakan ketik kata kunci untuk mencari issue
+                Ketik kata kunci di atas untuk mencari solusi masalah.
             </div>
 
             <div class="footer">
-                &copy; <span id="year"></span> Helpdesk Team • Ivosights Solutions
+                &copy; <span id="year"></span> Helpdesk Team • Professional Solution
             </div>
         </div>
     </div>
@@ -321,7 +314,7 @@
             list.innerHTML = "";
 
             if (!data.length) {
-                list.innerHTML = "<div class='empty'>Issue tidak ditemukan. Coba kata kunci lain.</div>";
+                list.innerHTML = "<div class='empty'>Maaf, issue tidak ditemukan.</div>";
                 return;
             }
 
@@ -333,15 +326,13 @@
                     <div class="issue-header">${item.issue}</div>
                     <div class="issue-detail">
                         <div class="section">
-                            <h4>Solusi Terverifikasi</h4>
-                            <div style="line-height: 1.6;">${nl(item.solusi)}</div>
+                            <h4>Langkah Solusi</h4>
+                            <div>${nl(item.solusi)}</div>
                         </div>
-                        ${item.image_id ? `<img src="https://drive.google.com/thumbnail?id=${item.image_id}&sz=w1200" alt="Panduan Visual">` : ""}
+                        ${item.image_id ? `<img src="https://drive.google.com/thumbnail?id=${item.image_id}&sz=w1200">` : ""}
                     </div>`;
 
                 wrap.querySelector(".issue-header").onclick = () => {
-                    const isOpen = wrap.classList.contains("open");
-                    // Close other items if you want accordion effect, or just toggle:
                     wrap.classList.toggle("open");
                 };
 
@@ -352,11 +343,10 @@
         document.getElementById("search").addEventListener("input", e => {
             const k = e.target.value.toLowerCase();
             if (!k) {
-                document.getElementById("list").innerHTML = "<div class='empty'>Silakan ketik kata kunci untuk mencari issue</div>";
+                document.getElementById("list").innerHTML = "<div class='empty'>Ketik kata kunci di atas untuk mencari solusi masalah.</div>";
                 return;
             }
-            const filtered = issues.filter(i => i.issue.toLowerCase().includes(k) || i.solusi.toLowerCase().includes(k));
-            render(filtered);
+            render(issues.filter(i => i.issue.toLowerCase().includes(k) || i.solusi.toLowerCase().includes(k)));
         });
     </script>
 </body>
