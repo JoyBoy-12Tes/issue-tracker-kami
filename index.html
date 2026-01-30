@@ -99,55 +99,19 @@ body{
   overflow:hidden;
 }
 
-/* ICON STACK */
-.icon-wrap{
-  display:flex;
-  justify-content:center;
-  margin-bottom:14px;
-}
-
-.icon-stack{
-  position:relative;
-  width:130px;
-  height:110px;
-}
-
-/* ================= GEAR ================= */
-.gear{
-  position:absolute;
-  top:-6px;
-  right:-6px;
-  width:32px;
-  height:32px;
-  stroke:white;
-  opacity:.95;
-  animation:spin 5s linear infinite;
-}
-
-/* ANIMATIONS */
-@keyframes spin{
-  from{transform:rotate(0deg)}
-  to{transform:rotate(360deg)}
-}
-
-/* ================= BOOK ISOMETRIK + ANIMASI ================= */
-.book {
-  width:120px;
+/* ================= LOGO HEADER ================= */
+.header-logo{
+  width:100px;
   height:auto;
-  animation: floatIso 4s ease-in-out infinite, fadeInScale 1.2s ease forwards;
-  opacity:0;
+  margin-bottom:16px;
+  animation: floatRotateLogo 4s ease-in-out infinite;
 }
 
-@keyframes floatIso {
-  0%, 100% { transform: translateY(0) rotateX(2deg) rotateZ(0deg); }
-  25% { transform: translateY(-6px) rotateX(3deg) rotateZ(-2deg); }
-  50% { transform: translateY(-12px) rotateX(1deg) rotateZ(1deg); }
-  75% { transform: translateY(-6px) rotateX(2deg) rotateZ(-1deg); }
-}
-
-@keyframes fadeInScale {
-  0% { opacity:0; transform: scale(0.6) rotateX(0deg); }
-  100% { opacity:1; transform: scale(1) rotateX(0deg); }
+@keyframes floatRotateLogo{
+  0%,100%{ transform: translateY(0) rotate(0deg);}
+  25%{ transform: translateY(-5px) rotate(-2deg);}
+  50%{ transform: translateY(-10px) rotate(3deg);}
+  75%{ transform: translateY(-5px) rotate(-1deg);}
 }
 
 .header h1{
@@ -270,53 +234,9 @@ body{
 <!-- HEADER -->
 <div class="header">
 
-  <div class="icon-wrap">
-    <div class="icon-stack">
-
-      <!-- GEAR -->
-      <svg class="gear" viewBox="0 0 24 24" fill="none">
-        <path d="M12 8a4 4 0 100 8 4 4 0 000-8z" stroke-width="1.6"/>
-        <path d="M19.4 15a7.8 7.8 0 000-6l1.8-1.2-2-3.4-2.1.8a8 8 0 00-5.2-3L11 2H9l-.9 2.2a8 8 0 00-5.2 3l-2.1-.8-2 3.4L4.6 9a7.8 7.8 0 000 6l-1.8 1.2 2 3.4 2.1-.8a8 8 0 005.2 3L9 22h2l.9-2.2a8 8 0 005.2-3l2.1.8 2-3.4L19.4 15z" stroke-width="1.2"/>
-      </svg>
-
-      <!-- BOOK STACK ISOMETRIK -->
-      <svg class="book" viewBox="0 0 200 160">
-        <defs>
-          <linearGradient id="bookTopIso" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#fbbf24"/>
-            <stop offset="100%" stop-color="#f87171"/>
-          </linearGradient>
-          <linearGradient id="bookMiddleIso" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#34d399"/>
-            <stop offset="100%" stop-color="#10b981"/>
-          </linearGradient>
-          <linearGradient id="bookBottomIso" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#fcd34d"/>
-            <stop offset="100%" stop-color="#fbbf24"/>
-          </linearGradient>
-        </defs>
-
-        <!-- Buku bawah -->
-        <g transform="skewX(-10) skewY(-5)">
-          <rect x="16" y="100" width="168" height="28" rx="12" ry="12" fill="url(#bookBottomIso)"
-                style="filter:drop-shadow(4px 4px 6px rgba(0,0,0,0.3))"/>
-        </g>
-
-        <!-- Buku tengah -->
-        <g transform="skewX(-8) skewY(-4)">
-          <rect x="20" y="64" width="160" height="32" rx="10" ry="10" fill="url(#bookMiddleIso)"
-                style="filter:drop-shadow(3px 3px 5px rgba(0,0,0,0.25))"/>
-        </g>
-
-        <!-- Buku atas -->
-        <g transform="skewX(-5) skewY(-2)">
-          <rect x="28" y="32" width="144" height="28" rx="8" ry="8" fill="url(#bookTopIso)"
-                style="filter:drop-shadow(2px 2px 4px rgba(0,0,0,0.2))"/>
-        </g>
-      </svg>
-
-    </div>
-  </div>
+  <!-- LOGO DARI DRIVE -->
+  <img src="https://drive.google.com/uc?export=view&id=1SINqv3envug8sIa6E9wtBMTZSF-NkaxY" 
+       alt="Logo" class="header-logo">
 
   <h1>Issue Tracker Helpdesk</h1>
   <p>Pusat Solusi Internal</p>
@@ -353,7 +273,7 @@ function updateTime(){
 }
 setInterval(updateTime,1000);updateTime();
 
-/* GOOGLE SHEET CSV (TIDAK DIKOSONGKAN) */
+/* GOOGLE SHEET CSV */
 const SHEET_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vQCLXvz4_F7EfUppPoKWSKQawlesCjiYHhceQCIEDoV8ntbDjFrvKUorP416AGydpWYmxWlOLA3b1JL/pub?gid=0&single=true&output=csv";
 
 let issues=[];
