@@ -9,11 +9,11 @@
 
     <style>
         :root {
-            --primary: #0ea5e9; /* Biru langit cerah */
-            --primary-dark: #0284c7;
-            --sidebar-bg: #1e293b; /* Navy Slate profesional */
-            --body-bg: #f8fafc;
-            --text-main: #0f172a;
+            --primary: #0ea5e9;
+            --sidebar-bg: #2d3748;
+            --body-bg: #ebf1f5;
+            --text-main: #2d3748;
+            --accent-green: #10b981;
         }
 
         * { box-sizing: border-box; font-style: normal !important; }
@@ -28,199 +28,169 @@
 
         /* --- SIDEBAR --- */
         .sidebar {
-            width: 280px;
+            width: 260px;
             background: var(--sidebar-bg);
-            padding: 40px 20px;
+            padding: 30px 15px;
             position: fixed;
             height: 100%;
-            box-shadow: 4px 0 20px rgba(0,0,0,0.05);
             z-index: 100;
+            display: flex;
+            flex-direction: column;
         }
 
         .sidebar h3 {
             font-size: 11px;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--primary);
-            margin-bottom: 30px;
+            letter-spacing: 1.5px;
+            color: #a0aec0;
+            margin-bottom: 25px;
             padding-left: 15px;
-            font-weight: 700;
         }
 
         .sidebar a {
             display: block;
-            padding: 14px 18px;
-            margin-bottom: 10px;
-            border-radius: 12px;
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border-radius: 10px;
             text-decoration: none;
-            color: #94a3b8;
-            font-size: 14px;
-            font-weight: 500;
+            color: #cbd5e1;
+            font-size: 13px;
             transition: 0.3s;
         }
 
         .sidebar a:hover {
-            background: rgba(255,255,255,0.05);
+            background: rgba(255,255,255,0.1);
             color: white;
-            transform: translateX(5px);
+        }
+
+        /* Link PPT Khusus */
+        .ppt-link {
+            margin-top: auto; /* Dorong ke bawah */
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--accent-green) !important;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .ppt-link:hover {
+            background: var(--accent-green) !important;
+            color: white !important;
         }
 
         /* --- MAIN --- */
         .main {
-            margin-left: 280px;
+            margin-left: 260px;
             width: 100%;
             padding: 40px;
         }
 
         .container {
-            max-width: 900px;
+            max-width: 850px;
             margin: auto;
         }
 
-        /* --- HEADER --- */
-        .header {
-            position: relative;
+        /* --- HEADER CARD --- */
+        .header-card {
             background: white;
-            border-radius: 30px;
-            padding: 40px 20px;
+            border-radius: 20px;
+            padding: 40px;
             text-align: center;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
             margin-bottom: 30px;
-        }
-
-        /* KONTAINER LOGO OVERLAP */
-        .logo-container {
             position: relative;
-            width: 320px; /* Lebar diperbesar */
-            height: 200px;
-            margin: 0 auto 10px;
-        }
-
-        /* Layer 1: Badan/Robot (Diam) */
-        .logo-static {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            object-fit: contain;
-            z-index: 1;
-        }
-
-        /* Layer 2: Hanya Gear (Berputar) */
-        .logo-rotating {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            object-fit: contain;
-            z-index: 2;
-            /* Memotong hanya bagian gear tengah */
-            clip-path: circle(35% at 50% 45%); 
-            animation: rotateOnlyGear 15s linear infinite;
-        }
-
-        @keyframes rotateOnlyGear {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .header h1 {
-            margin: 0;
-            font-size: 30px;
-            font-weight: 700;
-            color: var(--text-main);
-            letter-spacing: -0.5px;
-        }
-
-        .header p {
-            margin: 5px 0 0;
-            color: #64748b;
-            font-size: 15px;
         }
 
         .datetime {
             position: absolute;
             top: 20px;
-            right: 25px;
+            right: 30px;
             font-size: 11px;
-            color: #94a3b8;
-            font-weight: 600;
+            color: #a0aec0;
         }
 
-        /* --- SEARCH --- */
-        .search-wrap input {
-            width: 100%;
-            padding: 20px 25px;
-            border-radius: 20px;
-            border: 2px solid #e2e8f0;
-            font-size: 16px;
+        .logo-box {
+            position: relative;
+            width: 240px;
+            height: 180px;
+            margin: 0 auto 20px;
+        }
+
+        .img-base {
+            position: absolute;
+            width: 100%; height: 100%;
+            object-fit: contain;
+            z-index: 1;
+        }
+
+        .img-gear {
+            position: absolute;
+            width: 100%; height: 100%;
+            object-fit: contain;
+            z-index: 2;
+            clip-path: circle(24% at 55% 68%); 
+            animation: gearSpin 10s linear infinite;
+        }
+
+        @keyframes gearSpin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .header-card h1 { font-size: 32px; margin: 10px 0 5px; color: #1a202c; }
+        .header-card p { color: #718096; margin: 0; font-size: 14px; }
+
+        /* --- SEARCH BOX --- */
+        .search-container {
             background: white;
-            transition: 0.3s;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            padding: 5px 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            margin-bottom: 30px;
+        }
+
+        .search-container input {
+            border: none;
+            padding: 15px;
+            width: 100%;
+            font-size: 15px;
             outline: none;
         }
 
-        .search-wrap input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.1);
-        }
-
-        /* --- LIST --- */
-        #list { margin-top: 30px; }
-
-        .issue-item {
+        /* --- ISSUE LIST --- */
+        .issue-card {
             background: white;
-            border-radius: 20px;
-            margin-bottom: 12px;
-            border: 1px solid #e2e8f0;
-            transition: 0.2s;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            border: 1px solid #edf2f7;
         }
 
-        .issue-item:hover {
-            border-color: var(--primary);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
-        }
-
-        .issue-header {
-            padding: 22px 25px;
-            font-weight: 600;
+        .issue-trigger {
+            padding: 20px 25px;
             cursor: pointer;
             display: flex;
             justify-content: space-between;
+            font-weight: 600;
         }
 
-        .issue-detail {
+        .issue-content {
             max-height: 0;
             overflow: hidden;
-            transition: 0.3s;
+            transition: 0.3s ease-out;
             padding: 0 25px;
-            background: #fcfdfe;
         }
 
-        .issue-item.open .issue-detail {
-            max-height: 1500px;
-            padding: 10px 25px 30px;
-            border-top: 1px solid #f1f5f9;
+        .issue-card.open .issue-content {
+            max-height: 1200px;
+            padding: 20px 25px 30px;
+            border-top: 1px solid #edf2f7;
         }
 
-        .section h4 {
-            color: var(--primary);
-            font-size: 12px;
-            text-transform: uppercase;
-            margin-bottom: 8px;
-        }
-
-        .empty {
-            text-align: center;
-            padding: 60px;
-            color: #94a3b8;
-            background: white;
-            border-radius: 20px;
-            border: 1px dashed #e2e8f0;
-        }
-
-        .footer {
-            text-align: center;
-            margin: 50px 0;
-            font-size: 12px;
-            color: #94a3b8;
-        }
+        .empty-state { text-align: center; padding: 50px; color: #a0aec0; }
+        .footer { text-align: center; font-size: 12px; color: #a0aec0; margin-top: 40px; }
 
         @media (max-width: 900px) {
             body { flex-direction: column; }
@@ -229,43 +199,44 @@
         }
     </style>
 </head>
-
 <body>
 
     <div class="sidebar">
-        <h3>DOKUMENTASI</h3>
-        <a href="#">Marketing API</a>
-        <a href="#">WhatsApp Platform</a>
-        <a href="#">Graph API</a>
-        <a href="#">Messenger API</a>
-        <a href="#">Cloud API</a>
+        <h3>Dokumentasi</h3>
+        <a href="https://developers.facebook.com/docs/marketing-api/error-reference?locale=id_ID" target="_blank">Marketing API</a>
+        <a href="https://developers.facebook.com/docs/whatsapp/on-premises/sunset" target="_blank">WhatsApp Platform</a>
+        <a href="https://developers.facebook.com/docs/graph-api/guides/error-handling" target="_blank">Graph API</a>
+        <a href="https://developers.facebook.com/docs/messenger-platform/error-codes/" target="_blank">Messenger API</a>
+        <a href="https://developers.facebook.com/documentation/business-messaging/whatsapp/support/error-codes" target="_blank">Cloud API</a>
+        
+        <a href="https://docs.google.com/presentation/d/11juAD4KUHTNJ78kRXdotFl3rBwXIyRRU/edit?usp=sharing" target="_blank" class="ppt-link">
+            📊 View Analytics Report
+        </a>
     </div>
 
     <div class="main">
         <div class="container">
-            
-            <div class="header">
+            <div class="header-card">
                 <div class="datetime" id="datetime"></div>
-                
-                <div class="logo-container">
-                    <img src="https://drive.google.com/thumbnail?id=1SINqv3envug8sIa6E9wtBMTZSF-NkaxY&sz=w1000" class="logo-static">
-                    <img src="https://drive.google.com/thumbnail?id=1SINqv3envug8sIa6E9wtBMTZSF-NkaxY&sz=w1000" class="logo-rotating">
+                <div class="logo-box">
+                    <img src="https://drive.google.com/thumbnail?id=1o9R9cPxRc_D3x1AeWsoiCxi4gnlKk_Ut&sz=w1000" class="img-base">
+                    <img src="https://drive.google.com/thumbnail?id=1o9R9cPxRc_D3x1AeWsoiCxi4gnlKk_Ut&sz=w1000" class="img-gear">
                 </div>
-
-                <h1>Issue Tracker Helpdesk</h1>
-                <p>Solusi Cepat Kendala Sistem Anda</p>
+                <h1>Issue Tracker</h1>
+                <p>Pusat Solusi Teknis & Kendala Sistem</p>
             </div>
 
-            <div class="search-wrap">
-                <input id="search" placeholder="Cari masalah atau solusi...">
+            <div class="search-container">
+                <span>🔍</span>
+                <input id="search" placeholder="Cari masalah...">
             </div>
 
-            <div id="list" class="empty">
-                Masukkan kata kunci untuk mencari issue.
+            <div id="list">
+                <div class="empty-state">Masukkan kata kunci untuk mencari database issue.</div>
             </div>
 
             <div class="footer">
-                &copy; <span id="year"></span> Helpdesk System Portal
+                &copy; <span id="year"></span> Helpdesk Portal System
             </div>
         </div>
     </div>
@@ -274,7 +245,7 @@
         document.getElementById("year").textContent = new Date().getFullYear();
         function updateTime() {
             document.getElementById("datetime").textContent = new Date().toLocaleString("id-ID", {
-                weekday: "long", day: "2-digit", month: "long", hour: "2-digit", minute: "2-digit", timeZone: "Asia/Jakarta"
+                weekday: "short", day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit", timeZone: "Asia/Jakarta"
             }) + " WIB";
         }
         setInterval(updateTime, 1000); updateTime();
@@ -297,24 +268,22 @@
             const list = document.getElementById("list");
             list.innerHTML = "";
             if (!data.length) {
-                list.innerHTML = "<div class='empty'>Issue tidak ditemukan.</div>";
+                list.innerHTML = "<div class='empty-state'>Maaf, data tidak ditemukan.</div>";
                 return;
             }
             data.forEach(item => {
                 const wrap = document.createElement("div");
-                wrap.className = "issue-item";
+                wrap.className = "issue-card";
                 wrap.innerHTML = `
-                    <div class="issue-header"><span>${item.issue}</span> <span>▾</span></div>
-                    <div class="issue-detail">
-                        <div class="section">
-                            <h4>Langkah Solusi</h4>
-                            <div style="line-height:1.6; color:#475569;">${item.solusi.replace(/\n/g, "<br>")}</div>
+                    <div class="issue-trigger"><span>${item.issue}</span><span>▼</span></div>
+                    <div class="issue-content">
+                        <span style="color:var(--primary); font-size:11px; font-weight:700; text-transform:uppercase;">Langkah Penyelesaian</span>
+                        <div style="line-height:1.7; font-size:14px; color:#4a5568; margin-top:10px;">
+                            ${item.solusi.replace(/\n/g, "<br>")}
                         </div>
-                        ${item.image_id ? `<img src="https://drive.google.com/thumbnail?id=${item.image_id}&sz=w1200" style="width:100%; border-radius:12px; margin-top:15px;">` : ""}
+                        ${item.image_id ? `<img src="https://drive.google.com/thumbnail?id=${item.image_id}&sz=w1200" style="width:100%; border-radius:10px; margin-top:20px; border:1px solid #edf2f7;">` : ""}
                     </div>`;
-                wrap.querySelector(".issue-header").onclick = () => {
-                    wrap.classList.toggle("open");
-                };
+                wrap.querySelector(".issue-trigger").onclick = () => wrap.classList.toggle("open");
                 list.appendChild(wrap);
             });
         }
@@ -322,7 +291,7 @@
         document.getElementById("search").addEventListener("input", e => {
             const k = e.target.value.toLowerCase();
             if (!k) {
-                document.getElementById("list").innerHTML = "<div class='empty'>Masukkan kata kunci untuk mencari issue.</div>";
+                document.getElementById("list").innerHTML = "<div class='empty-state'>Masukkan kata kunci untuk mencari database issue.</div>";
                 return;
             }
             render(issues.filter(i => i.issue.toLowerCase().includes(k) || i.solusi.toLowerCase().includes(k)));
