@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Helpdesk Issue Tracker | Enterprise</title>
+    <title>Helpdesk Issue Tracker </title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 
@@ -12,7 +12,8 @@
             --primary: #0ea5e9;
             --primary-dark: #0284c7;
             --primary-glow: rgba(14, 165, 233, 0.1);
-            --bg-body: #f8fafc;
+            --bg-body: #f1f5f9; /* Latar belakang body sedikit lebih gelap */
+            --header-offwhite: #f8fafc; /* Warna putih condong ke abu-abu untuk header */
             --sidebar-dark: #0f172a;
             --card-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.07);
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -91,16 +92,16 @@
 
         .container { max-width: 900px; margin: auto; }
 
-        /* --- HEADER CARD --- */
+        /* --- HEADER CARD (WARNA PUTIH-ABU) --- */
         .header-card {
-            background: white;
+            background: var(--header-offwhite);
             border-radius: 24px;
             padding: 25px 40px;
             text-align: center;
-            box-shadow: var(--card-shadow);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
             margin-bottom: 30px;
             position: relative;
-            border: 1px solid #ffffff;
+            border: 1px solid #e2e8f0; /* Border dipertegas agar kontras dengan abu-abu */
         }
 
         .datetime {
@@ -110,17 +111,18 @@
             font-size: 11px;
             color: #94a3b8;
             font-weight: 600;
-            background: #f1f5f9;
+            background: #ffffff;
             padding: 4px 12px;
             border-radius: 20px;
+            border: 1px solid #f1f5f9;
         }
 
         .main-logo {
-            width: 180px; /* Gambar diperlebar sesuai permintaan */
+            width: 180px;
             height: auto;
             margin: 0 auto 15px;
             display: block;
-            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.08));
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.06));
         }
 
         .header-card h1 { 
@@ -140,7 +142,7 @@
             padding: 18px 25px 18px 60px;
             border-radius: 20px;
             border: 1px solid #e2e8f0;
-            background: white;
+            background: white; /* Tetap putih agar menonjol di atas body abu */
             font-size: 16px;
             outline: none;
             box-shadow: 0 10px 15px -3px rgba(0,0,0,0.02);
@@ -152,7 +154,7 @@
         }
         .search-icon { position: absolute; left: 22px; top: 50%; transform: translateY(-50%); color: #cbd5e1; font-size: 20px; }
 
-        /* --- ENHANCED ISSUE CARDS --- */
+        /* --- ISSUE CARDS --- */
         .issue-card {
             background: white;
             border-radius: 20px;
@@ -187,7 +189,7 @@
         .issue-card.open { border-color: var(--primary); }
         .issue-card.open .arrow { transform: rotate(180deg); color: var(--primary); }
 
-        /* --- STYLISH CONTENT AREA --- */
+        /* --- ENHANCED CONTENT AREA --- */
         .issue-content {
             max-height: 0;
             overflow: hidden;
@@ -202,16 +204,16 @@
         .solusi-container {
             background: #f8fafc;
             border-left: 4px solid var(--primary);
-            padding: 20px 25px;
+            padding: 22px 28px;
             border-radius: 0 16px 16px 0;
-            position: relative;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.01);
         }
 
         .solusi-text {
             line-height: 1.8;
             font-size: 15px;
             color: #475569;
-            font-weight: 400;
+            font-weight: 450;
         }
 
         .image-wrapper {
@@ -222,12 +224,7 @@
             border: 1px solid #e2e8f0;
         }
 
-        .issue-image {
-            width: 100%;
-            display: block;
-            transition: transform 0.5s;
-        }
-
+        .issue-image { width: 100%; display: block; transition: transform 0.5s; }
         .issue-image:hover { transform: scale(1.02); }
 
         .footer { text-align: center; padding: 40px 0; font-size: 12px; color: #94a3b8; font-weight: 500; }
@@ -235,7 +232,7 @@
         @media (max-width: 900px) {
             .sidebar { display: none; }
             .main { margin-left: 0; width: 100%; padding: 20px; }
-            .main-logo { width: 140px; }
+            .main-logo { width: 150px; }
         }
     </style>
 </head>
@@ -252,8 +249,10 @@
         <a href="https://developers.facebook.com/docs/whatsapp/" target="_blank">WhatsApp Platform</a>
         <a href="https://developers.facebook.com/docs/graph-api/" target="_blank">Graph API</a>
         <a href="https://developers.facebook.com/docs/messenger-platform/" target="_blank">Messenger API</a>
-        <a href="https://developers.facebook.com/documentation/business-messaging/whatsapp/support/error-codes" target="_blank">Cloud API</a> <a href="https://docs.google.com/presentation/d/11juAD4KUHTNJ78kRXdotFl3rBwXIyRRU/edit?usp=sharing" target="_blank" class="ppt-link">
-            📊 Analytics Analytics
+        <a href="https://developers.facebook.com/documentation/business-messaging/whatsapp/support/error-codes" target="_blank">Cloud API</a>
+        
+        <a href="https://docs.google.com/presentation/d/11juAD4KUHTNJ78kRXdotFl3rBwXIyRRU/edit?usp=sharing" target="_blank" class="ppt-link">
+            📊 Analytics Report
         </a>
     </nav>
 
@@ -278,7 +277,7 @@
             </div>
 
             <footer class="footer">
-                &copy; <span id="year"></span> <b>HELPDESK ECOSYSTEM</b> • All Rights Reserved.
+                &copy; <span id="year"></span> <b>HELPDESK </b> • All Rights Reserved.
             </footer>
         </div>
     </main>
