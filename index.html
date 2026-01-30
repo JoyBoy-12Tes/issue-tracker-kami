@@ -10,10 +10,9 @@
     <style>
         :root {
             --primary: #0ea5e9;
-            --primary-dark: #0369a1;
+            --primary-dark: #1e293b;
             --sidebar-bg: #1e293b;
-            --body-bg: #f1f5f9;
-            --text-main: #1e293b;
+            --body-bg: #f8fafc;
             --accent-green: #10b981;
         }
 
@@ -24,7 +23,7 @@
             font-family: 'Poppins', sans-serif;
             background: var(--body-bg);
             display: flex;
-            color: var(--text-main);
+            color: var(--primary-dark);
         }
 
         /* --- SIDEBAR --- */
@@ -74,7 +73,7 @@
             text-align: center;
         }
 
-        /* --- MAIN --- */
+        /* --- MAIN CONTENT --- */
         .main {
             margin-left: 260px;
             width: 100%;
@@ -92,9 +91,10 @@
             border-radius: 24px;
             padding: 40px;
             text-align: center;
-            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.05);
+            box-shadow: 0 15px 30px -10px rgba(0,0,0,0.05);
             margin-bottom: 30px;
             position: relative;
+            border: 1px solid #f1f5f9;
         }
 
         .datetime {
@@ -105,9 +105,17 @@
             color: #94a3b8;
         }
 
-        /* Tipografi Judul */
+        /* Gambar di Atas Judul */
+        .main-logo {
+            width: 220px; /* Ukuran proporsional untuk bagian atas */
+            height: auto;
+            margin: 0 auto 25px;
+            display: block;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.05));
+        }
+
         .header-card h1 { 
-            font-size: 40px; 
+            font-size: 38px; 
             margin: 0; 
             font-weight: 700;
             letter-spacing: -1px;
@@ -116,19 +124,9 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* Gambar Kecil di Tengah */
-        .mini-logo {
-            width: 60px; /* Ukuran kecil sesuai permintaan */
-            height: auto;
-            margin: 15px auto; /* Memberikan jarak atas (bawah judul) dan bawah (atas deskripsi) */
-            display: block;
-            filter: drop-shadow(0 4px 6px rgba(14, 165, 233, 0.2));
-        }
-
-        /* Deskripsi di Bawah Gambar */
         .header-card p { 
             color: #64748b; 
-            margin: 0; 
+            margin: 10px 0 0; 
             font-size: 15px; 
             font-weight: 400;
         }
@@ -142,6 +140,7 @@
             padding: 5px 25px;
             box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
             margin-bottom: 35px;
+            border: 1px solid #e2e8f0;
         }
 
         .search-container input {
@@ -150,6 +149,7 @@
             width: 100%;
             font-size: 16px;
             outline: none;
+            font-family: 'Poppins', sans-serif;
         }
 
         /* --- ISSUE LIST --- */
@@ -159,6 +159,11 @@
             margin-bottom: 16px;
             overflow: hidden;
             border: 1px solid #e2e8f0;
+            transition: transform 0.2s;
+        }
+
+        .issue-card:hover {
+            transform: translateY(-2px);
         }
 
         .issue-trigger {
@@ -166,6 +171,7 @@
             cursor: pointer;
             display: flex;
             justify-content: space-between;
+            align-items: center;
             font-weight: 600;
             color: #334155;
         }
@@ -175,11 +181,11 @@
             overflow: hidden;
             transition: 0.3s ease-out;
             padding: 0 25px;
-            background: #f8fafc;
+            background: #fdfdfd;
         }
 
         .issue-card.open .issue-content {
-            max-height: 1500px;
+            max-height: 2000px;
             padding: 25px;
             border-top: 1px solid #e2e8f0;
         }
@@ -191,7 +197,8 @@
             body { flex-direction: column; }
             .sidebar { position: relative; width: 100%; height: auto; }
             .main { margin-left: 0; padding: 20px; }
-            .header-card h1 { font-size: 30px; }
+            .header-card h1 { font-size: 28px; }
+            .main-logo { width: 160px; }
         }
     </style>
 </head>
@@ -215,24 +222,23 @@
             <div class="header-card">
                 <div class="datetime" id="datetime"></div>
                 
+                <img src="https://drive.google.com/thumbnail?id=1SINqv3envug8sIa6E9wtBMTZSF-NkaxY&sz=w1000" class="main-logo">
+                
                 <h1>Issue Tracker Helpdesk</h1>
-                
-                <img src="https://drive.google.com/thumbnail?id=1o9R9cPxRc_D3x1AeWsoiCxi4gnlKk_Ut&sz=w1000" class="mini-logo">
-                
                 <p>Pusat Solusi Teknis & Kendala Sistem Internal</p>
             </div>
 
             <div class="search-container">
-                <span>🔍</span>
-                <input id="search" placeholder="Cari solusi masalah...">
+                <span style="opacity: 0.5;">🔍</span>
+                <input id="search" placeholder="Apa kendala yang Anda hadapi?">
             </div>
 
             <div id="list">
-                <div class="empty-state">Ketik kata kunci untuk mencari database issue.</div>
+                <div class="empty-state">Masukkan kata kunci untuk mencari database solusi.</div>
             </div>
 
             <div class="footer">
-                &copy; <span id="year"></span> Helpdesk Portal System
+                &copy; <span id="year"></span> Helpdesk Portal System • Internal Only
             </div>
         </div>
     </div>
@@ -264,7 +270,7 @@
             const list = document.getElementById("list");
             list.innerHTML = "";
             if (!data.length) {
-                list.innerHTML = "<div class='empty-state'>Maaf, data tidak ditemukan.</div>";
+                list.innerHTML = "<div class='empty-state'>Maaf, tidak ditemukan data yang cocok.</div>";
                 return;
             }
             data.forEach(item => {
@@ -273,10 +279,10 @@
                 wrap.innerHTML = `
                     <div class="issue-trigger"><span>${item.issue}</span><span>▼</span></div>
                     <div class="issue-content">
-                        <div style="line-height:1.7; font-size:14px; color:#475569;">
+                        <div style="line-height:1.8; font-size:14px; color:#475569;">
                             ${item.solusi.replace(/\n/g, "<br>")}
                         </div>
-                        ${item.image_id ? `<img src="https://drive.google.com/thumbnail?id=${item.image_id}&sz=w1200" style="width:100%; border-radius:10px; margin-top:20px; border:1px solid #e2e8f0;">` : ""}
+                        ${item.image_id ? `<img src="https://drive.google.com/thumbnail?id=${item.image_id}&sz=w1200" style="width:100%; border-radius:12px; margin-top:20px; border:1px solid #e2e8f0;">` : ""}
                     </div>`;
                 wrap.querySelector(".issue-trigger").onclick = () => {
                     const isOpen = wrap.classList.contains("open");
@@ -290,7 +296,7 @@
         document.getElementById("search").addEventListener("input", e => {
             const k = e.target.value.toLowerCase();
             if (!k) {
-                document.getElementById("list").innerHTML = "<div class='empty-state'>Ketik kata kunci untuk mencari database issue.</div>";
+                document.getElementById("list").innerHTML = "<div class='empty-state'>Masukkan kata kunci untuk mencari database solusi.</div>";
                 return;
             }
             render(issues.filter(i => i.issue.toLowerCase().includes(k) || i.solusi.toLowerCase().includes(k)));
