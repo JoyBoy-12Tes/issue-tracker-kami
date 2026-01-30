@@ -4,18 +4,19 @@
 <meta charset="UTF-8">
 <title>Issue Tracker Helpdesk</title>
 
-<!-- Google Font -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 
 <style>
 :root{
- --primary:#4f46e5;
- --secondary:#6366f1;
- --bg:#f4f6ff;
- --soft:#eef2ff;
- --dark:#1e1b4b;
+ --primary:#2563eb;
+ --secondary:#06b6d4;
+ --accent:#22c55e;
+ --bg:#eef4ff;
+ --soft:#f0f9ff;
+ --dark:#0f172a;
  --text:#334155;
 }
 
@@ -24,118 +25,163 @@
 body{
  margin:0;
  font-family:"Inter",sans-serif;
- background:var(--bg);
+ background:linear-gradient(135deg,#dbeafe,#f0f9ff);
  color:var(--text);
  display:flex;
 }
 
 /* ===== SIDEBAR ===== */
 .sidebar{
- width:300px;
+ width:310px;
  background:linear-gradient(180deg,var(--primary),var(--secondary));
  color:#fff;
- padding:26px 22px;
+ padding:28px 22px;
  position:fixed;
- top:0;
- bottom:0;
+ inset:0 auto 0 0;
  overflow-y:auto;
+ box-shadow:6px 0 30px rgba(0,0,0,.25);
 }
 
 .sidebar h3{
  font-family:"Poppins",sans-serif;
- font-size:16px;
- margin:0 0 16px;
- opacity:.9;
+ font-size:15px;
+ letter-spacing:.4px;
+ margin:0 0 18px;
+ opacity:.95;
 }
 
 .sidebar a{
  display:block;
- padding:12px 14px;
- margin-bottom:10px;
- background:rgba(255,255,255,.12);
- border-radius:12px;
+ padding:14px 16px;
+ margin-bottom:12px;
+ background:rgba(255,255,255,.15);
+ border-radius:14px;
  color:#fff;
  text-decoration:none;
  font-size:14px;
  line-height:1.4;
- transition:.3s;
+ transition:.35s;
 }
 
 .sidebar a:hover{
- background:rgba(255,255,255,.22);
- transform:translateX(4px);
+ background:rgba(255,255,255,.28);
+ transform:translateX(6px);
+ box-shadow:0 10px 20px rgba(0,0,0,.2);
 }
 
 /* ===== MAIN ===== */
 .main{
- margin-left:300px;
+ margin-left:310px;
  width:100%;
- padding:36px;
+ padding:40px;
 }
 
 /* CONTAINER */
 .container{
- max-width:1000px;
+ max-width:1050px;
  margin:auto;
- background:#fff;
- border-radius:22px;
- padding:34px;
- box-shadow:0 30px 60px rgba(0,0,0,.12);
+ background:rgba(255,255,255,.95);
+ border-radius:26px;
+ padding:36px;
+ box-shadow:0 35px 70px rgba(0,0,0,.18);
 }
 
 /* HEADER */
 .header{
  text-align:center;
- padding:36px 20px;
- border-radius:20px;
- background:linear-gradient(135deg,var(--primary),var(--secondary));
+ padding:42px 20px;
+ border-radius:26px;
+ background:
+  linear-gradient(135deg,rgba(255,255,255,.25),transparent),
+  linear-gradient(135deg,var(--primary),var(--secondary));
  color:#fff;
  font-family:"Poppins",sans-serif;
+ position:relative;
+ overflow:hidden;
+}
+
+.header::after{
+ content:"";
+ position:absolute;
+ inset:0;
+ background:radial-gradient(circle at top,rgba(255,255,255,.45),transparent 60%);
 }
 
 .icon-wrap{
- font-size:62px;
- margin-bottom:10px;
+ position:relative;
+ font-size:68px;
+ margin-bottom:14px;
+ display:inline-flex;
+ gap:10px;
+ animation:float 3s ease-in-out infinite;
+}
+
+.book{
+ animation:floatBook 3.2s ease-in-out infinite;
+}
+
+.gear{
+ animation:spin 2.8s linear infinite;
+}
+
+@keyframes spin{
+ from{transform:rotate(0deg)}
+ to{transform:rotate(360deg)}
+}
+
+@keyframes float{
+ 0%,100%{transform:translateY(0)}
+ 50%{transform:translateY(-6px)}
+}
+
+@keyframes floatBook{
+ 0%,100%{transform:translateY(0)}
+ 50%{transform:translateY(-10px)}
 }
 
 .datetime{
- margin-top:14px;
+ margin-top:16px;
  font-size:14px;
- opacity:.9;
+ opacity:.95;
 }
 
 /* SEARCH */
 .search-wrap{
- margin:32px 0;
+ margin:36px 0;
  position:relative;
 }
 
 .search-wrap input{
  width:100%;
- padding:16px 54px 16px 20px;
- border-radius:16px;
- border:1px solid #dbeafe;
+ padding:18px 56px 18px 22px;
+ border-radius:18px;
+ border:1px solid #c7d2fe;
  font-size:15px;
  outline:none;
  transition:.3s;
 }
 
 .search-wrap input:focus{
- border-color:var(--primary);
- box-shadow:0 0 0 4px rgba(79,70,229,.2);
+ border-color:var(--secondary);
+ box-shadow:0 0 0 5px rgba(6,182,212,.25);
 }
 
-/* ISSUE */
+/* ISSUE CARD */
 .issue-item{
- margin-bottom:20px;
- border-radius:18px;
+ margin-bottom:22px;
+ border-radius:22px;
  background:#fff;
- box-shadow:0 14px 30px rgba(0,0,0,.08);
+ box-shadow:0 18px 40px rgba(0,0,0,.12);
  overflow:hidden;
+ transition:.3s;
+}
+
+.issue-item:hover{
+ transform:translateY(-2px);
 }
 
 .issue-header{
- padding:20px 24px;
+ padding:22px 26px;
  cursor:pointer;
  display:flex;
  justify-content:space-between;
@@ -150,37 +196,38 @@ body{
 
 .issue-detail{
  display:none;
- padding:24px;
- border-top:1px dashed #c7d2fe;
- background:#f8faff;
- line-height:1.7;
+ padding:26px;
+ border-top:1px dashed #bae6fd;
+ background:#f8fbff;
+ line-height:1.75;
 }
 
 .section h4{
- margin:0 0 8px;
+ margin:0 0 10px;
  color:var(--primary);
  font-size:15px;
 }
 
 img{
  width:100%;
- border-radius:16px;
- margin-top:16px;
- box-shadow:0 12px 28px rgba(0,0,0,.18);
+ border-radius:18px;
+ margin-top:18px;
+ box-shadow:0 14px 32px rgba(0,0,0,.2);
 }
 
+/* EMPTY */
 .empty{
  text-align:center;
- color:#94a3b8;
- padding:30px;
+ color:#64748b;
+ padding:36px;
 }
 
 /* FOOTER */
 .footer{
  text-align:center;
- margin-top:40px;
+ margin-top:48px;
  font-size:13px;
- color:#94a3b8;
+ color:#64748b;
 }
 
 /* RESPONSIVE */
@@ -202,7 +249,7 @@ img{
 
 <!-- SIDEBAR -->
 <div class="sidebar">
- <h3>📚 Dokumentasi Referensi</h3>
+ <h3>📚 Dokumentasi & Report</h3>
 
  <a href="https://developers.facebook.com/docs/marketing-api/error-reference?locale=id_ID" target="_blank">
   Kode Kesalahan<br><small>Marketing API</small>
@@ -217,11 +264,17 @@ img{
  </a>
 
  <a href="https://developers.facebook.com/docs/messenger-platform/error-codes/" target="_blank">
-  Error Code<br><small>Platform Messenger</small>
+  Error Code<br><small>Messenger Platform</small>
  </a>
 
  <a href="https://developers.facebook.com/documentation/business-messaging/whatsapp/support/error-codes" target="_blank">
   Kode Kesalahan<br><small>Cloud API WhatsApp</small>
+ </a>
+
+ <!-- PPT LINK -->
+ <a href="https://docs.google.com/presentation/d/11juAD4KUHTNJ78kRXdotFl3rBwXIyRRU/edit?usp=sharing"
+   target="_blank" style="background:rgba(34,197,94,.35)">
+  📊 Report PPT<br><small>Klik untuk membuka</small>
  </a>
 </div>
 
@@ -230,7 +283,10 @@ img{
  <div class="container">
 
   <div class="header">
-   <div class="icon-wrap">📘⚙️</div>
+   <div class="icon-wrap">
+    <span class="book">📘</span>
+    <span class="gear">⚙️</span>
+   </div>
    <h1>Issue Tracker Helpdesk</h1>
    <p>Pusat solusi internal</p>
    <div class="datetime" id="datetime"></div>
@@ -301,7 +357,6 @@ function render(data){
  data.forEach(item=>{
   const wrap=document.createElement("div");
   wrap.className="issue-item";
-
   wrap.innerHTML=`
    <div class="issue-header">${item.issue}</div>
    <div class="issue-detail">
@@ -316,12 +371,10 @@ function render(data){
     }
    </div>
   `;
-
   wrap.querySelector(".issue-header").onclick=()=>{
    const d=wrap.querySelector(".issue-detail");
    d.style.display=d.style.display==="block"?"none":"block";
   };
-
   list.appendChild(wrap);
  });
 }
