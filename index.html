@@ -8,13 +8,12 @@
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 
 <style>
+
 :root{
---bg:#f4f7f6;
---card:#ffffff;
---accent:#14b8a6;
---accent2:#0d9488;
---text:#0f172a;
---muted:#64748b;
+--primary:#14b8a6;
+--primary-dark:#0f766e;
+--soft:#ecfeff;
+--text:#334155;
 }
 
 *{box-sizing:border-box}
@@ -22,155 +21,190 @@
 body{
 margin:0;
 font-family:Inter;
-background:linear-gradient(135deg,#ecfeff,#f8fafc);
-display:flex;
+background:#f1f5f9;
 color:var(--text);
+display:flex;
 }
 
 /* SIDEBAR */
+
 .sidebar{
 width:260px;
-background:#0f172a;
-padding:28px 22px;
+background:linear-gradient(180deg,#0f766e,#14b8a6);
+padding:25px;
+color:#fff;
 position:fixed;
-height:100vh;
-color:white;
+height:100%;
 }
 
 .sidebar a{
 display:block;
-padding:14px;
-margin-bottom:12px;
+padding:12px 14px;
 border-radius:12px;
-background:rgba(255,255,255,.08);
+margin-bottom:10px;
+color:#fff;
 text-decoration:none;
-color:white;
-transition:.2s;
+background:rgba(255,255,255,.15);
+transition:.3s;
 }
 
 .sidebar a:hover{
-background:rgba(255,255,255,.18);
+background:rgba(255,255,255,.3);
 transform:translateX(6px);
 }
 
 /* MAIN */
+
 .main{
 margin-left:260px;
-padding:36px;
 width:100%;
+padding:30px;
 }
 
-/* CONTAINER */
 .container{
 max-width:1100px;
 margin:auto;
+background:#fff;
+border-radius:24px;
+padding:30px;
+box-shadow:0 20px 50px rgba(0,0,0,.12);
 }
 
 /* HEADER */
+
 .header{
-background:linear-gradient(135deg,#14b8a6,#0d9488);
-border-radius:24px;
-padding:70px 30px 60px;
+position:relative;
+background:linear-gradient(180deg,#14b8a6,#0f766e);
+border-radius:22px;
+padding:28px 20px 24px;
 text-align:center;
-color:white;
-box-shadow:0 25px 60px rgba(0,0,0,.2);
+color:#fff;
 }
 
+/* DATE TIME */
+
+.datetime{
+position:absolute;
+top:14px;
+right:18px;
+font-size:11px;
+opacity:.85;
+}
+
+/* LOGO */
+
 .header-logo{
-width:300px;
-max-width:90%;
-margin-bottom:10px;
-filter:drop-shadow(0 15px 35px rgba(0,0,0,.35));
+width:230px;
+margin-bottom:4px;
 animation:float 4s ease-in-out infinite;
 }
 
 @keyframes float{
-50%{transform:translateY(-10px)}
+0%,100%{transform:translateY(0)}
+50%{transform:translateY(-8px)}
 }
 
 .header h1{
 margin:0;
-font-size:38px;
-font-family:"Space Grotesk";
+font-size:28px;
+font-family:Space Grotesk;
 }
 
-.datetime{opacity:.9}
+.header p{
+margin-top:4px;
+opacity:.9;
+}
 
 /* SEARCH */
+
 .search-wrap{
-margin:40px 0;
+margin:30px 0;
 }
 
 .search-wrap input{
 width:100%;
-padding:18px 22px;
+padding:16px 20px;
 border-radius:16px;
-border:1px solid #ddd;
-font-size:16px;
+border:1px solid #cbd5f5;
+font-size:15px;
+}
+
+.search-wrap input:focus{
+outline:none;
+border-color:var(--primary);
+box-shadow:0 0 0 4px rgba(20,184,166,.25);
 }
 
 /* ISSUE */
-.issue-item{
-background:white;
-border-radius:20px;
-margin-bottom:24px;
-box-shadow:0 12px 30px rgba(0,0,0,.08);
-overflow:hidden;
-transition:.25s;
-}
 
-.issue-item:hover{
-transform:translateY(-5px);
+.issue-item{
+border-radius:18px;
+margin-bottom:18px;
+overflow:hidden;
+box-shadow:0 12px 28px rgba(0,0,0,.12);
 }
 
 .issue-header{
-padding:24px;
+padding:18px 22px;
 font-weight:600;
 cursor:pointer;
+background:#fff;
+}
+
+.issue-header:hover{
+background:var(--soft);
 }
 
 .issue-detail{
 display:none;
-padding:24px;
-background:#f9fafb;
-border-top:1px dashed #ddd;
-line-height:1.7;
+padding:22px;
+background:#f8fafc;
+border-top:1px dashed #99f6e4;
 }
 
 .issue-detail img{
 width:100%;
-margin-top:18px;
 border-radius:14px;
+margin-top:16px;
+}
+
+.section h4{
+margin:0 0 10px;
+font-family:Space Grotesk;
+color:var(--primary-dark);
 }
 
 .empty{
 text-align:center;
-padding:40px;
-color:var(--muted);
+padding:30px;
+color:#64748b;
 }
 
 .footer{
 text-align:center;
-margin-top:50px;
-color:var(--muted);
+margin-top:40px;
+font-size:13px;
+color:#64748b;
 }
 
 @media(max-width:900px){
+body{flex-direction:column}
 .sidebar{position:relative;width:100%}
 .main{margin-left:0}
-body{flex-direction:column}
+.datetime{position:static;margin-top:10px}
 }
+
 </style>
 </head>
 
 <body>
 
 <div class="sidebar">
-<a href="https://developers.facebook.com/docs/marketing-api/error-reference?locale=id_ID" target="_blank">Marketing API Error</a>
-<a href="https://developers.facebook.com/docs/whatsapp/on-premises/sunset" target="_blank">WhatsApp On-Prem API</a>
-<a href="https://developers.facebook.com/docs/graph-api/guides/error-handling" target="_blank">Graph API Error Handling</a>
-<a href="https://developers.facebook.com/docs/messenger-platform/error-codes/" target="_blank">Messenger Error Codes</a>
-<a href="https://developers.facebook.com/documentation/business-messaging/whatsapp/support/error-codes" target="_blank">Cloud API WhatsApp</a>
+<a href="https://developers.facebook.com/docs/marketing-api/error-reference?locale=id_ID" target="_blank">Marketing API</a>
+<a href="https://developers.facebook.com/docs/whatsapp/on-premises/sunset" target="_blank">WhatsApp On Prem</a>
+<a href="https://developers.facebook.com/docs/graph-api/guides/error-handling" target="_blank">Graph API</a>
+<a href="https://developers.facebook.com/docs/messenger-platform/error-codes/" target="_blank">Messenger</a>
+<a href="https://developers.facebook.com/documentation/business-messaging/whatsapp/support/error-codes" target="_blank">Cloud API</a>
 <a href="https://docs.google.com/presentation/d/11juAD4KUHTNJ78kRXdotFl3rBwXIyRRU/edit?usp=sharing" target="_blank">📊 Report PPT</a>
 </div>
 
@@ -178,17 +212,22 @@ body{flex-direction:column}
 <div class="container">
 
 <div class="header">
-<img src="https://drive.google.com/thumbnail?id=1SINqv3envug8sIa6E9wtBMTZSF-NkaxY&sz=w600" class="header-logo">
+
+<div id="datetime" class="datetime"></div>
+
+<img class="header-logo"
+src="https://drive.google.com/thumbnail?id=1SINqv3envug8sIa6E9wtBMTZSF-NkaxY&sz=w500">
+
 <h1>Issue Tracker Helpdesk</h1>
 <p>Pusat Solusi Internal</p>
-<div id="datetime" class="datetime"></div>
+
 </div>
 
 <div class="search-wrap">
-<input id="search" placeholder="Cari issue atau error...">
+<input id="search" placeholder="Cari issue...">
 </div>
 
-<div id="list" class="empty">Ketik kata kunci untuk mencari issue</div>
+<div id="list" class="empty">Ketik keyword</div>
 
 <div class="footer">© Helpdesk <span id="year"></span></div>
 
@@ -196,10 +235,15 @@ body{flex-direction:column}
 </div>
 
 <script>
+
 year.textContent=new Date().getFullYear();
 
 function updateTime(){
-datetime.textContent=new Date().toLocaleString("id-ID",{weekday:"long",year:"numeric",month:"long",day:"numeric",hour:"2-digit",minute:"2-digit",second:"2-digit",timeZone:"Asia/Jakarta"})+" WIB";
+datetime.textContent=new Date().toLocaleString("id-ID",{
+weekday:"short",year:"numeric",month:"short",day:"numeric",
+hour:"2-digit",minute:"2-digit",second:"2-digit",
+timeZone:"Asia/Jakarta"
+})+" WIB";
 }
 setInterval(updateTime,1000);updateTime();
 
@@ -223,18 +267,26 @@ const nl=t=>t.replace(/\n/g,"<br>");
 
 function render(data){
 list.innerHTML="";
-if(!data.length){list.innerHTML="<div class='empty'>Issue tidak ditemukan</div>";return;}
+if(!data.length){
+list.innerHTML="<div class='empty'>Tidak ditemukan</div>";
+return;
+}
 data.forEach(item=>{
 const wrap=document.createElement("div");
 wrap.className="issue-item";
 wrap.innerHTML=`
 <div class="issue-header">${item.issue}</div>
 <div class="issue-detail">
+<div class="section">
+<h4>Solusi</h4>
 ${nl(item.solusi)}
-${item.image_id&&item.image_id!=="kosong"?`<img src="https://drive.google.com/thumbnail?id=${item.image_id}&sz=w1200">`:""}
+</div>
+${item.image_id && item.image_id!=="kosong"
+?`<img src="https://drive.google.com/thumbnail?id=${item.image_id}&sz=w1200">`
+:""}
 </div>`;
 wrap.querySelector(".issue-header").onclick=()=>{
-document.querySelectorAll(".issue-detail").forEach(d=>{if(d!==wrap.querySelector(".issue-detail"))d.style.display="none"});
+document.querySelectorAll(".issue-detail").forEach(d=>d.style.display="none");
 const d=wrap.querySelector(".issue-detail");
 d.style.display=d.style.display==="block"?"none":"block";
 };
@@ -243,10 +295,11 @@ list.appendChild(wrap);
 }
 
 search.addEventListener("input",e=>{
-const k=e.target.value.toLowerCase().trim();
-if(!k){list.innerHTML="<div class='empty'>Ketik kata kunci untuk mencari issue</div>";return;}
+const k=e.target.value.toLowerCase();
+if(!k){list.innerHTML="<div class='empty'>Ketik keyword</div>";return;}
 render(issues.filter(i=>i.issue.toLowerCase().includes(k)));
 });
+
 </script>
 
 </body>
