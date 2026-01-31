@@ -1,377 +1,363 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Issue Tracker Helpdesk</title>
-    
-    <meta name="description" content="Portal Troubleshooting & Solusi Helpdesk untuk Marketing API, WhatsApp Platform, dan Graph API.">
-    <meta name="keywords" content="Helpdesk, Issue Tracker, Meta Business Partner, sights, Troubleshooting, WhatsApp API">
-    <meta name="author" content="sights">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Issue Tracker Helpdesk</title>
+    
+    <meta name="description" content="Portal Troubleshooting & Solusi Helpdesk untuk Marketing API, WhatsApp Platform, dan Graph API.">
+    <meta name="keywords" content="Helpdesk, Issue Tracker, Meta Business Partner, sights, Troubleshooting, WhatsApp API">
+    <meta name="author" content="sights">
 
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 
-    <style>
-        :root {
-            --primary: #0ea5e9;
-            --primary-dark: #0284c7;
-            --primary-glow: rgba(14, 165, 233, 0.1);
-            --bg-body: #f1f5f9;
-            --header-offwhite: #f8fafc;
-            --sidebar-dark: #0f172a;
-            --card-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.07);
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+    <style>
+        :root {
+            --primary: #0ea5e9;
+            --primary-dark: #0284c7;
+            --primary-glow: rgba(14, 165, 233, 0.1);
+            --bg-body: #f1f5f9;
+            --header-offwhite: #f8fafc;
+            --sidebar-dark: #0f172a;
+            --card-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.07);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-        @keyframes ani-bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
-        @keyframes ani-pulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.1); opacity: 0.8; } 100% { transform: scale(1); opacity: 1; } }
-        @keyframes ani-float { 0% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-4px) rotate(2deg); } 100% { transform: translateY(0px) rotate(0deg); } }
+        @keyframes ani-bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+        @keyframes ani-pulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.1); opacity: 0.8; } 100% { transform: scale(1); opacity: 1; } }
+        @keyframes ani-float { 0% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-4px) rotate(2deg); } 100% { transform: translateY(0px) rotate(0deg); } }
 
-        .move-bounce { display: inline-block; animation: ani-bounce 2s infinite ease-in-out; }
-        .move-pulse { display: inline-block; animation: ani-pulse 2.5s infinite ease-in-out; }
-        .move-float { display: inline-block; animation: ani-float 3s infinite ease-in-out; }
+        .move-bounce { display: inline-block; animation: ani-bounce 2s infinite ease-in-out; }
+        .move-pulse { display: inline-block; animation: ani-pulse 2.5s infinite ease-in-out; }
+        .move-float { display: inline-block; animation: ani-float 3s infinite ease-in-out; }
 
-        * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; padding: 0; }
-        body { background: var(--bg-body); display: flex; min-height: 100vh; color: #1e293b; overflow-x: hidden; }
+        * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; padding: 0; }
+        body { background: var(--bg-body); display: flex; min-height: 100vh; color: #1e293b; overflow-x: hidden; }
 
-        /* --- MOBILE MENU BUTTON --- */
-        .mobile-header {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            height: 60px;
-            background: var(--sidebar-dark);
-            color: white;
-            padding: 0 20px;
-            align-items: center;
-            justify-content: space-between;
-            z-index: 1002;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        .menu-btn {
-            background: none; border: 1px solid rgba(255,255,255,0.2);
-            color: white; padding: 8px 12px; border-radius: 8px; cursor: pointer;
-            font-size: 14px; font-weight: 600;
-        }
+        /* --- MOBILE MENU BUTTON --- */
+        .mobile-header {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 60px;
+            background: var(--sidebar-dark);
+            color: white;
+            padding: 0 20px;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 1002;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .menu-btn {
+            background: none; border: 1px solid rgba(255,255,255,0.2);
+            color: white; padding: 8px 12px; border-radius: 8px; cursor: pointer;
+            font-size: 14px; font-weight: 600;
+        }
 
-        /* --- SIDEBAR --- */
-        .sidebar { 
-            width: 280px; 
-            background: var(--sidebar-dark); 
-            position: fixed; 
-            height: 100vh; 
-            padding: 40px 24px; 
-            display: flex; 
-            flex-direction: column; 
-            color: white; 
-            z-index: 1001; 
-            transition: transform 0.3s ease;
-        }
-        .brand { margin-bottom: 40px; padding-left: 12px; }
-        .brand .logo-text { font-weight: 800; font-size: 24px; letter-spacing: -1px; }
-        .brand .logo-dot { color: var(--primary); }
-        .brand .sub-text { font-size: 10px; color: #64748b; font-weight: 700; letter-spacing: 1.5px; margin-top: 4px; }
-        .sidebar h3 { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: #475569; margin-bottom: 20px; padding-left: 12px; }
-        .sidebar a { display: flex; align-items: center; padding: 14px 16px; margin-bottom: 8px; border-radius: 12px; text-decoration: none; color: #94a3b8; font-size: 14px; font-weight: 500; transition: var(--transition); }
-        .sidebar a:hover { background: rgba(255, 255, 255, 0.05); color: white; transform: translateX(4px); }
-        .ppt-link { margin-top: auto !important; background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important; color: white !important; justify-content: center; font-weight: 700 !important; box-shadow: 0 10px 20px -5px rgba(16, 185, 129, 0.4); margin-bottom: 10px; }
+        /* --- SIDEBAR --- */
+        .sidebar { 
+            width: 280px; 
+            background: var(--sidebar-dark); 
+            position: fixed; 
+            height: 100vh; 
+            padding: 40px 24px; 
+            display: flex; 
+            flex-direction: column; 
+            color: white; 
+            z-index: 1001; 
+            transition: transform 0.3s ease;
+        }
+        .brand { margin-bottom: 40px; padding-left: 12px; }
+        .brand .logo-text { font-weight: 800; font-size: 24px; letter-spacing: -1px; }
+        .brand .logo-dot { color: var(--primary); }
+        .brand .sub-text { font-size: 10px; color: #64748b; font-weight: 700; letter-spacing: 1.5px; margin-top: 4px; }
+        .sidebar h3 { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: #475569; margin-bottom: 20px; padding-left: 12px; }
+        .sidebar a { display: flex; align-items: center; padding: 14px 16px; margin-bottom: 8px; border-radius: 12px; text-decoration: none; color: #94a3b8; font-size: 14px; font-weight: 500; transition: var(--transition); }
+        .sidebar a:hover { background: rgba(255, 255, 255, 0.05); color: white; transform: translateX(4px); }
+        .ppt-link { margin-top: auto !important; background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important; color: white !important; justify-content: center; font-weight: 700 !important; box-shadow: 0 10px 20px -5px rgba(16, 185, 129, 0.4); margin-bottom: 10px; }
 
-        /* --- MAIN CONTENT --- */
-        .main { margin-left: 280px; width: calc(100% - 280px); padding: 30px 50px; transition: var(--transition); }
-        .container { max-width: 1100px; margin: auto; }
-        .header-card { background: var(--header-offwhite); border-radius: 24px; padding: 30px 40px; text-align: center; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); margin-bottom: 30px; position: relative; border: 1px solid #e2e8f0; }
-        .datetime { position: absolute; top: 20px; right: 30px; font-size: 11px; color: #94a3b8; font-weight: 600; background: #ffffff; padding: 4px 12px; border-radius: 20px; border: 1px solid #f1f5f9; }
-        .main-logo { width: 180px; height: auto; margin: 0 auto 15px; display: block; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.06)); }
-        .header-card h1 { font-size: 36px; font-weight: 800; background: linear-gradient(135deg, #0f172a 0%, #1e293b 30%, #0ea5e9 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: -1.8px; line-height: 1.2; margin-bottom: 10px; }
+        /* --- MAIN CONTENT --- */
+        .main { margin-left: 280px; width: calc(100% - 280px); padding: 30px 50px; transition: var(--transition); }
+        .container { max-width: 1100px; margin: auto; }
+        .header-card { background: var(--header-offwhite); border-radius: 24px; padding: 30px 40px; text-align: center; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); margin-bottom: 30px; position: relative; border: 1px solid #e2e8f0; }
+        .datetime { position: absolute; top: 20px; right: 30px; font-size: 11px; color: #94a3b8; font-weight: 600; background: #ffffff; padding: 4px 12px; border-radius: 20px; border: 1px solid #f1f5f9; }
+        .main-logo { width: 180px; height: auto; margin: 0 auto 15px; display: block; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.06)); }
+        .header-card h1 { font-size: 36px; font-weight: 800; background: linear-gradient(135deg, #0f172a 0%, #1e293b 30%, #0ea5e9 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: -1.8px; line-height: 1.2; margin-bottom: 10px; }
 
-        /* --- SEARCH & LIST --- */
-        .search-wrapper { position: relative; margin-bottom: 25px; }
-        .search-wrapper input { width: 100%; padding: 18px 25px 18px 60px; border-radius: 20px; border: 1px solid #e2e8f0; background: white; font-size: 16px; outline: none; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.02); transition: var(--transition); }
-        .search-wrapper input:focus { border-color: var(--primary); box-shadow: 0 0 0 5px var(--primary-glow); }
-        .search-icon { position: absolute; left: 22px; top: 50%; transform: translateY(-50%); color: #cbd5e1; font-size: 20px; }
-        
-        .issue-card { background: white; border-radius: 20px; margin-bottom: 16px; border: 1px solid #edf2f7; transition: var(--transition); overflow: hidden; }
-        .issue-trigger { padding: 24px 30px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
-        .issue-trigger span:first-child { font-weight: 700; color: #334155; font-size: 15px; }
-        .arrow { font-size: 12px; color: #94a3b8; transition: transform 0.4s ease; }
-        .issue-card.open .arrow { transform: rotate(180deg); color: var(--primary); }
-        .issue-content { max-height: 0; overflow: hidden; transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1); background: #fcfdfe; }
-        .issue-card.open .issue-content { max-height: 3000px; border-top: 1px solid #f1f5f9; }
-        .content-inner { padding: 30px; }
-        .solusi-container { background: #f8fafc; border-left: 5px solid var(--primary); padding: 25px; border-radius: 0 16px 16px 0; }
-        .solusi-text { line-height: 1.8; font-size: 15px; color: #475569; white-space: pre-wrap; }
-        .btn-copy { margin-top: 15px; background: #ffffff; border: 1px solid #e2e8f0; padding: 8px 16px; border-radius: 8px; font-size: 12px; font-weight: 700; color: #64748b; cursor: pointer; transition: 0.2s; display: inline-flex; align-items: center; gap: 8px; }
-        .btn-copy:hover { border-color: var(--primary); color: var(--primary); background: #f0f9ff; }
-        mark { background: #fef08a; color: #854d0e; padding: 0 2px; border-radius: 2px; }
+        /* --- SEARCH & LIST --- */
+        .search-wrapper { position: relative; margin-bottom: 25px; }
+        .search-wrapper input { width: 100%; padding: 18px 25px 18px 60px; border-radius: 20px; border: 1px solid #e2e8f0; background: white; font-size: 16px; outline: none; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.02); transition: var(--transition); }
+        .search-wrapper input:focus { border-color: var(--primary); box-shadow: 0 0 0 5px var(--primary-glow); }
+        .search-icon { position: absolute; left: 22px; top: 50%; transform: translateY(-50%); color: #cbd5e1; font-size: 20px; }
+        
+        .issue-card { background: white; border-radius: 20px; margin-bottom: 16px; border: 1px solid #edf2f7; transition: var(--transition); overflow: hidden; }
+        .issue-trigger { padding: 24px 30px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        .issue-trigger span:first-child { font-weight: 700; color: #334155; font-size: 15px; }
+        .arrow { font-size: 12px; color: #94a3b8; transition: transform 0.4s ease; }
+        .issue-card.open .arrow { transform: rotate(180deg); color: var(--primary); }
+        .issue-content { max-height: 0; overflow: hidden; transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1); background: #fcfdfe; }
+        .issue-card.open .issue-content { max-height: 3000px; border-top: 1px solid #f1f5f9; }
+        .content-inner { padding: 30px; }
+        .solusi-container { background: #f8fafc; border-left: 5px solid var(--primary); padding: 25px; border-radius: 0 16px 16px 0; }
+        .solusi-text { line-height: 1.8; font-size: 15px; color: #475569; white-space: pre-wrap; }
+        .btn-copy { margin-top: 15px; background: #ffffff; border: 1px solid #e2e8f0; padding: 8px 16px; border-radius: 8px; font-size: 12px; font-weight: 700; color: #64748b; cursor: pointer; transition: 0.2s; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-copy:hover { border-color: var(--primary); color: var(--primary); background: #f0f9ff; }
+        mark { background: #fef08a; color: #854d0e; padding: 0 2px; border-radius: 2px; }
 
-        /* --- FOOTER --- */
-        .footer { margin-top: 60px; padding: 40px 0; border-top: 1px solid #e2e8f0; }
-        .footer-layout { display: flex; align-items: center; justify-content: space-between; gap: 30px; flex-wrap: nowrap; }
-        .footer-item { display: flex; gap: 12px; align-items: center; }
-        .address-text { font-size: 12px; color: #64748b; line-height: 1.5; }
-        .address-text strong { color: #1e293b; display: block; }
-        .contact-link { text-decoration: none; color: #475569; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 6px; transition: 0.2s; }
-        .contact-link:hover { color: var(--primary); }
-        /* --- UKURAN LOGO YANG SUDAH DIPERBESAR --- */
-.meta-logo { 
-    width: 45px;            /* Ukuran logo Meta (sebelumnya 22px) */
-    height: auto;
+        /* --- FOOTER --- */
+        .footer { margin-top: 60px; padding: 40px 0; border-top: 1px solid #e2e8f0; }
+        .footer-layout { display: flex; align-items: center; justify-content: space-between; gap: 30px; flex-wrap: nowrap; }
+        .footer-item { display: flex; gap: 12px; align-items: center; }
+        .address-text { font-size: 12px; color: #64748b; line-height: 1.5; }
+        .address-text strong { color: #1e293b; display: block; }
+        .contact-link { text-decoration: none; color: #475569; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 6px; transition: 0.2s; }
+        .contact-link:hover { color: var(--primary); }
+        .meta-box { display: flex; align-items: center; gap: 10px; }
+        .meta-logo { width: 30px; }
+        .meta-label { font-size: 14px; font-weight: 700; color: #1c2b33; }
+        .sama-box { border-left: 1px solid #e2e8f0; padding-left: 20px; }
+        .sama-label { font-size: 10px; color: #94a3b8; font-weight: 800; text-transform: uppercase; display: block; }
+        .sama-logo { font-size: 25px; font-weight: 800; color: #1e293b; }
+        .sama-dot { color: #f97316; }
+        .footer-copyright { margin-top: 30px; text-align: center; font-size: 11px; color: #94a3b8; letter-spacing: 0.5px; }
+
+        /* Efek Denyut/Pulse */
+            @keyframes ani-pulse { 
+            0% { transform: scale(1); opacity: 1; } 
+            50% { transform: scale(1.2); opacity: 0.7; } 
+            100% { transform: scale(1); opacity: 1; } 
 }
 
-.sama-logo { 
-    font-size: 36px;        /* Ukuran teks sama (sebelumnya 18px) */
-    font-weight: 800; 
-    color: #1e293b; 
-    line-height: 1;
+                .move-pulse { 
+                    display: inline-block; 
+                    animation: ani-pulse 2s infinite ease-in-out; 
 }
 
-/* Mengatur jarak kotak agar tidak terlalu rapat setelah logo membesar */
-.sama-box {
-    border-left: 1px solid #e2e8f0;
-    padding-left: 25px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-        .footer-copyright { margin-top: 30px; text-align: center; font-size: 11px; color: #94a3b8; letter-spacing: 0.5px; }
-
-        /* Efek Denyut/Pulse */
-            @keyframes ani-pulse { 
-            0% { transform: scale(1); opacity: 1; } 
-            50% { transform: scale(1.2); opacity: 0.7; } 
-            100% { transform: scale(1); opacity: 1; } 
-}
-
-                .move-pulse { 
-                    display: inline-block; 
-                    animation: ani-pulse 2s infinite ease-in-out; 
-}
-
-        /* --- MEDIA QUERIES --- */
-        @media (max-width: 1024px) {
-            .mobile-header { display: flex; }
-            .sidebar { transform: translateX(-100%); z-index: 1003; }
-            .sidebar.active { transform: translateX(0); box-shadow: 10px 0 30px rgba(0,0,0,0.3); }
-            .main { margin-left: 0; width: 100%; padding: 80px 20px 20px; }
-            .footer-layout { flex-wrap: wrap; justify-content: center; text-align: center; }
-            .datetime { position: static; margin-bottom: 15px; display: inline-block; }
-            .header-card h1 { font-size: 28px; }
-            .sidebar-overlay { 
-                display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; 
-                background: rgba(0,0,0,0.5); z-index: 1002; 
-            }
-            .sidebar-overlay.active { display: block; }
-        }
-    </style>
+        /* --- MEDIA QUERIES --- */
+        @media (max-width: 1024px) {
+            .mobile-header { display: flex; }
+            .sidebar { transform: translateX(-100%); z-index: 1003; }
+            .sidebar.active { transform: translateX(0); box-shadow: 10px 0 30px rgba(0,0,0,0.3); }
+            .main { margin-left: 0; width: 100%; padding: 80px 20px 20px; }
+            .footer-layout { flex-wrap: wrap; justify-content: center; text-align: center; }
+            .datetime { position: static; margin-bottom: 15px; display: inline-block; }
+            .header-card h1 { font-size: 28px; }
+            .sidebar-overlay { 
+                display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; 
+                background: rgba(0,0,0,0.5); z-index: 1002; 
+            }
+            .sidebar-overlay.active { display: block; }
+        }
+    </style>
 </head>
 <body>
 
-    <div class="sidebar-overlay" id="overlay"></div>
+    <div class="sidebar-overlay" id="overlay"></div>
 
-    <header class="mobile-header">
-        <div class="brand" style="margin-bottom: 0; padding-left: 0;">
-            <div class="logo-text" style="font-size: 18px;">Helpdesk<span class="logo-dot">.</span></div>
-        </div>
-        <button class="menu-btn" id="menuToggle">☰ MENU</button>
-    </header>
+    <header class="mobile-header">
+        <div class="brand" style="margin-bottom: 0; padding-left: 0;">
+            <div class="logo-text" style="font-size: 18px;">Helpdesk<span class="logo-dot">.</span></div>
+        </div>
+        <button class="menu-btn" id="menuToggle">☰ MENU</button>
+    </header>
 
-    <nav class="sidebar" id="sidebar">
-        <div class="brand">
-            <div class="logo-text">Helpdesk<span class="logo-dot">.</span></div>
-            <div class="sub-text">CENTRAL SOLUTION</div>
-        </div>
-        
-        <h3>Dokumentasi API</h3>
-        <a href="https://developers.facebook.com/docs/marketing-api/" target="_blank">Marketing API</a>
-        <a href="https://developers.facebook.com/docs/whatsapp/" target="_blank">WhatsApp Platform</a>
-        <a href="https://developers.facebook.com/docs/graph-api/" target="_blank">Graph API</a>
-        <a href="https://developers.facebook.com/docs/messenger-platform/" target="_blank">Messenger API</a>
-        <a href="https://developers.facebook.com/documentation/business-messaging/whatsapp/support/error-codes" target="_blank">Cloud API</a>
-        <a href="https://kb.sociomile.com/how-to-add-a-whatsapp-channel/" target="_blank"> Add Channel Whatsapp</a>
-        <a href="https://kb.sociomile.com/how-to-add-an-email-channel/" target="_blank"> Add Channel Email</a>
-        <a href="https://kb.sociomile.com/how-to-add-a-facebook-channel/" target="_blank"> Add Channel Facebook</a>
-        <a href="https://kb.sociomile.com/how-to-add-an-instagram-channel/" target="_blank"> Add Channel Instagram</a>
-        <a href="https://kb.sociomile.com/how-to-add-a-facebook-channel/" target="_blank"> Add Channel Facebook</a>
-        <a href="https://kb.sociomile.com/category/technical-troubleshooting/" target="_blank"> Technical Issue & Troubleshooting</a>
-        <a href="https://kb.sociomile.com/category/account-settings/" target="_blank"> Account Setting</a>
-        
-        <a href="https://docs.google.com/spreadsheets/d/1Ak1J5gqrLzHaLxxqbrjGTYnj2XgD7onzv07iMrirBAA/edit?usp=sharing" target="_blank">📅 Support Schedule</a>
+    <nav class="sidebar" id="sidebar">
+        <div class="brand">
+            <div class="logo-text">Helpdesk<span class="logo-dot">.</span></div>
+            <div class="sub-text">CENTRAL SOLUTION</div>
+        </div>
+        
+        <h3>Dokumentasi API</h3>
+        <a href="https://developers.facebook.com/docs/marketing-api/" target="_blank">Marketing API</a>
+        <a href="https://developers.facebook.com/docs/whatsapp/" target="_blank">WhatsApp Platform</a>
+        <a href="https://developers.facebook.com/docs/graph-api/" target="_blank">Graph API</a>
+        <a href="https://developers.facebook.com/docs/messenger-platform/" target="_blank">Messenger API</a>
+        <a href="https://developers.facebook.com/documentation/business-messaging/whatsapp/support/error-codes" target="_blank">Cloud API</a>
+        <a href="https://kb.sociomile.com/how-to-add-a-whatsapp-channel/" target="_blank"> Add Channel Whatsapp</a>
+        <a href="https://kb.sociomile.com/how-to-add-an-email-channel/" target="_blank"> Add Channel Email</a>
+        <a href="https://kb.sociomile.com/how-to-add-a-facebook-channel/" target="_blank"> Add Channel Facebook</a>
+        <a href="https://kb.sociomile.com/how-to-add-an-instagram-channel/" target="_blank"> Add Channel Instagram</a>
+        <a href="https://kb.sociomile.com/how-to-add-a-facebook-channel/" target="_blank"> Add Channel Facebook</a>
+        <a href="https://kb.sociomile.com/category/technical-troubleshooting/" target="_blank"> Technical Issue & Troubleshooting</a>
+        <a href="https://kb.sociomile.com/category/account-settings/" target="_blank"> Account Setting</a>
+        
+        <a href="https://docs.google.com/spreadsheets/d/1Ak1J5gqrLzHaLxxqbrjGTYnj2XgD7onzv07iMrirBAA/edit?usp=sharing" target="_blank">📅 Support Schedule</a>
 
-        <a href="https://docs.google.com/presentation/d/11juAD4KUHTNJ78kRXdotFl3rBwXIyRRU/edit?usp=sharing" target="_blank" class="ppt-link">
-            <span class="move-float" style="margin-right: 8px;">📊</span> Weekly Report
-        </a>
-    </nav>
+        <a href="https://docs.google.com/presentation/d/11juAD4KUHTNJ78kRXdotFl3rBwXIyRRU/edit?usp=sharing" target="_blank" class="ppt-link">
+            <span class="move-float" style="margin-right: 8px;">📊</span> Weekly Report
+        </a>
+    </nav>
 
-    <main class="main">
-        <div class="container">
-            <header class="header-card">
-                <div class="datetime" id="datetime"></div>
-                <img src="https://drive.google.com/thumbnail?id=1SINqv3envug8sIa6E9wtBMTZSF-NkaxY&sz=w1000" class="main-logo">
-                <h1>Issue Tracker Helpdesk</h1>
-                <p style="font-size: 12px; color: #94a3b8; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px;">Troubleshooting & Solution Portal</p>
-            </header>
+    <main class="main">
+        <div class="container">
+            <header class="header-card">
+                <div class="datetime" id="datetime"></div>
+                <img src="https://drive.google.com/thumbnail?id=1SINqv3envug8sIa6E9wtBMTZSF-NkaxY&sz=w1000" class="main-logo">
+                <h1>Issue Tracker Helpdesk</h1>
+                <p style="font-size: 12px; color: #94a3b8; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px;">Troubleshooting & Solution Portal</p>
+            </header>
 
-            <div class="search-wrapper">
-                <span class="search-icon">🔍</span>
-                <input id="search" placeholder="Cari masalah, solusi, atau kode error..." autocomplete="off">
-            </div>
+            <div class="search-wrapper">
+                <span class="search-icon">🔍</span>
+                <input id="search" placeholder="Cari masalah, solusi, atau kode error..." autocomplete="off">
+            </div>
 
-            <div id="list">
-                <div style="text-align: center; padding: 100px 0; color: #cbd5e1;">
-                    <p>Memuat data dari sistem...</p>
-                </div>
-            </div>
+            <div id="list">
+                <div style="text-align: center; padding: 100px 0; color: #cbd5e1;">
+                    <p>Memuat data dari sistem...</p>
+                </div>
+            </div>
 
-            <footer class="footer">
-                <div class="footer-layout">
-                    <div class="footer-item">
-                        <span class="move-bounce" style="font-size: 25px;">📍</span>
-                        <div class="address-text">
-                            <strong>Jakarta (HQ)</strong>
-                            Jl. Tebet Raya, South Jakarta
-                        </div>
-                    </div>
+            <footer class="footer">
+                <div class="footer-layout">
+                    <div class="footer-item">
+                        <span class="move-bounce" style="font-size: 25px;">📍</span>
+                        <div class="address-text">
+                            <strong>Jakarta (HQ)</strong>
+                            Jl. Tebet Raya, South Jakarta
+                        </div>
+                    </div>
 
-                    <a href="https://www.ivosights.com" target="_blank" class="contact-link">
-                        <span class="move-pulse"style="font-size: 25px;">🌐</span> ivosights.com
-                    </a>
+                    <a href="https://www.ivosights.com" target="_blank" class="contact-link">
+                        <span class="move-pulse"style="font-size: 25px;">🌐</span> ivosights.com
+                    </a>
 
-                    <a href="mailto:hello@ivosights.com" class="contact-link">
-                        <span class="move-pulse"style="font-size: 25px;">📧</span> hello@ivosights.com
-                    </a>
+                    <a href="mailto:hello@ivosights.com" class="contact-link">
+                        <span class="move-pulse"style="font-size: 25px;">📧</span> hello@ivosights.com
+                    </a>
 
-                    <div class="meta-box">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Meta_Platforms_Inc._logo.svg" class="meta-logo move-pulse">
-                        <span class="meta-label">Meta <small style="font-weight: 400; color:#94a3b8">Partner</small></span>
-                    </div>
+                    <div class="meta-box">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Meta_Platforms_Inc._logo.svg" class="meta-logo move-pulse">
+                        <span class="meta-label">Meta <small style="font-weight: 400; color:#94a3b8">Partner</small></span>
+                    </div>
 
-                    <div class="sama-box">
-                        <span class="sama-label">Part of</span>
-                        <span class="sama-logo">sama<span class="sama-dot">.</span></span>
-                    </div>
-                </div>
+                    <div class="sama-box">
+                        <span class="sama-label">Part of</span>
+                        <span class="sama-logo">sama<span class="sama-dot">.</span></span>
+                    </div>
+                </div>
 
-                <div class="footer-copyright">
-                    &copy; <span id="year"></span> <b>HELPDESK ECOSYSTEM</b> • All Rights Reserved.
-                </div>
-            </footer>
-        </div>
-    </main>
+                <div class="footer-copyright">
+                    &copy; <span id="year"></span> <b>HELPDESK ECOSYSTEM</b> • All Rights Reserved.
+                </div>
+            </footer>
+        </div>
+    </main>
 
-    <script>
-        // Logika Sidebar Mobile
-        const menuToggle = document.getElementById('menuToggle');
-        const sidebar = document.getElementById('sidebar');
-        const overlay = document.getElementById('overlay');
+    <script>
+        // Logika Sidebar Mobile
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
 
-        function toggleMenu() {
-            sidebar.classList.toggle('active');
-            overlay.classList.toggle('active');
-        }
+        function toggleMenu() {
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
 
-        menuToggle.onclick = toggleMenu;
-        overlay.onclick = toggleMenu;
-        
-        // Menutup menu jika link diklik (opsional)
-        sidebar.querySelectorAll('a').forEach(link => {
-            link.onclick = () => {
-                if(window.innerWidth <= 1024) toggleMenu();
-            };
-        });
+        menuToggle.onclick = toggleMenu;
+        overlay.onclick = toggleMenu;
+        
+        // Menutup menu jika link diklik (opsional)
+        sidebar.querySelectorAll('a').forEach(link => {
+            link.onclick = () => {
+                if(window.innerWidth <= 1024) toggleMenu();
+            };
+        });
 
-        document.getElementById("year").textContent = new Date().getFullYear();
-        
-        function updateTime() {
-            const now = new Date();
-            document.getElementById("datetime").textContent = now.toLocaleDateString('id-ID', {
-                weekday: 'short', day: '2-digit', month: 'short'
-            }) + " • " + now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) + " WIB";
-        }
-        setInterval(updateTime, 1000); updateTime();
+        document.getElementById("year").textContent = new Date().getFullYear();
+        
+        function updateTime() {
+            const now = new Date();
+            document.getElementById("datetime").textContent = now.toLocaleDateString('id-ID', {
+                weekday: 'short', day: '2-digit', month: 'short'
+            }) + " • " + now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) + " WIB";
+        }
+        setInterval(updateTime, 1000); updateTime();
 
-        const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQCLXvz4_F7EfUppPoKWSKQawlesCjiYHhceQCIEDoV8ntbDjFrvKUorP416AGydpWYmxWlOLA3b1JL/pub?gid=0&single=true&output=csv";
-        let issues = [];
+        const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQCLXvz4_F7EfUppPoKWSKQawlesCjiYHhceQCIEDoV8ntbDjFrvKUorP416AGydpWYmxWlOLA3b1JL/pub?gid=0&single=true&output=csv";
+        let issues = [];
 
-        Papa.parse(SHEET_URL, {
-            download: true, header: true,
-            complete: r => {
-                issues = r.data.map(x => ({
-                    issue: (x.issue || "").trim(),
-                    solusi: (x.solusi || "").trim(),
-                    image_id: (x.image_id || "").trim()
-                })).filter(i => i.issue);
-                document.getElementById("list").innerHTML = `<div style="text-align: center; padding: 100px 0; color: #cbd5e1;"><p>Masukkan kata kunci untuk mencari solusi.</p></div>`;
-            }
-        });
+        Papa.parse(SHEET_URL, {
+            download: true, header: true,
+            complete: r => {
+                issues = r.data.map(x => ({
+                    issue: (x.issue || "").trim(),
+                    solusi: (x.solusi || "").trim(),
+                    image_id: (x.image_id || "").trim()
+                })).filter(i => i.issue);
+                document.getElementById("list").innerHTML = `<div style="text-align: center; padding: 100px 0; color: #cbd5e1;"><p>Masukkan kata kunci untuk mencari solusi.</p></div>`;
+            }
+        });
 
-        function copyToClipboard(btn, text) {
-            const tempInput = document.createElement('textarea');
-            tempInput.value = text;
-            document.body.appendChild(tempInput);
-            tempInput.select();
-            document.execCommand('copy');
-            const originalContent = btn.innerHTML;
-            btn.innerHTML = "✅ Berhasil Disalin";
-            setTimeout(() => { btn.innerHTML = originalContent; }, 2000);
-            document.body.removeChild(tempInput);
-        }
+        function copyToClipboard(btn, text) {
+            const tempInput = document.createElement('textarea');
+            tempInput.value = text;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            const originalContent = btn.innerHTML;
+            btn.innerHTML = "✅ Berhasil Disalin";
+            setTimeout(() => { btn.innerHTML = originalContent; }, 2000);
+            document.body.removeChild(tempInput);
+        }
 
-        function render(data, query = "") {
-            const list = document.getElementById("list");
-            list.innerHTML = "";
-            if (!data.length) {
-                list.innerHTML = `<div style="text-align: center; padding: 80px 0; color: #94a3b8;"><p>Data tidak ditemukan.</p></div>`;
-                return;
-            }
+        function render(data, query = "") {
+            const list = document.getElementById("list");
+            list.innerHTML = "";
+            if (!data.length) {
+                list.innerHTML = `<div style="text-align: center; padding: 80px 0; color: #94a3b8;"><p>Data tidak ditemukan.</p></div>`;
+                return;
+            }
 
-            data.forEach((item) => {
-                const wrap = document.createElement("div");
-                wrap.className = "issue-card";
-                const highlightText = (text) => {
-                    if (!query) return text;
-                    const re = new RegExp(`(${query})`, "gi");
-                    return text.replace(re, "<mark>$1</mark>");
-                };
+            data.forEach((item) => {
+                const wrap = document.createElement("div");
+                wrap.className = "issue-card";
+                const highlightText = (text) => {
+                    if (!query) return text;
+                    const re = new RegExp(`(${query})`, "gi");
+                    return text.replace(re, "<mark>$1</mark>");
+                };
 
-                wrap.innerHTML = `
-                    <div class="issue-trigger">
-                        <span>${highlightText(item.issue.toUpperCase())}</span>
-                        <span class="arrow">▼</span>
-                    </div>
-                    <div class="issue-content">
-                        <div class="content-inner">
-                            <div class="solusi-container">
-                                <div class="solusi-text">${highlightText(item.solusi)}</div>
-                                <button class="btn-copy">📋 Salin Solusi</button>
-                            </div>
-                            ${item.image_id ? `<img src="https://drive.google.com/thumbnail?id=${item.image_id}&sz=w1200" style="width:100%; margin-top:20px; border-radius:12px;">` : ""}
-                        </div>
-                    </div>`;
+                wrap.innerHTML = `
+                    <div class="issue-trigger">
+                        <span>${highlightText(item.issue.toUpperCase())}</span>
+                        <span class="arrow">▼</span>
+                    </div>
+                    <div class="issue-content">
+                        <div class="content-inner">
+                            <div class="solusi-container">
+                                <div class="solusi-text">${highlightText(item.solusi)}</div>
+                                <button class="btn-copy">📋 Salin Solusi</button>
+                            </div>
+                            ${item.image_id ? `<img src="https://drive.google.com/thumbnail?id=${item.image_id}&sz=w1200" style="width:100%; margin-top:20px; border-radius:12px;">` : ""}
+                        </div>
+                    </div>`;
 
-                wrap.querySelector(".issue-trigger").onclick = () => {
-                    const isOpen = wrap.classList.contains("open");
-                    document.querySelectorAll(".issue-card").forEach(c => c.classList.remove("open"));
-                    if (!isOpen) wrap.classList.add("open");
-                };
+                wrap.querySelector(".issue-trigger").onclick = () => {
+                    const isOpen = wrap.classList.contains("open");
+                    document.querySelectorAll(".issue-card").forEach(c => c.classList.remove("open"));
+                    if (!isOpen) wrap.classList.add("open");
+                };
 
-                wrap.querySelector(".btn-copy").onclick = (e) => {
-                    e.stopPropagation();
-                    copyToClipboard(e.target, item.solusi);
-                };
-                list.appendChild(wrap);
-            });
-        }
+                wrap.querySelector(".btn-copy").onclick = (e) => {
+                    e.stopPropagation();
+                    copyToClipboard(e.target, item.solusi);
+                };
+                list.appendChild(wrap);
+            });
+        }
 
-        document.getElementById("search").addEventListener("input", e => {
-            const k = e.target.value.toLowerCase();
-            if (!k) {
-                document.getElementById("list").innerHTML = `<div style="text-align: center; padding: 100px 0; color: #cbd5e1;"><p>Masukkan kata kunci untuk mencari solusi.</p></div>`;
-                return;
-            }
-            const filtered = issues.filter(i => i.issue.toLowerCase().includes(k) || i.solusi.toLowerCase().includes(k));
-            render(filtered, k);
-        });
-    </script>
+        document.getElementById("search").addEventListener("input", e => {
+            const k = e.target.value.toLowerCase();
+            if (!k) {
+                document.getElementById("list").innerHTML = `<div style="text-align: center; padding: 100px 0; color: #cbd5e1;"><p>Masukkan kata kunci untuk mencari solusi.</p></div>`;
+                return;
+            }
+            const filtered = issues.filter(i => i.issue.toLowerCase().includes(k) || i.solusi.toLowerCase().includes(k));
+            render(filtered, k);
+        });
+    </script>
 </body>
 </html>
