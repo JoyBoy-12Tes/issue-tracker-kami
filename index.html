@@ -13,7 +13,7 @@
             --primary-dark: #0284c7;
             --primary-glow: rgba(14, 165, 233, 0.1);
             --bg-body: #f1f5f9;
-            --header-offwhite: #f8fafc; /* Putih keabu-abuan untuk Header */
+            --header-offwhite: #f8fafc;
             --sidebar-dark: #0f172a;
             --card-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.07);
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -118,14 +118,13 @@
         }
 
         .main-logo {
-            width: 180px; /* Logo diperlebar */
+            width: 180px;
             height: auto;
             margin: 0 auto 15px;
             display: block;
             filter: drop-shadow(0 10px 15px rgba(0,0,0,0.06));
         }
 
-        /* GAYA FONT KEREN UNTUK JUDUL */
         .header-card h1 { 
             font-size: 36px;
             font-weight: 800;
@@ -172,7 +171,7 @@
         }
         .search-icon { position: absolute; left: 22px; top: 50%; transform: translateY(-50%); color: #cbd5e1; font-size: 20px; }
 
-        /* --- ENHANCED ISSUE CARDS --- */
+        /* --- ISSUE CARDS --- */
         .issue-card {
             background: white;
             border-radius: 20px;
@@ -202,7 +201,6 @@
         .issue-card.open { border-color: var(--primary); }
         .issue-card.open .arrow { transform: rotate(180deg); color: var(--primary); }
 
-        /* STYLISH DETAIL CONTENT */
         .issue-content {
             max-height: 0;
             overflow: hidden;
@@ -258,6 +256,8 @@
         <a href="https://developers.facebook.com/docs/messenger-platform/" target="_blank">Messenger API</a>
         <a href="https://developers.facebook.com/documentation/business-messaging/whatsapp/support/error-codes" target="_blank">Cloud API</a>
         
+        <a href="https://docs.google.com/spreadsheets/d/1Ak1J5gqrLzHaLxxqbrjGTYnj2XgD7onzv07iMrirBAA/edit?usp=sharing" target="_blank">📅 Support Schedule</a>
+        
         <a href="https://docs.google.com/presentation/d/11juAD4KUHTNJ78kRXdotFl3rBwXIyRRU/edit?usp=sharing" target="_blank" class="ppt-link">
             📊 Analytics Report
         </a>
@@ -274,7 +274,7 @@
 
             <div class="search-wrapper">
                 <span class="search-icon">🔍</span>
-                <input id="search" placeholder="Cari masalah, solusi, atau kode error..." autocomplete="off">
+                <input id="search" placeholder="Cari masalah, solusi, atau kode error..." autocomplete="off" autofocus>
             </div>
 
             <div id="list">
@@ -291,6 +291,7 @@
 
     <script>
         document.getElementById("year").textContent = new Date().getFullYear();
+        
         function updateTime() {
             const now = new Date();
             document.getElementById("datetime").textContent = now.toLocaleDateString('id-ID', {
@@ -299,7 +300,13 @@
                 hour: '2-digit', minute: '2-digit'
             }) + " WIB";
         }
-        setInterval(updateTime, 1000); updateTime();
+        setInterval(updateTime, 1000); 
+        updateTime();
+
+        // Fokus otomatis ke input pencarian
+        window.onload = () => {
+            document.getElementById("search").focus();
+        };
 
         const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQCLXvz4_F7EfUppPoKWSKQawlesCjiYHhceQCIEDoV8ntbDjFrvKUorP416AGydpWYmxWlOLA3b1JL/pub?gid=0&single=true&output=csv";
         let issues = [];
