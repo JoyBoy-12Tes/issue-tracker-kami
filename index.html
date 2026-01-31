@@ -13,9 +13,7 @@
             --primary-dark: #0284c7;
             --primary-glow: rgba(14, 165, 233, 0.1);
             --bg-body: #f1f5f9;
-            --header-offwhite: #f8fafc;
             --sidebar-dark: #0f172a;
-            --card-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.07);
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -84,160 +82,95 @@
         }
 
         /* --- MAIN CONTENT --- */
-        .main {
-            margin-left: 280px;
-            width: calc(100% - 280px);
-            padding: 30px 50px;
-        }
-
+        .main { margin-left: 280px; width: calc(100% - 280px); padding: 30px 50px; }
         .container { max-width: 900px; margin: auto; }
 
-        /* --- HEADER CARD --- */
+        /* --- ENHANCED HEADER (GLASSMORPHISM) --- */
         .header-card {
-            background: var(--header-offwhite);
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border-radius: 24px;
-            padding: 30px 40px;
+            padding: 40px;
             text-align: center;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            margin-bottom: 30px;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 35px;
             position: relative;
-            border: 1px solid #e2e8f0;
+            border: 1px solid rgba(255, 255, 255, 0.8);
         }
 
         .datetime {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            font-size: 11px;
-            color: #94a3b8;
-            font-weight: 600;
-            background: #ffffff;
-            padding: 4px 12px;
-            border-radius: 20px;
-            border: 1px solid #f1f5f9;
+            position: absolute; top: 20px; right: 30px; font-size: 11px;
+            color: #64748b; font-weight: 700; background: white;
+            padding: 6px 14px; border-radius: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.03);
         }
 
-        .main-logo {
-            width: 180px;
-            height: auto;
-            margin: 0 auto 15px;
-            display: block;
-            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.06));
-        }
+        .main-logo { width: 160px; height: auto; margin: 0 auto 20px; display: block; filter: drop-shadow(0 8px 12px rgba(0,0,0,0.08)); }
 
         .header-card h1 { 
-            font-size: 36px;
-            font-weight: 800;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 30%, #0ea5e9 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: -1.8px;
-            line-height: 1.2;
-            margin-bottom: 10px;
-            animation: focus-in 0.8s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+            font-size: 38px; font-weight: 800; 
+            background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            letter-spacing: -1.5px; margin-bottom: 8px;
         }
 
-        .header-card p { 
-            color: #64748b; 
-            font-size: 13px; 
-            font-weight: 600; 
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            opacity: 0.8;
-        }
-
-        @keyframes focus-in {
-            0% { letter-spacing: 2px; filter: blur(12px); opacity: 0; }
-            100% { letter-spacing: -1.8px; filter: blur(0); opacity: 1; }
-        }
-
-        /* --- SEARCH BOX --- */
-        .search-wrapper { position: relative; margin-bottom: 35px; }
+        /* --- SEARCH & QUICK TAGS --- */
+        .search-wrapper { position: relative; margin-bottom: 15px; }
         .search-wrapper input {
-            width: 100%;
-            padding: 18px 25px 18px 60px;
-            border-radius: 20px;
-            border: 1px solid #e2e8f0;
-            background: white;
-            font-size: 16px;
-            outline: none;
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.02);
-            transition: var(--transition);
+            width: 100%; padding: 20px 25px 20px 65px; border-radius: 20px;
+            border: 1px solid #e2e8f0; background: white; font-size: 16px; outline: none;
+            transition: var(--transition); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.03);
         }
-        .search-wrapper input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 5px var(--primary-glow);
+        .search-wrapper input:focus { border-color: var(--primary); box-shadow: 0 0 0 5px var(--primary-glow); }
+        .search-icon { position: absolute; left: 25px; top: 50%; transform: translateY(-50%); color: var(--primary); font-size: 22px; }
+
+        .quick-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 30px; align-items: center; }
+        .tag-label { font-size: 11px; color: #94a3b8; font-weight: 700; text-transform: uppercase; margin-right: 5px; }
+        .tag { 
+            background: white; border: 1px solid #e2e8f0; padding: 5px 14px; border-radius: 10px; 
+            font-size: 12px; color: #475569; font-weight: 600; cursor: pointer; transition: 0.2s;
         }
-        .search-icon { position: absolute; left: 22px; top: 50%; transform: translateY(-50%); color: #cbd5e1; font-size: 20px; }
+        .tag:hover { background: var(--primary); color: white; border-color: var(--primary); }
 
         /* --- ISSUE CARDS --- */
         .issue-card {
-            background: white;
-            border-radius: 20px;
-            margin-bottom: 16px;
-            border: 1px solid #edf2f7;
-            transition: var(--transition);
-            overflow: hidden;
+            background: white; border-radius: 20px; margin-bottom: 16px;
+            border: 1px solid #edf2f7; transition: var(--transition); overflow: hidden;
         }
+        .issue-card:hover { transform: translateY(-3px); box-shadow: 0 15px 30px -10px rgba(0,0,0,0.08); }
 
-        .issue-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 25px -5px rgba(0,0,0,0.05);
-            border-color: #cbd5e1;
-        }
-
-        .issue-trigger {
-            padding: 24px 30px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .issue-trigger span:first-child { font-weight: 700; color: #334155; font-size: 15px; }
-        .arrow { font-size: 12px; color: #94a3b8; transition: transform 0.4s ease; }
-
-        .issue-card.open { border-color: var(--primary); }
-        .issue-card.open .arrow { transform: rotate(180deg); color: var(--primary); }
-
-        .issue-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            background: linear-gradient(to bottom, #ffffff, #fcfdfe);
-        }
-
-        .issue-card.open .issue-content { max-height: 3000px; border-top: 1px solid #f1f5f9; }
-        .content-inner { padding: 30px; }
+        .issue-trigger { padding: 24px 30px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        .issue-trigger span:first-child { font-weight: 700; color: #1e293b; font-size: 15px; line-height: 1.4; }
+        
+        .issue-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease; background: #fafcfe; }
+        .issue-card.open .issue-content { max-height: 2000px; border-top: 1px solid #f1f5f9; }
+        .content-inner { padding: 30px; position: relative; }
 
         .solusi-container {
-            background: #f8fafc;
-            border-left: 5px solid var(--primary);
-            padding: 25px;
-            border-radius: 0 16px 16px 0;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+            background: white; border-left: 4px solid var(--primary); padding: 25px;
+            border-radius: 0 16px 16px 0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
         }
+        .solusi-text { line-height: 1.8; font-size: 15px; color: #475569; }
+        
+        /* Highlight Style */
+        mark { background: #fef08a; color: #854d0e; padding: 0 2px; border-radius: 2px; font-weight: 600; }
 
-        .solusi-text { line-height: 1.8; font-size: 15px; color: #475569; font-weight: 450; }
-
-        .image-wrapper {
-            margin-top: 25px;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 25px 35px -10px rgba(0,0,0,0.12);
-            border: 1px solid #e2e8f0;
+        .btn-copy {
+            margin-top: 15px; background: #f1f5f9; border: none; padding: 8px 15px;
+            border-radius: 8px; font-size: 12px; font-weight: 700; color: #475569;
+            cursor: pointer; transition: 0.2s; display: inline-flex; align-items: center; gap: 6px;
         }
+        .btn-copy:hover { background: #e2e8f0; color: var(--primary-dark); }
 
-        .issue-image { width: 100%; display: block; transition: transform 0.5s ease; }
-        .issue-image:hover { transform: scale(1.03); }
+        .image-wrapper { margin-top: 25px; border-radius: 16px; overflow: hidden; border: 1px solid #e2e8f0; }
+        .issue-image { width: 100%; display: block; }
 
-        .footer { text-align: center; padding: 40px 0; font-size: 12px; color: #94a3b8; font-weight: 500; }
+        .footer { text-align: center; padding: 50px 0; font-size: 12px; color: #94a3b8; }
 
         @media (max-width: 900px) {
             .sidebar { display: none; }
             .main { margin-left: 0; width: 100%; padding: 20px; }
-            .header-card h1 { font-size: 26px; }
+            .header-card h1 { font-size: 28px; }
         }
     </style>
 </head>
@@ -255,12 +188,9 @@
         <a href="https://developers.facebook.com/docs/graph-api/" target="_blank">Graph API</a>
         <a href="https://developers.facebook.com/docs/messenger-platform/" target="_blank">Messenger API</a>
         <a href="https://developers.facebook.com/documentation/business-messaging/whatsapp/support/error-codes" target="_blank">Cloud API</a>
-        
         <a href="https://docs.google.com/spreadsheets/d/1Ak1J5gqrLzHaLxxqbrjGTYnj2XgD7onzv07iMrirBAA/edit?usp=sharing" target="_blank">📅 Support Schedule</a>
         
-        <a href="https://docs.google.com/presentation/d/11juAD4KUHTNJ78kRXdotFl3rBwXIyRRU/edit?usp=sharing" target="_blank" class="ppt-link">
-            📊 Analytics Report
-        </a>
+        <a href="https://docs.google.com/presentation/d/11juAD4KUHTNJ78kRXdotFl3rBwXIyRRU/edit?usp=sharing" target="_blank" class="ppt-link">📊 Analytics Report</a>
     </nav>
 
     <main class="main">
@@ -268,23 +198,31 @@
             <header class="header-card">
                 <div class="datetime" id="datetime"></div>
                 <img src="https://drive.google.com/thumbnail?id=1SINqv3envug8sIa6E9wtBMTZSF-NkaxY&sz=w1000" class="main-logo">
-                <h1>Issue Tracker Helpdesk</h1>
-                <p>Troubleshooting & Solution Portal</p>
+                <h1>Issue Tracker</h1>
+                <p style="letter-spacing: 2px; font-weight: 700; color: #94a3b8; font-size: 11px;">TROUBLESHOOTING & SOLUTION PORTAL</p>
             </header>
 
             <div class="search-wrapper">
                 <span class="search-icon">🔍</span>
-                <input id="search" placeholder="Cari masalah, solusi, atau kode error..." autocomplete="off" autofocus>
+                <input id="search" placeholder="Cari masalah, solusi, atau kode error..." autocomplete="off">
+            </div>
+
+            <div class="quick-tags">
+                <span class="tag-label">Cepat:</span>
+                <div class="tag" onclick="quickSearch('WhatsApp')">WhatsApp</div>
+                <div class="tag" onclick="quickSearch('Token')">Token</div>
+                <div class="tag" onclick="quickSearch('400')">Error 400</div>
+                <div class="tag" onclick="quickSearch('Template')">Template</div>
             </div>
 
             <div id="list">
                 <div style="text-align: center; padding: 100px 0; color: #cbd5e1;">
-                    <p style="font-size: 15px; font-weight: 500;">Silakan masukkan kata kunci pencarian di atas.</p>
+                    <p style="font-size: 15px; font-weight: 500;">Silakan masukkan kata kunci pencarian.</p>
                 </div>
             </div>
 
             <footer class="footer">
-                &copy; <span id="year"></span> <b>HELPDESK ECOSYSTEM</b> • All Rights Reserved.
+                &copy; <span id="year"></span> <b>HELPDESK ECOSYSTEM</b> • Enterprise Solution Portal
             </footer>
         </div>
     </main>
@@ -296,17 +234,9 @@
             const now = new Date();
             document.getElementById("datetime").textContent = now.toLocaleDateString('id-ID', {
                 weekday: 'short', day: '2-digit', month: 'short'
-            }) + " • " + now.toLocaleTimeString('id-ID', {
-                hour: '2-digit', minute: '2-digit'
-            }) + " WIB";
+            }) + " • " + now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) + " WIB";
         }
-        setInterval(updateTime, 1000); 
-        updateTime();
-
-        // Fokus otomatis ke input pencarian
-        window.onload = () => {
-            document.getElementById("search").focus();
-        };
+        setInterval(updateTime, 1000); updateTime();
 
         const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQCLXvz4_F7EfUppPoKWSKQawlesCjiYHhceQCIEDoV8ntbDjFrvKUorP416AGydpWYmxWlOLA3b1JL/pub?gid=0&single=true&output=csv";
         let issues = [];
@@ -322,7 +252,26 @@
             }
         });
 
-        function render(data) {
+        function quickSearch(val) {
+            const input = document.getElementById("search");
+            input.value = val;
+            input.dispatchEvent(new Event('input'));
+        }
+
+        function highlight(text, query) {
+            if (!query) return text;
+            const re = new RegExp(`(${query})`, "gi");
+            return text.replace(re, "<mark>$1</mark>");
+        }
+
+        function copyText(btn, text) {
+            navigator.clipboard.writeText(text.replace(/<br>/g, '\n'));
+            const originalText = btn.innerHTML;
+            btn.innerHTML = "✅ Berhasil Disalin!";
+            setTimeout(() => { btn.innerHTML = originalText; }, 2000);
+        }
+
+        function render(data, query = "") {
             const list = document.getElementById("list");
             list.innerHTML = "";
             if (!data.length) {
@@ -333,15 +282,18 @@
             data.forEach((item) => {
                 const wrap = document.createElement("div");
                 wrap.className = "issue-card";
+                const cleanSolusi = item.solusi.replace(/\n/g, "<br>");
+                
                 wrap.innerHTML = `
                     <div class="issue-trigger">
-                        <span>${item.issue}</span>
-                        <span class="arrow">▼</span>
+                        <span>${highlight(item.issue, query)}</span>
+                        <span style="color:#cbd5e1; font-size:10px;">KLIK DETAIL ▼</span>
                     </div>
                     <div class="issue-content">
                         <div class="content-inner">
                             <div class="solusi-container">
-                                <div class="solusi-text">${item.solusi.replace(/\n/g, "<br>")}</div>
+                                <div class="solusi-text">${highlight(cleanSolusi, query)}</div>
+                                <button class="btn-copy" onclick="copyText(this, '${item.solusi.replace(/'/g, "\\'")}')">📋 Salin Solusi</button>
                             </div>
                             ${item.image_id ? `
                                 <div class="image-wrapper">
@@ -349,6 +301,7 @@
                                 </div>` : ""}
                         </div>
                     </div>`;
+                
                 wrap.querySelector(".issue-trigger").onclick = () => {
                     const isOpen = wrap.classList.contains("open");
                     document.querySelectorAll(".issue-card").forEach(c => c.classList.remove("open"));
@@ -361,10 +314,11 @@
         document.getElementById("search").addEventListener("input", e => {
             const k = e.target.value.toLowerCase();
             if (!k) {
-                document.getElementById("list").innerHTML = `<div style="text-align: center; padding: 100px 0; color: #cbd5e1;"><p style="font-size: 15px; font-weight: 500;">Silakan masukkan kata kunci pencarian di atas.</p></div>`;
+                document.getElementById("list").innerHTML = `<div style="text-align: center; padding: 100px 0; color: #cbd5e1;"><p>Silakan masukkan kata kunci pencarian.</p></div>`;
                 return;
             }
-            render(issues.filter(i => i.issue.toLowerCase().includes(k) || i.solusi.toLowerCase().includes(k)));
+            const filtered = issues.filter(i => i.issue.toLowerCase().includes(k) || i.solusi.toLowerCase().includes(k));
+            render(filtered, k);
         });
     </script>
 </body>
