@@ -11,8 +11,6 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
     <style>
         :root {
             --primary: #0ea5e9;
@@ -55,11 +53,6 @@
         .main-logo { width: 180px; height: auto; margin: 0 auto 15px; display: block; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.06)); }
         .header-card h1 { font-size: 36px; font-weight: 800; background: linear-gradient(135deg, #0f172a 0%, #1e293b 30%, #0ea5e9 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: -1.8px; line-height: 1.2; margin-bottom: 10px; }
 
-        /* --- DASHBOARD --- */
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px; }
-        .chart-card { background: white; padding: 25px; border-radius: 24px; border: 1px solid #e2e8f0; box-shadow: var(--card-shadow); }
-        .chart-title { font-size: 11px; color: #94a3b8; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px; display: block; }
-
         /* --- SEARCH & LIST --- */
         .search-wrapper { position: relative; margin-bottom: 25px; }
         .search-wrapper input { width: 100%; padding: 18px 25px 18px 60px; border-radius: 20px; border: 1px solid #e2e8f0; background: white; font-size: 16px; outline: none; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.02); transition: var(--transition); }
@@ -100,7 +93,6 @@
             .footer-layout { flex-wrap: wrap; justify-content: center; text-align: center; }
             .sidebar { display: none; }
             .main { margin-left: 0; width: 100%; padding: 20px; }
-            .stats-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -121,8 +113,7 @@
         
         <a href="https://docs.google.com/spreadsheets/d/1Ak1J5gqrLzHaLxxqbrjGTYnj2XgD7onzv07iMrirBAA/edit?usp=sharing" target="_blank">📅 Support Schedule</a>
 
-        
-<a href="https://docs.google.com/presentation/d/11juAD4KUHTNJ78kRXdotFl3rBwXIyRRU/edit?usp=sharing" target="_blank" class="ppt-link">
+        <a href="https://docs.google.com/presentation/d/11juAD4KUHTNJ78kRXdotFl3rBwXIyRRU/edit?usp=sharing" target="_blank" class="ppt-link">
             <span class="move-float" style="margin-right: 8px;">📊</span> Weekly Report
         </a>
     </nav>
@@ -136,17 +127,6 @@
                 <p style="font-size: 12px; color: #94a3b8; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px;">Troubleshooting & Solution Portal</p>
             </header>
 
-            <div class="stats-grid">
-                <div class="chart-card">
-                    <span class="chart-title">Issue Distribution</span>
-                    <canvas id="categoryChart" height="120"></canvas>
-                </div>
-                <div class="chart-card">
-                    <span class="chart-title">Resolution Performance</span>
-                    <canvas id="performanceChart" height="120"></canvas>
-                </div>
-            </div>
-
             <div class="search-wrapper">
                 <span class="search-icon">🔍</span>
                 <input id="search" placeholder="Cari masalah, solusi, atau kode error..." autocomplete="off">
@@ -159,38 +139,40 @@
             </div>
 
             <footer class="footer">
-    <div class="footer-layout">
-        <div class="footer-item">
-            <span class="move-bounce" style="font-size: 20px;">📍</span>
-            <div class="address-text">
-                <strong>Jakarta (HQ)</strong>
-                Jl. Tebet Raya, South Jakarta
-            </div>
+                <div class="footer-layout">
+                    <div class="footer-item">
+                        <span class="move-bounce" style="font-size: 20px;">📍</span>
+                        <div class="address-text">
+                            <strong>Jakarta (HQ)</strong>
+                            Jl. Tebet Raya, South Jakarta
+                        </div>
+                    </div>
+
+                    <a href="https://www.ivosights.com" target="_blank" class="contact-link">
+                        <span class="move-pulse">🌐</span> ivosights.com
+                    </a>
+
+                    <a href="mailto:hello@ivosights.com" class="contact-link">
+                        <span class="move-pulse">📧</span> hello@ivosights.com
+                    </a>
+
+                    <div class="meta-box">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Meta_Platforms_Inc._logo.svg" class="meta-logo move-pulse">
+                        <span class="meta-label">Meta <small style="font-weight: 400; color:#94a3b8">Partner</small></span>
+                    </div>
+
+                    <div class="sama-box">
+                        <span class="sama-label">Part of</span>
+                        <span class="sama-logo">sama<span class="sama-dot">.</span></span>
+                    </div>
+                </div>
+
+                <div class="footer-copyright">
+                    &copy; <span id="year"></span> <b>HELPDESK ECOSYSTEM</b> • All Rights Reserved.
+                </div>
+            </footer>
         </div>
-
-        <a href="https://www.ivosights.com" target="_blank" class="contact-link">
-            <span class="move-pulse">🌐</span> ivosights.com
-        </a>
-
-        <a href="mailto:hello@ivosights.com" class="contact-link">
-            <span class="move-pulse">📧</span> hello@ivosights.com
-        </a>
-
-        <div class="meta-box">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Meta_Platforms_Inc._logo.svg" class="meta-logo move-pulse">
-            <span class="meta-label">Meta <small style="font-weight: 400; color:#94a3b8">Partner</small></span>
-        </div>
-
-        <div class="sama-box">
-            <span class="sama-label">Part of</span>
-            <span class="sama-logo">sama<span class="sama-dot">.</span></span>
-        </div>
-    </div>
-
-    <div class="footer-copyright">
-        &copy; <span id="year"></span> <b>HELPDESK ECOSYSTEM</b> • All Rights Reserved.
-    </div>
-</footer>
+    </main>
 
     <script>
         document.getElementById("year").textContent = new Date().getFullYear();
@@ -205,7 +187,6 @@
 
         const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQCLXvz4_F7EfUppPoKWSKQawlesCjiYHhceQCIEDoV8ntbDjFrvKUorP416AGydpWYmxWlOLA3b1JL/pub?gid=0&single=true&output=csv";
         let issues = [];
-        let categoryChart, performanceChart;
 
         Papa.parse(SHEET_URL, {
             download: true, header: true,
@@ -216,43 +197,10 @@
                     image_id: (x.image_id || "").trim()
                 })).filter(i => i.issue);
                 
-                initCharts(issues);
                 // Pesan awal setelah data dimuat
                 document.getElementById("list").innerHTML = `<div style="text-align: center; padding: 100px 0; color: #cbd5e1;"><p>Masukkan kata kunci untuk mencari solusi.</p></div>`;
             }
         });
-
-        function initCharts(data) {
-            const ctxCat = document.getElementById('categoryChart').getContext('2d');
-            const ctxPerf = document.getElementById('performanceChart').getContext('2d');
-
-            categoryChart = new Chart(ctxCat, {
-                type: 'bar',
-                data: {
-                    labels: ['WhatsApp', 'Marketing API', 'Graph API', 'Account'],
-                    datasets: [{
-                        label: 'Tickets',
-                        data: [data.length * 0.4, data.length * 0.3, data.length * 0.2, data.length * 0.1],
-                        backgroundColor: '#0ea5e9',
-                        borderRadius: 6
-                    }]
-                },
-                options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, grid: { display: false } } } }
-            });
-
-            performanceChart = new Chart(ctxPerf, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Resolved', 'Progress'],
-                    datasets: [{
-                        data: [92, 8],
-                        backgroundColor: ['#10b981', '#f1f5f9'],
-                        borderWidth: 0
-                    }]
-                },
-                options: { cutout: '75%', plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } } } }
-            });
-        }
 
         function copyToClipboard(btn, text) {
             const tempInput = document.createElement('textarea');
