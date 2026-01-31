@@ -251,7 +251,24 @@
         .issue-image { width: 100%; display: block; transition: transform 0.5s ease; }
         .issue-image:hover { transform: scale(1.03); }
 
-        .footer { text-align: center; padding: 40px 0; font-size: 12px; color: #94a3b8; font-weight: 500; }
+        /* --- FOOTER & ANIMATIONS --- */
+        @keyframes shake { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(5deg); } 75% { transform: rotate(-5deg); } }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+        .contact-info-footer { margin-top: 50px; text-align: center; border-top: 1px dashed #cbd5e1; padding-top: 30px; }
+        .shaking-icon { display: inline-block; animation: shake 0.6s infinite; font-size: 24px; margin-bottom: 5px; }
+        .moving-icon { display: inline-block; animation: pulse 1.5s infinite ease-in-out; }
+        .address-text { font-size: 13px; color: #64748b; margin: 10px 0; line-height: 1.6; }
+        .contact-links { display: flex; justify-content: center; gap: 20px; margin: 15px 0; }
+        .contact-item { text-decoration: none; color: #475569; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 6px; transition: 0.2s; }
+        .contact-item:hover { color: var(--primary); }
+
+        .meta-partner-section { margin-top: 30px; animation: float 3s ease-in-out infinite; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+        .meta-logo-img { width: 30px; }
+        .meta-text { font-weight: 800; font-size: 18px; color: #1c2b33; display: flex; align-items: center; gap: 8px; }
+
+        .footer-copyright { text-align: center; padding: 40px 0; font-size: 12px; color: #94a3b8; font-weight: 500; }
 
         @media (max-width: 900px) {
             .sidebar { display: none; }
@@ -311,7 +328,30 @@
             </div>
 
             <footer class="footer">
-                &copy; <span id="year"></span> <b>HELPDESK ECOSYSTEM</b> • All Rights Reserved.
+                <div class="contact-info-footer">
+                    <span class="shaking-icon">📍</span>
+                    <h4 style="font-size: 14px; color: #1e293b; font-weight: 800;">Contact Info :</h4>
+                    <div class="address-text">
+                        <strong>Jakarta (HQ)</strong><br>
+                        Jl. Tebet Raya No.62 Rt.02/04, East Tebet, South Jakarta, 12820
+                    </div>
+                    <div class="contact-links">
+                        <a href="mailto:hello@ivosights.com" class="contact-item"><span class="moving-icon">📧</span> hello@ivosights.com</a>
+                        <a href="https://www.ivosights.com" target="_blank" class="contact-item"><span class="moving-icon">🌐</span> www.ivosights.com</a>
+                    </div>
+                    
+                    <div class="meta-partner-section">
+                        <span style="font-size: 10px; color: #94a3b8; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Official Partner</span>
+                        <div class="meta-text">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Meta_Platforms_Inc._logo.svg" class="meta-logo-img"> 
+                            Meta <span style="font-weight: 400; color: #64748b;">Business Partner</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer-copyright">
+                    &copy; <span id="year"></span> <b>HELPDESK ECOSYSTEM</b> • All Rights Reserved.
+                </div>
             </footer>
         </div>
     </main>
@@ -388,7 +428,7 @@
                 
                 wrap.innerHTML = `
                     <div class="issue-trigger">
-                        <span>${highlight(item.issue, query)}</span>
+                        <span>${highlight(item.issue.toUpperCase(), query)}</span>
                         <span class="arrow">▼</span>
                     </div>
                     <div class="issue-content">
