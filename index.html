@@ -6,10 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
 
-    <title>Helpdesk Issue Tracker</title>
+    <title>Helpdesk Issue Tracker | Central Solution</title>
 
     <meta name="description" content="Portal Troubleshooting & Solusi Helpdesk untuk Marketing API, WhatsApp Platform, dan Graph API.">
-    <meta name="keywords" content="Helpdesk, Issue Tracker, Meta Business Partner, sights, Troubleshooting, WhatsApp API">
     <meta name="author" content="sights">
 
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -19,57 +18,32 @@
         :root {
             --primary: #0ea5e9;
             --primary-dark: #0284c7;
-            --primary-glow: rgba(14, 165, 233, 0.1);
-            --bg-body: #f1f5f9;
-            --header-offwhite: #f8fafc;
+            --primary-glow: rgba(14, 165, 233, 0.12);
+            --bg-body: #f8fafc;
+            --header-offwhite: #ffffff;
             --sidebar-dark: #0f172a;
-            --card-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.07);
+            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
+        /* Animations */
         @keyframes ani-bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
-        @keyframes ani-pulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.1); opacity: 0.8; } 100% { transform: scale(1); opacity: 1; } }
-        @keyframes ani-float { 0% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-4px) rotate(2deg); } 100% { transform: translateY(0px) rotate(0deg); } }
+        @keyframes ani-pulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.05); opacity: 0.9; } 100% { transform: scale(1); opacity: 1; } }
+        @keyframes ani-float { 0% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-5px) rotate(1deg); } 100% { transform: translateY(0px) rotate(0deg); } }
 
         .move-bounce { display: inline-block; animation: ani-bounce 2s infinite ease-in-out; }
-        .move-pulse { display: inline-block; animation: ani-pulse 2.5s infinite ease-in-out; }
-        .move-float { display: inline-block; animation: ani-float 3s infinite ease-in-out; }
+        .move-pulse { display: inline-block; animation: ani-pulse 3s infinite ease-in-out; }
+        .move-float { display: inline-block; animation: ani-float 4s infinite ease-in-out; }
 
         * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; padding: 0; }
-        body { background: var(--bg-body); display: flex; min-height: 100vh; color: #1e293b; overflow-x: hidden; }
-
-        .popular-item {
-            background: #e0f2fe;
-            color: #0369a1;
-            padding: 6px 12px;
-            border-radius: 999px;
-            font-size: 12px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: .2s;
-        }
-
-        .popular-item:hover { background: #bae6fd; }
-
-        /* --- MOBILE MENU BUTTON --- */
-        .mobile-header {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            height: 60px;
-            background: var(--sidebar-dark);
-            color: white;
-            padding: 0 20px;
-            align-items: center;
-            justify-content: space-between;
-            z-index: 1002;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .menu-btn {
-            background: none; border: 1px solid rgba(255,255,255,0.2);
-            color: white; padding: 8px 12px; border-radius: 8px; cursor: pointer;
-            font-size: 14px; font-weight: 600;
+        
+        body { 
+            background: var(--bg-body); 
+            display: flex; 
+            min-height: 100vh; 
+            color: #1e293b; 
+            overflow-x: hidden; 
+            scroll-behavior: smooth;
         }
 
         /* --- SIDEBAR --- */
@@ -78,91 +52,181 @@
             background: var(--sidebar-dark); 
             position: fixed; 
             height: 100vh; 
-            padding: 40px 24px; 
+            padding: 40px 20px; 
             display: flex; 
             flex-direction: column; 
             color: white; 
             z-index: 1001; 
-            transition: transform 0.3s ease;
+            transition: var(--transition);
         }
 
-        .brand { margin-bottom: 40px; padding-left: 12px; }
+        .brand { margin-bottom: 40px; padding-left: 15px; }
         .brand .logo-text { font-weight: 800; font-size: 24px; letter-spacing: -1px; }
         .brand .logo-dot { color: var(--primary); }
         .brand .sub-text { font-size: 10px; color: #64748b; font-weight: 700; letter-spacing: 1.5px; margin-top: 4px; }
+
+        .sidebar h3 { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: #475569; margin: 25px 0 15px 15px; }
         
-        .sidebar h3 { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: #475569; margin-bottom: 20px; padding-left: 12px; }
-        .sidebar a { display: flex; align-items: center; padding: 14px 16px; margin-bottom: 8px; border-radius: 12px; text-decoration: none; color: #94a3b8; font-size: 14px; font-weight: 500; transition: var(--transition); }
-        .sidebar a:hover { background: rgba(255, 255, 255, 0.05); color: white; transform: translateX(4px); }
-        
+        .sidebar a { 
+            display: flex; 
+            align-items: center; 
+            padding: 12px 15px; 
+            margin-bottom: 4px; 
+            border-radius: 12px; 
+            text-decoration: none; 
+            color: #94a3b8; 
+            font-size: 14px; 
+            font-weight: 500; 
+            transition: var(--transition); 
+        }
+
+        .sidebar a:hover { background: rgba(255, 255, 255, 0.08); color: white; transform: translateX(5px); }
+        .sidebar a.active { background: var(--primary); color: white; }
+
         .ppt-link { 
             margin-top: auto !important; 
             background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important; 
             color: white !important; 
             justify-content: center; 
             font-weight: 700 !important; 
-            box-shadow: 0 10px 20px -5px rgba(16, 185, 129, 0.4); 
-            margin-bottom: 10px; 
+            box-shadow: 0 10px 20px -5px rgba(16, 185, 129, 0.3);
         }
 
         /* --- MAIN CONTENT --- */
-        .main { margin-left: 280px; width: calc(100% - 280px); padding: 30px 50px; transition: var(--transition); }
-        .container { max-width: 1100px; margin: auto; }
-        .header-card { background: var(--header-offwhite); border-radius: 24px; padding: 30px 40px; text-align: center; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); margin-bottom: 30px; position: relative; border: 1px solid #e2e8f0; }
-        .datetime { position: absolute; top: 20px; right: 30px; font-size: 11px; color: #94a3b8; font-weight: 600; background: #ffffff; padding: 4px 12px; border-radius: 20px; border: 1px solid #f1f5f9; }
-        .main-logo { width: 180px; height: auto; margin: 0 auto 15px; display: block; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.06)); }
-        .header-card h1 { font-size: 36px; font-weight: 800; background: linear-gradient(135deg, #0f172a 0%, #1e293b 30%, #0ea5e9 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: -1.8px; line-height: 1.2; margin-bottom: 10px; }
+        .main { margin-left: 280px; width: calc(100% - 280px); padding: 40px 60px; transition: var(--transition); }
+        .container { max-width: 1000px; margin: auto; }
+
+        .header-card { 
+            background: var(--header-offwhite); 
+            border-radius: 24px; 
+            padding: 40px; 
+            text-align: center; 
+            box-shadow: var(--card-shadow); 
+            margin-bottom: 40px; 
+            position: relative; 
+            border: 1px solid #f1f5f9; 
+        }
+
+        .datetime { 
+            position: absolute; 
+            top: 20px; 
+            right: 30px; 
+            font-size: 11px; 
+            color: #64748b; 
+            font-weight: 600; 
+            background: #f1f5f9; 
+            padding: 6px 14px; 
+            border-radius: 20px; 
+        }
+
+        .main-logo { width: 160px; height: auto; margin: 0 auto 20px; display: block; }
+        .header-card h1 { font-size: 32px; font-weight: 800; color: #0f172a; letter-spacing: -1px; margin-bottom: 8px; }
 
         /* --- SEARCH & LIST --- */
-        .search-wrapper { position: relative; margin-bottom: 25px; }
-        .search-wrapper input { width: 100%; padding: 18px 25px 18px 60px; border-radius: 20px; border: 1px solid #e2e8f0; background: white; font-size: 16px; outline: none; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.02); transition: var(--transition); }
+        .search-wrapper { position: relative; margin-bottom: 30px; }
+        .search-wrapper input { 
+            width: 100%; 
+            padding: 20px 25px 20px 65px; 
+            border-radius: 20px; 
+            border: 2px solid #e2e8f0; 
+            background: white; 
+            font-size: 16px; 
+            outline: none; 
+            transition: var(--transition); 
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+        }
         .search-wrapper input:focus { border-color: var(--primary); box-shadow: 0 0 0 5px var(--primary-glow); }
-        .search-icon { position: absolute; left: 22px; top: 50%; transform: translateY(-50%); color: #cbd5e1; font-size: 20px; }
-        
-        .issue-card { background: white; border-radius: 20px; margin-bottom: 16px; border: 1px solid #edf2f7; transition: var(--transition); overflow: hidden; }
-        .issue-trigger { padding: 24px 30px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
-        .issue-trigger span:first-child { font-weight: 700; color: #334155; font-size: 15px; }
-        .arrow { font-size: 12px; color: #94a3b8; transition: transform 0.4s ease; }
-        .issue-card.open .arrow { transform: rotate(180deg); color: var(--primary); }
-        .issue-content { max-height: 0; overflow: hidden; transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1); background: #fcfdfe; }
-        .issue-card.open .issue-content { max-height: 3000px; border-top: 1px solid #f1f5f9; }
-        .content-inner { padding: 30px; }
-        
-        .solusi-container { background: #f8fafc; border-left: 5px solid var(--primary); padding: 25px; border-radius: 0 16px 16px 0; }
-        .solusi-text { line-height: 1.8; font-size: 15px; color: #475569; white-space: pre-wrap; }
-        .btn-copy { margin-top: 15px; background: #ffffff; border: 1px solid #e2e8f0; padding: 8px 16px; border-radius: 8px; font-size: 12px; font-weight: 700; color: #64748b; cursor: pointer; transition: 0.2s; display: inline-flex; align-items: center; gap: 8px; }
-        .btn-copy:hover { border-color: var(--primary); color: var(--primary); background: #f0f9ff; }
-        mark { background: #fef08a; color: #854d0e; padding: 0 2px; border-radius: 2px; }
+        .search-icon { position: absolute; left: 25px; top: 50%; transform: translateY(-50%); color: #94a3b8; font-size: 22px; }
 
-        /* --- FOOTER --- */
-        .footer { margin-top: 60px; padding: 40px 0; border-top: 1px solid #e2e8f0; }
-        .footer-layout { display: flex; align-items: center; justify-content: space-between; gap: 30px; flex-wrap: nowrap; }
-        .footer-item { display: flex; gap: 12px; align-items: center; }
-        .address-text { font-size: 12px; color: #64748b; line-height: 1.5; }
-        .address-text strong { color: #1e293b; display: block; }
-        .meta-box { display: flex; align-items: center; gap: 10px; }
-        .meta-logo { width: 22px; }
-        .meta-label { font-size: 14px; font-weight: 700; color: #1c2b33; }
+        .popular-item { 
+            background: #f1f5f9; 
+            color: #475569; 
+            padding: 8px 16px; 
+            border-radius: 10px; 
+            font-size: 12px; 
+            font-weight: 600; 
+            cursor: pointer; 
+            transition: 0.2s; 
+            border: 1px solid transparent;
+        }
+        .popular-item:hover { background: #e0f2fe; color: #0369a1; border-color: #bae6fd; }
+
+        /* --- CARDS --- */
+        .issue-card { 
+            background: white; 
+            border-radius: 18px; 
+            margin-bottom: 16px; 
+            border: 1px solid #f1f5f9; 
+            transition: var(--transition); 
+            overflow: hidden; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .issue-card:hover { transform: translateY(-2px); box-shadow: var(--card-shadow); }
         
-        .sama-box { border-left: 1px solid #e2e8f0; padding-left: 20px; display: flex; flex-direction: column; }
-        .sama-label { font-size: 10px; color: #94a3b8; font-weight: 800; text-transform: uppercase; margin-bottom: 2px; }
-        .sama-logo-wrapper { display: flex; flex-direction: column; line-height: 1.1; }
-        .sama-logo-new { font-size: 22px; font-weight: 900; color: #1e293b; font-style: italic; letter-spacing: -1px; }
-        .sama-subtext { font-size: 5.5px; font-weight: 800; color: #475569; letter-spacing: 0.1px; white-space: nowrap; }
+        .issue-trigger { padding: 25px 30px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        .issue-trigger span:first-child { font-weight: 700; color: #334155; font-size: 15px; }
+        .arrow { font-size: 12px; color: #cbd5e1; transition: transform 0.4s ease; }
         
-        .footer-copyright { margin-top: 30px; text-align: center; font-size: 11px; color: #94a3b8; letter-spacing: 0.5px; line-height: 1.6; }
+        .issue-card.open { border-color: var(--primary); }
+        .issue-card.open .arrow { transform: rotate(180deg); color: var(--primary); }
+        
+        .issue-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease; background: #fafbfc; }
+        .issue-card.open .issue-content { max-height: 2000px; }
+        
+        .content-inner { padding: 30px; }
+        .solusi-container { 
+            background: white; 
+            border-left: 4px solid var(--primary); 
+            padding: 25px; 
+            border-radius: 4px 16px 16px 4px; 
+            box-shadow: inset 0 0 0 1px #f1f5f9;
+        }
+        .solusi-text { line-height: 1.7; font-size: 15px; color: #475569; white-space: pre-wrap; }
+        
+        .btn-copy { 
+            margin-top: 20px; 
+            background: #0f172a; 
+            color: white; 
+            border: none; 
+            padding: 10px 20px; 
+            border-radius: 10px; 
+            font-size: 13px; 
+            font-weight: 600; 
+            cursor: pointer; 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 8px; 
+            transition: 0.2s;
+        }
+        .btn-copy:hover { background: var(--primary); transform: scale(1.02); }
+
+        /* --- MOBILE --- */
+        .mobile-header { 
+            display: none; 
+            position: fixed; 
+            top: 0; left: 0; right: 0; 
+            height: 65px; 
+            background: var(--sidebar-dark); 
+            color: white; 
+            padding: 0 20px; 
+            align-items: center; 
+            justify-content: space-between; 
+            z-index: 1002; 
+        }
 
         @media (max-width: 1024px) {
             .mobile-header { display: flex; }
-            .sidebar { transform: translateX(-100%); z-index: 1003; }
-            .sidebar.active { transform: translateX(0); box-shadow: 10px 0 30px rgba(0,0,0,0.3); }
-            .main { margin-left: 0; width: 100%; padding: 80px 20px 20px; }
-            .footer-layout { flex-wrap: wrap; justify-content: center; text-align: center; }
-            .datetime { position: static; margin-bottom: 15px; display: inline-block; }
-            .header-card h1 { font-size: 28px; }
-            .sidebar-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1002; }
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.active { transform: translateX(0); }
+            .main { margin-left: 0; width: 100%; padding: 100px 20px 40px; }
+            .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; backdrop-filter: blur(4px); }
             .sidebar-overlay.active { display: block; }
         }
+
+        .footer { margin-top: 80px; padding: 40px 0; border-top: 1px solid #e2e8f0; }
+        .footer-layout { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 30px; }
+        
+        mark { background: #fef08a; color: #854d0e; padding: 0 2px; border-radius: 2px; font-weight: 600; }
     </style>
 </head>
 
@@ -170,10 +234,10 @@
     <div class="sidebar-overlay" id="overlay"></div>
 
     <header class="mobile-header">
-        <div class="brand" style="margin-bottom: 0; padding-left: 0;">
+        <div class="brand" style="margin:0; padding:0">
             <div class="logo-text" style="font-size: 18px;">Helpdesk<span class="logo-dot">.</span></div>
         </div>
-        <button class="menu-btn" id="menuToggle">☰ MENU</button>
+        <button class="menu-btn" id="menuToggle" style="background:rgba(255,255,255,0.1); border:none; color:white; padding:8px 15px; border-radius:8px; cursor:pointer; font-weight:700;">MENU</button>
     </header>
 
     <nav class="sidebar" id="sidebar">
@@ -182,285 +246,235 @@
             <div class="sub-text">CENTRAL SOLUTION</div>
         </div>
 
-        <h3>Dokumentasi API</h3>
-        <a href="https://developers.facebook.com/docs/marketing-api/" target="_blank">Marketing API</a>
-        <a href="https://developers.facebook.com/docs/whatsapp/" target="_blank">WhatsApp Platform</a>
-        <a href="https://developers.facebook.com/docs/graph-api/" target="_blank">Graph API</a>
-        <a href="https://developers.facebook.com/docs/messenger-platform/" target="_blank">Messenger API</a>
-        <a href="https://developers.facebook.com/documentation/business-messaging/whatsapp/support/error-codes" target="_blank">Cloud API</a>
-        <a href="https://kb.sociomile.com/how-to-add-a-whatsapp-channel/" target="_blank"> Add Channel Whatsapp</a>
-        <a href="https://kb.sociomile.com/how-to-add-an-email-channel/" target="_blank"> Add Channel Email</a>
-        <a href="https://kb.sociomile.com/how-to-add-a-facebook-channel/" target="_blank"> Add Channel Facebook</a>
-        <a href="https://kb.sociomile.com/how-to-add-an-instagram-channel/" target="_blank"> Add Channel Instagram</a>
-        <a href="https://kb.sociomile.com/category/technical-troubleshooting/" target="_blank"> Technical Issue & Troubleshooting</a>
-        <a href="https://kb.sociomile.com/category/account-settings/" target="_blank"> Account Setting</a>
-        <a href="https://docs.google.com/spreadsheets/d/1Ak1J5gqrLzHaLxxqbrjGTYnj2XgD7onzv07iMrirBAA/edit?usp=sharing" target="_blank">📅 Support Schedule</a>
+        <h3>API Docs</h3>
+        <a href="https://developers.facebook.com/docs/marketing-api/" target="_blank" rel="noopener">Marketing API</a>
+        <a href="https://developers.facebook.com/docs/whatsapp/" target="_blank" rel="noopener">WhatsApp Platform</a>
+        <a href="https://developers.facebook.com/docs/graph-api/" target="_blank" rel="noopener">Graph API</a>
+        
+        <h3>Sociomile KB</h3>
+        <a href="https://kb.sociomile.com/category/technical-troubleshooting/" target="_blank" rel="noopener">Technical Issue</a>
+        <a href="https://kb.sociomile.com/category/account-settings/" target="_blank" rel="noopener">Account Settings</a>
 
         <a href="https://docs.google.com/presentation/d/11juAD4KUHTNJ78kRXdotFl3rBwXIyRRU/edit?usp=sharing" target="_blank" class="ppt-link">
-            <span class="move-float" style="margin-right: 8px;">📊</span> Weekly Report
+            <span class="move-float">📊</span> &nbsp; Weekly Report
         </a>
     </nav>
 
     <main class="main">
         <div class="container">
             <header class="header-card">
-                <div class="datetime" id="datetime"></div>
-                <img src="https://drive.google.com/thumbnail?id=1SINqv3envug8sIa6E9wtBMTZSF-NkaxY&sz=w1000" class="main-logo">
-                <h1>Helpdesk Issue Tracker</h1>
-                <p style="font-size: 12px; color: #94a3b8; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px;">Troubleshooting & Solution Portal</p>
+                <div class="datetime" id="datetime">Memuat waktu...</div>
+                <img src="https://drive.google.com/thumbnail?id=1SINqv3envug8sIa6E9wtBMTZSF-NkaxY&sz=w1000" class="main-logo" alt="Logo">
+                <h1>Issue Tracker</h1>
+                <p style="color: #64748b; font-weight: 500;">Pusat Pencarian Solusi & Troubleshooting Helpdesk</p>
             </header>
 
             <div class="search-wrapper">
                 <div id="popular-search" style="margin-bottom:20px;">
-                    <div style="font-size:12px;font-weight:700;color:#64748b;margin-bottom:8px;">🔥 Sering Dicari</div>
-                    <div id="popular-list" style="display:flex;gap:8px;flex-wrap:wrap;"></div>
+                    <p style="font-size:11px; font-weight:800; color:#94a3b8; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px;">🔥 Top Pencarian</p>
+                    <div id="popular-list" style="display:flex; gap:8px; flex-wrap:wrap;"></div>
                 </div>
-
                 <span class="search-icon">🔍</span>
-                <input id="search" placeholder="Cari masalah, solusi, atau kode error..." autocomplete="off">
+                <input id="search" placeholder="Ketik masalah atau kode error (misal: 100 atau 404)..." autocomplete="off">
             </div>
 
             <div id="list">
-                <div style="text-align: center; padding: 100px 0; color: #cbd5e1;">
-                    <p>Memuat data dari sistem...</p>
+                <div style="text-align: center; padding: 60px 0; color: #94a3b8;">
+                    <p>Menunggu input pencarian...</p>
                 </div>
             </div>
 
             <footer class="footer">
                 <div class="footer-layout">
-                    <div class="footer-item">
-                        <span class="move-bounce" style="font-size: 25px;">📍</span>
-                        <div class="address-text">
-                            <strong>Jakarta (HQ)</strong>
-                            Jl. Tebet Raya, South Jakarta
+                    <div style="display:flex; align-items:center; gap:15px;">
+                        <span class="move-bounce" style="font-size: 24px;">📍</span>
+                        <div style="font-size:13px; color:#64748b;">
+                            <strong style="color:#1e293b; display:block;">Jakarta Headquarters</strong>
+                            Tebet Raya, South Jakarta
                         </div>
                     </div>
-
-                    <div class="meta-box">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Meta_Platforms_Inc._logo.svg" class="meta-logo move-pulse">
-                        <span class="meta-label">Meta <small style="font-weight: 400; color:#94a3b8">Partner</small></span>
-                    </div>
-
-                    <div class="sama-box">
-                        <span class="sama-label">Part of</span>
-                        <div class="sama-logo-wrapper">
-                            <span class="sama-logo-new">sama<span class="sama-dot" style="color: #f97316;">.</span></span>
-                            <span class="sama-subtext">STRATEGIC ASIA MARKETING ALLIANCE</span>
+                    
+                    <div style="display:flex; align-items:center; gap:20px;">
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Meta_Platforms_Inc._logo.svg" style="width:20px;">
+                            <span style="font-weight:700; font-size:14px;">Meta <small style="color:#94a3b8; font-weight:400;">Partner</small></span>
+                        </div>
+                        <div style="height:30px; width:1px; background:#e2e8f0;"></div>
+                        <div style="line-height:1">
+                            <span style="font-size:20px; font-weight:900; color:#1e293b; font-style:italic;">sama<span style="color:#f97316">.</span></span>
+                            <p style="font-size:6px; font-weight:800; color:#64748b; margin-top:2px;">STRATEGIC ASIA MARKETING ALLIANCE</p>
                         </div>
                     </div>
                 </div>
-
-                <div class="footer-copyright">
-                    <div>&copy; <span id="year"></span> All Team Helpdesk.</div>
-                </div>
+                <p style="text-align:center; margin-top:40px; font-size:11px; color:#94a3b8;">&copy; <span id="year"></span> All Team Helpdesk. Version 2.1 Optimized.</p>
             </footer>
         </div>
     </main>
 
     <script>
-        // Logika Sidebar Mobile
-        const menuToggle = document.getElementById('menuToggle');
-        const sidebar = document.getElementById('sidebar');
-        const overlay = document.getElementById('overlay');
-
-        function toggleMenu() {
-            sidebar.classList.toggle('active');
-            overlay.classList.toggle('active');
-        }
-
-        menuToggle.onclick = toggleMenu;
-        overlay.onclick = toggleMenu;
-
-        sidebar.querySelectorAll('a').forEach(link => {
-            link.onclick = () => {
-                if (window.innerWidth <= 1024) toggleMenu();
-            };
-        });
-
-        document.getElementById("year").textContent = new Date().getFullYear();
-
-        function updateTime() {
-            const now = new Date();
-            document.getElementById("datetime").textContent = now.toLocaleDateString('id-ID', {
-                weekday: 'short', day: '2-digit', month: 'short'
-            }) + " • " + now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) + " WIB";
-        }
-        setInterval(updateTime, 1000);
-        updateTime();
-
+        // Utilities
+        const $ = id => document.getElementById(id);
         const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQCLXvz4_F7EfUppPoKWSKQawlesCjiYHhceQCIEDoV8ntbDjFrvKUorP416AGydpWYmxWlOLA3b1JL/pub?gid=0&single=true&output=csv";
+        
         let issues = [];
         let dataReady = false;
 
+        // DateTime
+        function updateTime() {
+            const now = new Date();
+            $('datetime').textContent = now.toLocaleDateString('id-ID', {
+                weekday: 'short', day: '2-digit', month: 'short'
+            }) + " • " + now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) + " WIB";
+        }
+        setInterval(updateTime, 1000); updateTime();
+        $('year').textContent = new Date().getFullYear();
+
+        // Sidebar Toggle
+        const toggle = () => {
+            $('sidebar').classList.toggle('active');
+            $('overlay').classList.toggle('active');
+        };
+        $('menuToggle').onclick = toggle;
+        $('overlay').onclick = toggle;
+
+        // Data Fetching
         Papa.parse(SHEET_URL, {
             download: true,
             header: true,
-            complete: r => {
-                issues = r.data.map(x => ({
-                    issue: (x.issue || "").trim(),
-                    solusi: (x.solusi || "").trim(),
-                    image_id: (x.image_id || "").trim()
+            complete: results => {
+                issues = results.data.map(item => ({
+                    issue: (item.issue || "").trim(),
+                    solusi: (item.solusi || "").trim(),
+                    image_id: (item.image_id || "").trim()
                 })).filter(i => i.issue);
-
                 dataReady = true;
-                document.getElementById("list").innerHTML =
-                    `<div style="text-align: center; padding: 100px 0; color: #cbd5e1;">
-                        <p>Masukkan kata kunci untuk mencari solusi.</p>
-                    </div>`;
+                $('list').innerHTML = `<div style="text-align:center; padding:60px; color:#94a3b8;"><p>Siap mencari. Masukkan kata kunci di atas.</p></div>`;
             }
         });
 
-        function copyToClipboard(btn, text) {
-            const tempInput = document.createElement('textarea');
-            tempInput.value = text;
-            document.body.appendChild(tempInput);
-            tempInput.select();
-            document.execCommand('copy');
-            const originalContent = btn.innerHTML;
-            btn.innerHTML = "✅ Berhasil Disalin";
-            setTimeout(() => { btn.innerHTML = originalContent; }, 2000);
-            document.body.removeChild(tempInput);
+        // Copy Function with Modern Clipboard API
+        async function copyContent(btn, text) {
+            try {
+                await navigator.clipboard.writeText(text);
+                const oldText = btn.innerHTML;
+                btn.innerHTML = "✅ Berhasil Disalin";
+                btn.style.background = "#10b981";
+                setTimeout(() => { 
+                    btn.innerHTML = oldText; 
+                    btn.style.background = "#0f172a";
+                }, 2000);
+            } catch (err) {
+                // Fallback
+                const t = document.createElement("textarea");
+                t.value = text; document.body.appendChild(t); t.select();
+                document.execCommand('copy'); document.body.removeChild(t);
+            }
         }
 
-        function render(data, query = "") {
-            const list = document.getElementById("list");
-            list.innerHTML = "";
-            if (!data.length) {
-                list.innerHTML = `<div style="text-align: center; padding: 80px 0; color: #94a3b8;"><p>Data tidak ditemukan.</p></div>`;
+        // Render Issue List
+        function render(data, q = "") {
+            const container = $('list');
+            container.innerHTML = "";
+            
+            if (data.length === 0) {
+                container.innerHTML = `<div style="text-align:center; padding:60px; color:#94a3b8;"><p>Maaf, solusi tidak ditemukan.</p></div>`;
                 return;
             }
 
-            data.forEach((item) => {
-                const wrap = document.createElement("div");
-                wrap.className = "issue-card";
-                const highlightText = (text) => {
-                    if (!query) return text;
-                    const re = new RegExp(`(${query})`, "gi");
-                    return text.replace(re, "<mark>$1</mark>");
-                };
+            data.forEach(item => {
+                const card = document.createElement('div');
+                card.className = "issue-card";
+                
+                const highlight = t => q ? t.replace(new RegExp(`(${q})`, "gi"), "<mark>$1</mark>") : t;
 
-                wrap.innerHTML = `
+                card.innerHTML = `
                     <div class="issue-trigger">
-                        <span>${highlightText(item.issue.toUpperCase())}</span>
+                        <span>${highlight(item.issue.toUpperCase())}</span>
                         <span class="arrow">▼</span>
                     </div>
                     <div class="issue-content">
                         <div class="content-inner">
                             <div class="solusi-container">
-                                <div class="solusi-text">${highlightText(item.solusi)}</div>
+                                <div class="solusi-text">${highlight(item.solusi)}</div>
                                 <button class="btn-copy">📋 Salin Solusi</button>
                             </div>
-                            ${item.image_id ? `<img src="https://drive.google.com/thumbnail?id=${item.image_id}&sz=w1200" style="width:100%; margin-top:20px; border-radius:12px;">` : ""}
+                            <div class="img-placeholder" data-id="${item.image_id}"></div>
                         </div>
-                    </div>`;
+                    </div>
+                `;
 
-                wrap.querySelector(".issue-trigger").onclick = () => {
-                    const isOpen = wrap.classList.contains("open");
-                    document.querySelectorAll(".issue-card").forEach(c => c.classList.remove("open"));
-                    if (!isOpen) wrap.classList.add("open");
+                card.querySelector('.issue-trigger').onclick = () => {
+                    const isOpen = card.classList.contains('open');
+                    document.querySelectorAll('.issue-card').forEach(c => c.classList.remove('open'));
+                    if(!isOpen) {
+                        card.classList.add('open');
+                        // Lazy load image
+                        const placeholder = card.querySelector('.img-placeholder');
+                        const imgId = placeholder.dataset.id;
+                        if(imgId && !placeholder.innerHTML) {
+                            placeholder.innerHTML = `<img src="https://drive.google.com/thumbnail?id=${imgId}&sz=w1200" style="width:100%; margin-top:20px; border-radius:12px; display:block; border:1px solid #f1f5f9;">`;
+                        }
+                    }
                 };
 
-                wrap.querySelector(".btn-copy").onclick = (e) => {
+                card.querySelector('.btn-copy').onclick = (e) => {
                     e.stopPropagation();
-                    copyToClipboard(e.target, item.solusi);
+                    copyContent(e.target, item.solusi);
                 };
-                list.appendChild(wrap);
+
+                container.appendChild(card);
             });
         }
 
-        document.getElementById("search").addEventListener("input", e => {
-            if (!dataReady) {
-                document.getElementById("list").innerHTML =
-                    `<div style="text-align: center; padding: 100px 0; color: #94a3b8;">
-                        <p>⏳ Data masih dimuat, tunggu sebentar...</p>
-                    </div>`;
+        // Search Logic
+        $('search').oninput = e => {
+            if(!dataReady) return;
+            const query = e.target.value.toLowerCase().trim();
+            if(!query) {
+                $('list').innerHTML = `<div style="text-align:center; padding:60px; color:#94a3b8;"><p>Masukkan kata kunci untuk mencari.</p></div>`;
                 return;
             }
+            const filtered = issues.filter(i => i.issue.toLowerCase().includes(query) || i.solusi.toLowerCase().includes(query));
+            render(filtered, query);
+        };
 
-            const k = e.target.value.toLowerCase();
-            if (!k) {
-                document.getElementById("list").innerHTML =
-                    `<div style="text-align: center; padding: 100px 0; color: #cbd5e1;">
-                        <p>Masukkan kata kunci untuk mencari solusi.</p>
-                    </div>`;
-                return;
-            }
-
-            const filtered = issues.filter(i =>
-                i.issue.toLowerCase().includes(k) ||
-                i.solusi.toLowerCase().includes(k)
-            );
-            render(filtered, k);
-        });
-
-        /* =========================
-            SMART FREQUENT SEARCH V2
-        ========================= */
-        const FREQ_STORAGE_KEY = "helpdesk_freq_search_v2";
-        const MAX_SAVE = 25;
-        const EXPIRE_DAYS = 7;
-
-        function normalize(t) { return t.toLowerCase().trim().replace(/\s+/g, ' ') }
-
-        function loadFreq() {
-            try {
-                const raw = JSON.parse(localStorage.getItem(FREQ_STORAGE_KEY) || "[]");
-                const now = Date.now();
-                const valid = raw.filter(i => now - i.time < EXPIRE_DAYS * 86400000);
-                localStorage.setItem(FREQ_STORAGE_KEY, JSON.stringify(valid));
-                return valid;
-            } catch (e) { return [] }
+        // Popular Search (Persistent)
+        const STORAGE_KEY = "helpdesk_popular_v2";
+        
+        function recordSearch(k) {
+            k = k.toLowerCase().trim();
+            if(k.length < 3) return;
+            let data = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+            let existing = data.find(i => i.key === k);
+            if(existing) existing.count++; else data.push({key: k, count: 1});
+            data.sort((a,b) => b.count - a.count);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data.slice(0, 10)));
+            renderPopular();
         }
 
-        function saveFreq(d) {
-            localStorage.setItem(FREQ_STORAGE_KEY, JSON.stringify(d.slice(0, MAX_SAVE)))
-        }
-
-        function recordSearch(keyword) {
-            keyword = normalize(keyword);
-            if (keyword.length < 3 || keyword.length > 60) return;
-
-            let data = loadFreq();
-            const now = Date.now();
-
-            let found = data.find(i => i.key === keyword);
-            if (found) { found.count++; found.time = now }
-            else data.push({ key: keyword, count: 1, time: now });
-
-            data.sort((a, b) => b.count - a.count);
-            saveFreq(data);
-            renderFreq();
-        }
-
-        function renderFreq() {
-            const box = document.getElementById("popular-list");
-            if (!box) return;
-
-            const data = loadFreq().slice(0, 8);
-            box.innerHTML = "";
-
+        function renderPopular() {
+            const list = $('popular-list');
+            const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]").slice(0, 6);
+            list.innerHTML = "";
             data.forEach(d => {
-                const btn = document.createElement("div");
-                btn.className = "popular-item";
-                btn.textContent = d.key;
-                btn.onclick = () => {
-                    const input = document.getElementById("search");
-                    input.value = d.key;
-                    input.dispatchEvent(new Event("input"));
+                const item = document.createElement('div');
+                item.className = "popular-item";
+                item.textContent = d.key;
+                item.onclick = () => {
+                    $('search').value = d.key;
+                    $('search').dispatchEvent(new Event('input'));
                 };
-                box.appendChild(btn);
+                list.appendChild(item);
             });
         }
 
-        let debounceTimer = null;
-        document.addEventListener("input", e => {
-            if (e.target.id != "search") return;
-            clearTimeout(debounceTimer);
-            debounceTimer = setTimeout(() => recordSearch(e.target.value), 600);
+        let searchDebounce;
+        $('search').addEventListener('input', e => {
+            clearTimeout(searchDebounce);
+            searchDebounce = setTimeout(() => recordSearch(e.target.value), 1500);
         });
 
-        document.addEventListener("DOMContentLoaded", renderFreq);
+        window.onload = renderPopular;
     </script>
 </body>
-
 </html>
