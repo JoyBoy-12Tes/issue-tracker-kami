@@ -2,7 +2,10 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">""
+
+    <meta name="robots" content="noindex, nofollow">
+    
     <title>Helpdesk Issue Tracker</title>
     
     <meta name="description" content="Portal Troubleshooting & Solusi Helpdesk untuk Marketing API, WhatsApp Platform, dan Graph API.">
@@ -13,6 +16,7 @@
     <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 
     <style>
+        
         :root {
             --primary: #0ea5e9;
             --primary-dark: #0284c7;
@@ -34,6 +38,21 @@
 
         * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; padding: 0; }
         body { background: var(--bg-body); display: flex; min-height: 100vh; color: #1e293b; overflow-x: hidden; }
+
+        .popular-item{
+    background:#e0f2fe;
+    color:#0369a1;
+    padding:6px 12px;
+    border-radius:999px;
+    font-size:12px;
+    font-weight:700;
+    cursor:pointer;
+    transition:.2s;
+}
+.popular-item:hover{
+    background:#bae6fd;
+}
+
 
         /* --- MOBILE MENU BUTTON --- */
         .mobile-header {
@@ -235,6 +254,15 @@
             </header>
 
             <div class="search-wrapper">
+
+<div id="popular-search" style="margin-bottom:20px;">
+    <div style="font-size:12px;font-weight:700;color:#64748b;margin-bottom:8px;">
+        🔥 Sering Dicari
+    </div>
+    <div id="popular-list" style="display:flex;gap:8px;flex-wrap:wrap;"></div>
+</div>
+
+                
                 <span class="search-icon">🔍</span>
                 <input id="search" placeholder="Cari masalah, solusi, atau kode error..." autocomplete="off">
             </div>
@@ -388,9 +416,52 @@
                 document.getElementById("list").innerHTML = `<div style="text-align: center; padding: 100px 0; color: #cbd5e1;"><p>Masukkan kata kunci untuk mencari solusi.</p></div>`;
                 return;
             }
-            const filtered = issues.filter(i => i.issue.toLowerCase().includes(k) || i.solusi.toLowerCase().includes(k));
+            const filtered = issues.filter(i => i.issue.toLowerCase().includes(k) || i.solusi.toLowerCase().includes(k));saveSearch(k);
             render(filtered, k);
         });
+            /* =========================
+   POPULAR SEARCH TRACKER
+========================= */
+
+function saveSearch(keyword){
+    if(!keyword || keyword.length < 3) return;
+
+    let data = JSON.parse(localStorage.getItem("helpdesk_search") || "{}");
+
+    data[keyword] = (data[keyword] || 0) + 1;
+
+    localStorage.setItem("helpdesk_search", JSON.stringify(data));
+    renderPopular();
+}
+
+function renderPopular(){
+    const box = document.getElementById("popular-list");
+    if(!box) return;
+
+    let data = JSON.parse(localStorage.getItem("helpdesk_search") || "{}");
+
+    const sorted = Object.entries(data)
+        .sort((a,b)=>b[1]-a[1])
+        .slice(0,8); // tampilkan 8 teratas
+
+    box.innerHTML="";
+
+    sorted.forEach(([keyword])=>{
+        const btn = document.createElement("div");
+        btn.className="popular-item";
+        btn.textContent=keyword;
+
+        btn.onclick=()=>{
+            document.getElementById("search").value = keyword;
+            document.getElementById("search").dispatchEvent(new Event("input"));
+        };
+
+        box.appendChild(btn);
+    });
+}
+
+renderPopular();
+        
     </script>
 </body>
 </html>
