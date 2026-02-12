@@ -339,17 +339,26 @@
 
         const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQCLXvz4_F7EfUppPoKWSKQawlesCjiYHhceQCIEDoV8ntbDjFrvKUorP416AGydpWYmxWlOLA3b1JL/pub?gid=0&single=true&output=csv";
         let issues = [];
+        let dataReady = false;
+
 
         Papa.parse(SHEET_URL, {
             download: true, header: true,
             complete: r => {
-                issues = r.data.map(x => ({
-                    issue: (x.issue || "").trim(),
-                    solusi: (x.solusi || "").trim(),
-                    image_id: (x.image_id || "").trim()
-                })).filter(i => i.issue);
-                document.getElementById("list").innerHTML = `<div style="text-align: center; padding: 100px 0; color: #cbd5e1;"><p>Masukkan kata kunci untuk mencari solusi.</p></div>`;
-            }
+    issues = r.data.map(x => ({
+        issue: (x.issue || "").trim(),
+        solusi: (x.solusi || "").trim(),
+        image_id: (x.image_id || "").trim()
+    })).filter(i => i.issue);
+
+    dataReady = true;
+
+    document.getElementById("list").innerHTML =
+    `<div style="text-align: center; padding: 100px 0; color: #cbd5e1;">
+        <p>Masukkan kata kunci untuk mencari solusi.</p>
+    </div>`;
+}
+
         });
 
         function copyToClipboard(btn, text) {
@@ -410,7 +419,15 @@
             });
         }
 
-        document.getElementById("search").addEventListener("input", e => {
+document.getElementById("search").addEventListener("input", e => {
+
+    if(!dataReady){
+        document.getElementById("list").innerHTML =
+        `<div style="text-align: center; padding: 100px 0; color: #94a3b8;">
+            <p>⏳ Data masih dimuat, tunggu sebentar...</p>
+        </div>`;
+        return;
+    }
             const k = e.target.value.toLowerCase();
             if (!k) {
                 document.getElementById("list").innerHTML = `<div style="text-align: center; padding: 100px 0; color: #cbd5e1;"><p>Masukkan kata kunci untuk mencari solusi.</p></div>`;
