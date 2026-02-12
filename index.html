@@ -58,24 +58,25 @@
             color: white; 
             z-index: 1001; 
             transition: var(--transition);
+            overflow-y: auto; /* Memastikan jika link banyak bisa di-scroll */
         }
 
-        .brand { margin-bottom: 40px; padding-left: 15px; }
+        .brand { margin-bottom: 30px; padding-left: 15px; }
         .brand .logo-text { font-weight: 800; font-size: 24px; letter-spacing: -1px; }
         .brand .logo-dot { color: var(--primary); }
         .brand .sub-text { font-size: 10px; color: #64748b; font-weight: 700; letter-spacing: 1.5px; margin-top: 4px; }
 
-        .sidebar h3 { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: #475569; margin: 25px 0 15px 15px; }
+        .sidebar h3 { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: #475569; margin: 25px 0 10px 15px; }
         
         .sidebar a { 
             display: flex; 
             align-items: center; 
-            padding: 12px 15px; 
-            margin-bottom: 4px; 
-            border-radius: 12px; 
+            padding: 10px 15px; 
+            margin-bottom: 2px; 
+            border-radius: 10px; 
             text-decoration: none; 
             color: #94a3b8; 
-            font-size: 14px; 
+            font-size: 13px; 
             font-weight: 500; 
             transition: var(--transition); 
         }
@@ -84,12 +85,13 @@
         .sidebar a.active { background: var(--primary); color: white; }
 
         .ppt-link { 
-            margin-top: auto !important; 
+            margin-top: 30px !important; 
             background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important; 
             color: white !important; 
             justify-content: center; 
             font-weight: 700 !important; 
             box-shadow: 0 10px 20px -5px rgba(16, 185, 129, 0.3);
+            margin-bottom: 40px;
         }
 
         /* --- MAIN CONTENT --- */
@@ -250,10 +252,19 @@
         <a href="https://developers.facebook.com/docs/marketing-api/" target="_blank" rel="noopener">Marketing API</a>
         <a href="https://developers.facebook.com/docs/whatsapp/" target="_blank" rel="noopener">WhatsApp Platform</a>
         <a href="https://developers.facebook.com/docs/graph-api/" target="_blank" rel="noopener">Graph API</a>
+        <a href="https://developers.facebook.com/docs/messenger-platform/" target="_blank" rel="noopener">Messenger API</a>
+        <a href="https://developers.facebook.com/documentation/business-messaging/whatsapp/support/error-codes" target="_blank" rel="noopener">Cloud API</a>
         
         <h3>Sociomile KB</h3>
+        <a href="https://kb.sociomile.com/how-to-add-a-whatsapp-channel/" target="_blank" rel="noopener">Add Channel Whatsapp</a>
+        <a href="https://kb.sociomile.com/how-to-add-an-email-channel/" target="_blank" rel="noopener">Add Channel Email</a>
+        <a href="https://kb.sociomile.com/how-to-add-a-facebook-channel/" target="_blank" rel="noopener">Add Channel Facebook</a>
+        <a href="https://kb.sociomile.com/how-to-add-an-instagram-channel/" target="_blank" rel="noopener">Add Channel Instagram</a>
         <a href="https://kb.sociomile.com/category/technical-troubleshooting/" target="_blank" rel="noopener">Technical Issue</a>
         <a href="https://kb.sociomile.com/category/account-settings/" target="_blank" rel="noopener">Account Settings</a>
+
+        <h3>Support</h3>
+        <a href="https://docs.google.com/spreadsheets/d/1Ak1J5gqrLzHaLxxqbrjGTYnj2XgD7onzv07iMrirBAA/edit?usp=sharing" target="_blank" rel="noopener">📅 Support Schedule</a>
 
         <a href="https://docs.google.com/presentation/d/11juAD4KUHTNJ78kRXdotFl3rBwXIyRRU/edit?usp=sharing" target="_blank" class="ppt-link">
             <span class="move-float">📊</span> &nbsp; Weekly Report
@@ -352,7 +363,7 @@
             }
         });
 
-        // Copy Function with Modern Clipboard API
+        // Copy Function
         async function copyContent(btn, text) {
             try {
                 await navigator.clipboard.writeText(text);
@@ -364,7 +375,6 @@
                     btn.style.background = "#0f172a";
                 }, 2000);
             } catch (err) {
-                // Fallback
                 const t = document.createElement("textarea");
                 t.value = text; document.body.appendChild(t); t.select();
                 document.execCommand('copy'); document.body.removeChild(t);
@@ -384,7 +394,6 @@
             data.forEach(item => {
                 const card = document.createElement('div');
                 card.className = "issue-card";
-                
                 const highlight = t => q ? t.replace(new RegExp(`(${q})`, "gi"), "<mark>$1</mark>") : t;
 
                 card.innerHTML = `
@@ -408,7 +417,6 @@
                     document.querySelectorAll('.issue-card').forEach(c => c.classList.remove('open'));
                     if(!isOpen) {
                         card.classList.add('open');
-                        // Lazy load image
                         const placeholder = card.querySelector('.img-placeholder');
                         const imgId = placeholder.dataset.id;
                         if(imgId && !placeholder.innerHTML) {
@@ -438,9 +446,8 @@
             render(filtered, query);
         };
 
-        // Popular Search (Persistent)
+        // Popular Search
         const STORAGE_KEY = "helpdesk_popular_v2";
-        
         function recordSearch(k) {
             k = k.toLowerCase().trim();
             if(k.length < 3) return;
