@@ -428,14 +428,24 @@ document.getElementById("search").addEventListener("input", e => {
         </div>`;
         return;
     }
-            const k = e.target.value.toLowerCase();
-            if (!k) {
-                document.getElementById("list").innerHTML = `<div style="text-align: center; padding: 100px 0; color: #cbd5e1;"><p>Masukkan kata kunci untuk mencari solusi.</p></div>`;
-                return;
-            }
-            const filtered = issues.filter(i => i.issue.toLowerCase().includes(k) || i.solusi.toLowerCase().includes(k));saveSearch(k);
-            render(filtered, k);
-        });
+
+    const k = e.target.value.toLowerCase();
+
+    if (!k) {
+        document.getElementById("list").innerHTML =
+        `<div style="text-align: center; padding: 100px 0; color: #cbd5e1;">
+            <p>Masukkan kata kunci untuk mencari solusi.</p>
+        </div>`;
+        return;
+    }
+
+    const filtered = issues.filter(i =>
+        i.issue.toLowerCase().includes(k) ||
+        i.solusi.toLowerCase().includes(k)
+    );
+
+    render(filtered, k);
+});
 
 
 /* =========================
