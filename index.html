@@ -509,25 +509,23 @@
     }
     }
        let searchDebounce;
-$('search').addEventListener('input', e => {
-    // Logika filter list tetap berjalan instan
-    if(!dataReady) return;
-    const query = e.target.value.toLowerCase().trim();
-    if(!query) {
-        $('list').innerHTML = `<div style="text-align:center; padding:60px; color:#94a3b8;"><p>Masukkan kata kunci untuk mencari.</p></div>`;
-    } else {
-        const filtered = issues.filter(i => i.issue.toLowerCase().includes(query) || i.solusi.toLowerCase().includes(query));
-        render(filtered, query);
-    }
+        $('search').addEventListener('input', e => {
+            if(!dataReady) return;
+            const query = e.target.value.toLowerCase().trim();
+            if(!query) {
+                $('list').innerHTML = `<div style="text-align:center; padding:60px; color:#94a3b8;"><p>Masukkan kata kunci untuk mencari.</p></div>`;
+            } else {
+                const filtered = issues.filter(i => i.issue.toLowerCase().includes(query) || i.solusi.toLowerCase().includes(query));
+                render(filtered, query);
+            }
 
-    // Logika pencatatan Global didebounce (tunggu 1.5 detik diam baru kirim)
-    clearTimeout(searchDebounce);
-    searchDebounce = setTimeout(() => recordSearch(e.target.value), 1500);
-});
+            clearTimeout(searchDebounce);
+            searchDebounce = setTimeout(() => recordSearch(e.target.value), 1500);
+        });
 
-// Jalankan saat load pertama kali
-window.onload = renderPopular;
+        // Jalankan saat load pertama kali
+        window.onload = renderPopular;
         
-</script>
- </body>
+    </script>
+</body>
 </html>
