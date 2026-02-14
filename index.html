@@ -338,193 +338,279 @@
     </main>
 
     <script>
-        // Utilities
-        const $ = id => document.getElementById(id);
-        const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQCLXvz4_F7EfUppPoKWSKQawlesCjiYHhceQCIEDoV8ntbDjFrvKUorP416AGydpWYmxWlOLA3b1JL/pub?gid=0&single=true&output=csv";
-        
-        let issues = [];
+/* ================= UTILITIES ================= */
+const $ = id => document.getElementById(id);
 
-        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby2WBn2g148Yr57lzKsfLu0muSXJ6b5sr_88jZf0M3BY2oJbYzEqGCjQLYR5IaLnU_z/exec";
-        
-        let dataReady = false;
+const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQCLXvz4_F7EfUppPoKWSKQawlesCjiYHhceQCIEDoV8ntbDjFrvKUorP416AGydpWYmxWlOLA3b1JL/pub?gid=0&single=true&output=csv";
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz36c1S9rtnt0TArVUhX0kv_ZZcgtBNIm4vffZ9jenQzTVV-xA7RjNVcKv9IkXjqWDi/exec";
 
-        // DateTime
-        function updateTime() {
-            const now = new Date();
-            $('datetime').textContent = now.toLocaleDateString('id-ID', {
-                weekday: 'short', day: '2-digit', month: 'short'
-            }) + " • " + now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) + " WIB";
-        }
-        setInterval(updateTime, 1000); updateTime();
-        $('year').textContent = new Date().getFullYear();
+let issues = [];
+let dataReady = false;
+let searchDebounce;
 
-        // Sidebar Toggle
-        const toggle = () => {
-            $('sidebar').classList.toggle('active');
-            $('overlay').classList.toggle('active');
-        };
-        $('menuToggle').onclick = toggle;
-        $('overlay').onclick = toggle;
+/* ================= DATETIME ================= */
+function updateTime() {
+    const now = new Date();
+    $('datetime').textContent =
+        now.toLocaleDateString('id-ID', {
+            weekday: 'short',
+            day: '2-digit',
+            month: 'short'
+        }) +
+        " • " +
+        now.toLocaleTimeString('id-ID', {
+            hour: '2-digit',
+            minute: '2-digit'
+        }) +
+        " WIB";
+}
+setInterval(updateTime, 1000);
+updateTime();
+$('year').textContent = new Date().getFullYear();
 
-        // Data Fetching
-        Papa.parse(SHEET_URL, {
-            download: true,
-            header: true,
-            complete: results => {
-                issues = results.data.map(item => ({
-                    issue: (item.issue || "").trim(),
-                    solusi: (item.solusi || "").trim(),
-                    image_id: (item.image_id || "").trim()
-                })).filter(i => i.issue);
-                dataReady = true;
-                $('list').innerHTML = `<div style="text-align:center; padding:60px; color:#94a3b8;"><p>Siap mencari. Masukkan kata kunci di atas.</p></div>`;
-            }
-        });
+/* ================= SIDEBAR ================= */
+const toggle = () => {
+    $('sidebar').classList.toggle('active');
+    $('overlay').classList.toggle('active');
+};
+$('menuToggle').onclick = toggle;
+$('overlay').onclick = toggle;
 
-        // Copy Function
-        async function copyContent(btn, text) {
-            try {
-                await navigator.clipboard.writeText(text);
-                const oldText = btn.innerHTML;
-                btn.innerHTML = "✅ Berhasil Disalin";
-                btn.style.background = "#10b981";
-                setTimeout(() => { 
-                    btn.innerHTML = oldText; 
-                    btn.style.background = "#0f172a";
-                }, 2000);
-            } catch (err) {
-                const t = document.createElement("textarea");
-                t.value = text; document.body.appendChild(t); t.select();
-                document.execCommand('copy'); document.body.removeChild(t);
-            }
-        }
+/* ================= LOAD CSV ================= */
+Papa.parse(SHEET_URL, {
+    download: true,
+    header: true,
+    complete: results => {
+        issues = results.data
+            .map(item => ({
+                issue: (item.issue || "").trim(),
+                solusi: (item.solusi || "").trim(),
+                image_id: (item.image_id || "").trim()
+            }))
+            .filter(i => i.issue);
 
-        // Render Issue List
-        function render(data, q = "") {
-            const container = $('list');
-            container.innerHTML = "";
-            
-            if (data.length === 0) {
-                container.innerHTML = `<div style="text-align:center; padding:60px; color:#94a3b8;"><p>Maaf, solusi tidak ditemukan.</p></div>`;
-                return;
-            }
+        dataReady = true;
 
-            data.forEach(item => {
-                const card = document.createElement('div');
-                card.className = "issue-card";
-                const highlight = t => q ? t.replace(new RegExp(`(${q})`, "gi"), "<mark>$1</mark>") : t;
-
-                card.innerHTML = `
-                    <div class="issue-trigger">
-                        <span>${highlight(item.issue.toUpperCase())}</span>
-                        <span class="arrow">▼</span>
-                    </div>
-                    <div class="issue-content">
-                        <div class="content-inner">
-                            <div class="solusi-container">
-                                <div class="solusi-text">${highlight(item.solusi)}</div>
-                                <button class="btn-copy">📋 Salin Solusi</button>
-                            </div>
-                            <div class="img-placeholder" data-id="${item.image_id}"></div>
-                        </div>
-                    </div> `;
-
-                card.querySelector('.issue-trigger').onclick = () => {
-                    const isOpen = card.classList.contains('open');
-                    document.querySelectorAll('.issue-card').forEach(c => c.classList.remove('open'));
-                    if(!isOpen) {
-                        card.classList.add('open');
-                        const placeholder = card.querySelector('.img-placeholder');
-                        const imgId = placeholder.dataset.id;
-                        if(imgId && !placeholder.innerHTML) {
-                            placeholder.innerHTML = `<img src="https://drive.google.com/thumbnail?id=${imgId}&sz=w1200" style="width:100%; margin-top:20px; border-radius:12px; display:block; border:1px solid #f1f5f9;">`;
-                        }
-                    }
-                };
-
-                card.querySelector('.btn-copy').onclick = (e) => {
-                    e.stopPropagation();
-                    copyContent(e.target, item.solusi);
-                };
-
-                container.appendChild(card);
-            });
-        }
-
-        // Search Logic
-        $('search').oninput = e => {
-            if(!dataReady) return;
-            const query = e.target.value.toLowerCase().trim();
-            if(!query) {
-                $('list').innerHTML = `<div style="text-align:center; padding:60px; color:#94a3b8;"><p>Masukkan kata kunci untuk mencari.</p></div>`;
-                return;
-            }
-            const filtered = issues.filter(i => i.issue.toLowerCase().includes(query) || i.solusi.toLowerCase().includes(query));
-            render(filtered, query);
-        };
-    
-        async function recordSearch(k) {
-    k = k.toLowerCase().trim();
-    if(k.length < 3) return; 
-    
-    try {
-        // Mengirim data ke Google Sheets (Global)
-        await fetch(APPS_SCRIPT_URL, {
-            method: 'POST',
-            mode: 'no-cors', 
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ keyword: k })
-        });
-        // Opsional: render ulang setelah jeda singkat untuk sinkronisasi
-        setTimeout(renderPopular, 2000); 
-    } catch (err) {
-        console.error("Gagal sinkronisasi pencarian global");
+        $('list').innerHTML =
+            `<div style="text-align:center; padding:60px; color:#94a3b8;">
+                <p>Siap mencari. Masukkan kata kunci di atas.</p>
+            </div>`;
     }
-    }  
-        async function renderPopular() {
-    const list = $('popular-list');
+});
+
+/* ================= COPY ================= */
+async function copyContent(btn, text) {
     try {
-        // Mengambil data Top 6 dari Google Sheets
-        const response = await fetch(APPS_SCRIPT_URL);
-        const data = await response.json();
-        
+        await navigator.clipboard.writeText(text);
+        const old = btn.innerHTML;
+        btn.innerHTML = "✅ Berhasil Disalin";
+        btn.style.background = "#10b981";
+        setTimeout(() => {
+            btn.innerHTML = old;
+            btn.style.background = "#0f172a";
+        }, 2000);
+    } catch {
+        const t = document.createElement("textarea");
+        t.value = text;
+        document.body.appendChild(t);
+        t.select();
+        document.execCommand("copy");
+        document.body.removeChild(t);
+    }
+}
+
+/* ================= SAFE REGEX ================= */
+function escapeRegExp(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+/* ================= RENDER ================= */
+function render(data, q = "") {
+    const container = $('list');
+    container.innerHTML = "";
+
+    if (data.length === 0) {
+        if (q) {
+            askAI(q);
+        } else {
+            container.innerHTML =
+                `<div style="text-align:center; padding:60px; color:#94a3b8;">
+                    <p>Maaf, solusi tidak ditemukan.</p>
+                </div>`;
+        }
+        return;
+    }
+
+    const highlight = text =>
+        q
+            ? text.replace(
+                new RegExp(`(${escapeRegExp(q)})`, "gi"),
+                "<mark>$1</mark>"
+              )
+            : text;
+
+    data.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "issue-card";
+
+        card.innerHTML = `
+            <div class="issue-trigger">
+                <span>${highlight(item.issue.toUpperCase())}</span>
+                <span class="arrow">▼</span>
+            </div>
+            <div class="issue-content">
+                <div class="content-inner">
+                    <div class="solusi-container">
+                        <div class="solusi-text">${highlight(item.solusi)}</div>
+                        <button class="btn-copy">📋 Salin Solusi</button>
+                    </div>
+                    <div class="img-placeholder" data-id="${item.image_id}"></div>
+                </div>
+            </div>`;
+
+        card.querySelector(".issue-trigger").onclick = () => {
+            const isOpen = card.classList.contains("open");
+            document.querySelectorAll(".issue-card").forEach(c =>
+                c.classList.remove("open")
+            );
+
+            if (!isOpen) {
+                card.classList.add("open");
+
+                const placeholder = card.querySelector(".img-placeholder");
+                const imgId = placeholder.dataset.id;
+
+                if (imgId && !placeholder.innerHTML) {
+                    placeholder.innerHTML =
+                        `<img src="https://drive.google.com/thumbnail?id=${imgId}&sz=w1200"
+                        style="width:100%; margin-top:20px; border-radius:12px;
+                        display:block; border:1px solid #f1f5f9;">`;
+                }
+            }
+        };
+
+        card.querySelector(".btn-copy").onclick = e => {
+            e.stopPropagation();
+            copyContent(e.target, item.solusi);
+        };
+
+        container.appendChild(card);
+    });
+}
+
+
+/* ================= SEARCH ================= */
+$('search').addEventListener('input', e => {
+    if (!dataReady) return;
+
+    const query = e.target.value.toLowerCase().trim();
+
+    if (!query) {
+        $('list').innerHTML =
+            `<div style="text-align:center; padding:60px; color:#94a3b8;">
+                <p>Masukkan kata kunci untuk mencari.</p>
+            </div>`;
+    } else {
+        const filtered = issues.filter(i =>
+            i.issue.toLowerCase().includes(query) ||
+            i.solusi.toLowerCase().includes(query)
+        );
+
+        render(filtered, query);
+    }
+
+    clearTimeout(searchDebounce);
+    searchDebounce = setTimeout(() => recordSearch(query), 1500);
+});
+
+/* ================= RECORD SEARCH ================= */
+async function recordSearch(keyword) {
+    if (!keyword || keyword.length < 3) return;
+
+    try {
+        await fetch(APPS_SCRIPT_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ keyword })
+        });
+
+        setTimeout(renderPopular, 2000);
+    } catch (err) {
+        console.error("Gagal sync keyword");
+    }
+}
+
+        async function askAI(question) {
+
+    const container = $('list');
+
+    container.innerHTML =
+        `<div style="text-align:center; padding:60px;">
+            <p style="color:#94a3b8;">🤖 AI sedang menganalisa...</p>
+        </div>`;
+
+    try {
+        const res = await fetch(APPS_SCRIPT_URL + "?ai=" + encodeURIComponent(question));
+        const data = await res.json();
+
+        container.innerHTML =
+            `<div class="issue-card open">
+                <div class="issue-trigger">
+                    <span>🤖 Jawaban AI</span>
+                </div>
+                <div class="issue-content" style="max-height:2000px;">
+                    <div class="content-inner">
+                        <div class="solusi-container">
+                            <div class="solusi-text">${data.answer}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+
+    } catch {
+        container.innerHTML =
+            `<div style="text-align:center; padding:60px; color:red;">
+                <p>AI gagal merespon.</p>
+            </div>`;
+    }
+}
+
+
+/* ================= POPULAR SEARCH ================= */
+async function renderPopular() {
+    const list = $('popular-list');
+
+    try {
+        const res = await fetch(APPS_SCRIPT_URL);
+        const data = await res.json();
+
         list.innerHTML = "";
-        if(!data || data.length === 0) {
-            list.innerHTML = "<span style='font-size:11px; color:#94a3b8;'>Belum ada tren</span>";
+
+        if (!data || data.length === 0) {
+            list.innerHTML =
+                "<span style='font-size:11px;color:#94a3b8;'>Belum ada tren</span>";
             return;
         }
 
         data.forEach(d => {
-            const item = document.createElement('div');
+            const item = document.createElement("div");
             item.className = "popular-item";
             item.textContent = d.key;
+
             item.onclick = () => {
                 $('search').value = d.key;
-                $('search').dispatchEvent(new Event('input'));
+                $('search').dispatchEvent(new Event("input"));
             };
+
             list.appendChild(item);
         });
-    } catch (err) {
+
+    } catch {
         console.error("Gagal memuat Top Pencarian");
     }
-    }
-       let searchDebounce;
-        $('search').addEventListener('input', e => {
-            if(!dataReady) return;
-            const query = e.target.value.toLowerCase().trim();
-            if(!query) {
-                $('list').innerHTML = `<div style="text-align:center; padding:60px; color:#94a3b8;"><p>Masukkan kata kunci untuk mencari.</p></div>`;
-            } else {
-                const filtered = issues.filter(i => i.issue.toLowerCase().includes(query) || i.solusi.toLowerCase().includes(query));
-                render(filtered, query);
-            }
+}
 
-            clearTimeout(searchDebounce);
-            searchDebounce = setTimeout(() => recordSearch(e.target.value), 1500);
-        });
-
-        // Jalankan saat load pertama kali
-        window.onload = renderPopular;
+window.onload = renderPopular;
         
     </script>
 </body>
