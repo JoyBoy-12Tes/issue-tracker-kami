@@ -26,6 +26,50 @@
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
+        /* --- LOGIN STYLES --- */
+        #login-overlay {
+            position: fixed;
+            inset: 0;
+            background: var(--sidebar-dark);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .login-box {
+            background: white;
+            padding: 40px;
+            border-radius: 24px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        .login-box input {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            outline: none;
+            font-size: 14px;
+        }
+        .btn-login {
+            width: 100%;
+            padding: 15px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: 0.2s;
+        }
+        .btn-login:hover { background: var(--primary-dark); }
+        .login-error { color: #ef4444; font-size: 12px; margin-top: 15px; display: none; font-weight: 600; }
+
         /* Animations */
         @keyframes ani-bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
         @keyframes ani-pulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.05); opacity: 0.9; } 100% { transform: scale(1); opacity: 1; } }
@@ -123,7 +167,6 @@
 
         .main-logo { width: 160px; height: auto; margin: 0 auto 20px; display: block; }
         
-        /* PERBAIKAN JUDUL TENGAH */
         .header-card h1 { 
             font-size: 36px; 
             font-weight: 800; 
@@ -138,7 +181,6 @@
             font-size: 15px;
         }
 
-        /* --- SEARCH & LIST --- */
         .search-wrapper { position: relative; margin-bottom: 30px; }
         .search-wrapper input { 
             width: 100%; 
@@ -167,7 +209,6 @@
         }
         .popular-item:hover { background: #e0f2fe; color: #0369a1; border-color: #bae6fd; }
 
-        /* --- CARDS --- */
         .issue-card { 
             background: white; 
             border-radius: 18px; 
@@ -216,7 +257,6 @@
         }
         .btn-copy:hover { background: var(--primary); transform: scale(1.02); }
 
-        /* --- MOBILE --- */
         .mobile-header { 
             display: none; 
             position: fixed; 
@@ -247,6 +287,18 @@
 </head>
 
 <body>
+    <!-- LAYER LOGIN -->
+    <div id="login-overlay">
+        <div class="login-box">
+            <div class="logo-text" style="font-size: 24px; font-weight: 800; margin-bottom: 10px;">Helpdesk<span style="color: var(--primary);">.</span></div>
+            <p style="font-size: 12px; color: #64748b; margin-bottom: 25px; font-weight: 600;">CENTRAL SOLUTION PORTAL</p>
+            <input type="text" id="login-id" placeholder="ID Pengguna" autocomplete="off">
+            <input type="password" id="login-pw" placeholder="Kata Sandi">
+            <button class="btn-login" id="btnLogin">MASUK KE PORTAL</button>
+            <div id="login-error" class="login-error">ID atau Password salah!</div>
+        </div>
+    </div>
+
     <div class="sidebar-overlay" id="overlay"></div>
 
     <header class="mobile-header">
@@ -278,15 +330,15 @@
         <a href="https://kb.sociomile.com/category/account-settings/" target="_blank" rel="noopener">Account Settings</a>
 
         <h3> Guideline Sociomile KB</h3>
-        <h3> <a href="https://drive.google.com/file/d/1YqBY-5RrDTZt_WBc_DuMKRAIwe9N7BUy/view?usp=sharing" target="_blank" rel="noopener">📘 Panduan Sociomile</a>
+        <a href="https://drive.google.com/file/d/1YqBY-5RrDTZt_WBc_DuMKRAIwe9N7BUy/view?usp=sharing" target="_blank" rel="noopener" style="padding-left: 20px;">📘 Panduan Sociomile</a>
 
         <h3> Guideline Ivowaba KB</h3>
-        <h3> <a href="https://drive.google.com/file/d/1Subigz9der4-Ygw_SUj8moBQ651lqsG9/view?usp=sharing" target="_blank" rel="noopener">📗 Panduan Ivowaba</a>
+        <a href="https://drive.google.com/file/d/1Subigz9der4-Ygw_SUj8moBQ651lqsG9/view?usp=sharing" target="_blank" rel="noopener" style="padding-left: 20px;">📗 Panduan Ivowaba</a>
 
         <h3>Support</h3>
         <a href="https://docs.google.com/spreadsheets/d/1Ak1J5gqrLzHaLxxqbrjGTYnj2XgD7onzv07iMrirBAA/edit?usp=sharing" target="_blank" rel="noopener">📅 Support Schedule</a>
 
-            <h3>Guidline</h3>
+        <h3>Guidline</h3>
         <a href="https://docs.google.com/document/d/1CQO_cgCSbxB-94XLV5L0F4OUXeoDC87BZFcsMk9lL9c/edit?usp=sharing" target="_blank" rel="noopener">📅 Support Guidline</a>
 
         <a href="https://docs.google.com/presentation/d/1dBR74m33vH_XwpfuZUJZOExDE9FnQ43m/edit?usp=sharing" target="_blank" class="ppt-link">
@@ -347,17 +399,72 @@
     </main>
 
     <script>
-        // Utilities
         const $ = id => document.getElementById(id);
         const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQCLXvz4_F7EfUppPoKWSKQawlesCjiYHhceQCIEDoV8ntbDjFrvKUorP416AGydpWYmxWlOLA3b1JL/pub?gid=0&single=true&output=csv";
+        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwKZDnSUHxwIJhINbwgLU124GLWH8O7Xs2d8UTM857XxfK9rRkAJTnRk8XcblMqZ9z1/exec";
         
         let issues = [];
-
-        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby2WBn2g148Yr57lzKsfLu0muSXJ6b5sr_88jZf0M3BY2oJbYzEqGCjQLYR5IaLnU_z/exec";
-        
         let dataReady = false;
 
-        // DateTime
+        // --- SISTEM LOGIN ---
+        $('btnLogin').onclick = async () => {
+            const idValue = $('login-id').value;
+            const pwValue = $('login-pw').value;
+            const btn = $('btnLogin');
+            
+            btn.textContent = "MEMVERIFIKASI...";
+            btn.disabled = true;
+
+            try {
+                // Verifikasi ke server (Apps Script)
+                const response = await fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    body: JSON.stringify({ action: "login", id: idValue, pw: pwValue })
+                });
+                const result = await response.json();
+
+                if (result.success) {
+                    sessionStorage.setItem("helpdesk_auth", result.token);
+                    $('login-overlay').style.display = 'none';
+                    initData();
+                } else {
+                    $('login-error').style.display = 'block';
+                    btn.textContent = "MASUK KE PORTAL";
+                    btn.disabled = false;
+                }
+            } catch (err) {
+                // Fallback jika Apps Script belum diset up untuk login
+                // Hapus blok ini jika sudah menggunakan login di Apps Script
+                if(idValue === "admin123" && pwValue === "pass123") {
+                     sessionStorage.setItem("helpdesk_auth", "local_active");
+                     $('login-overlay').style.display = 'none';
+                     initData();
+                } else {
+                    $('login-error').style.display = 'block';
+                    btn.textContent = "MASUK KE PORTAL";
+                    btn.disabled = false;
+                }
+            }
+        };
+
+        // --- CORE LOGIC ---
+        function initData() {
+            Papa.parse(SHEET_URL, {
+                download: true,
+                header: true,
+                complete: results => {
+                    issues = results.data.map(item => ({
+                        issue: (item.issue || "").trim(),
+                        solusi: (item.solusi || "").trim(),
+                        image_id: (item.image_id || "").trim()
+                    })).filter(i => i.issue);
+                    dataReady = true;
+                    $('list').innerHTML = `<div style="text-align:center; padding:60px; color:#94a3b8;"><p>Siap mencari. Masukkan kata kunci di atas.</p></div>`;
+                    renderPopular();
+                }
+            });
+        }
+
         function updateTime() {
             const now = new Date();
             $('datetime').textContent = now.toLocaleDateString('id-ID', {
@@ -367,7 +474,6 @@
         setInterval(updateTime, 1000); updateTime();
         $('year').textContent = new Date().getFullYear();
 
-        // Sidebar Toggle
         const toggle = () => {
             $('sidebar').classList.toggle('active');
             $('overlay').classList.toggle('active');
@@ -375,22 +481,6 @@
         $('menuToggle').onclick = toggle;
         $('overlay').onclick = toggle;
 
-        // Data Fetching
-        Papa.parse(SHEET_URL, {
-            download: true,
-            header: true,
-            complete: results => {
-                issues = results.data.map(item => ({
-                    issue: (item.issue || "").trim(),
-                    solusi: (item.solusi || "").trim(),
-                    image_id: (item.image_id || "").trim()
-                })).filter(i => i.issue);
-                dataReady = true;
-                $('list').innerHTML = `<div style="text-align:center; padding:60px; color:#94a3b8;"><p>Siap mencari. Masukkan kata kunci di atas.</p></div>`;
-            }
-        });
-
-        // Copy Function
         async function copyContent(btn, text) {
             try {
                 await navigator.clipboard.writeText(text);
@@ -408,21 +498,17 @@
             }
         }
 
-        // Render Issue List
         function render(data, q = "") {
             const container = $('list');
             container.innerHTML = "";
-            
             if (data.length === 0) {
                 container.innerHTML = `<div style="text-align:center; padding:60px; color:#94a3b8;"><p>Maaf, solusi tidak ditemukan.</p></div>`;
                 return;
             }
-
             data.forEach(item => {
                 const card = document.createElement('div');
                 card.className = "issue-card";
                 const highlight = t => q ? t.replace(new RegExp(`(${q})`, "gi"), "<mark>$1</mark>") : t;
-
                 card.innerHTML = `
                     <div class="issue-trigger">
                         <span>${highlight(item.issue.toUpperCase())}</span>
@@ -437,7 +523,6 @@
                             <div class="img-placeholder" data-id="${item.image_id}"></div>
                         </div>
                     </div> `;
-
                 card.querySelector('.issue-trigger').onclick = () => {
                     const isOpen = card.classList.contains('open');
                     document.querySelectorAll('.issue-card').forEach(c => c.classList.remove('open'));
@@ -450,75 +535,16 @@
                         }
                     }
                 };
-
                 card.querySelector('.btn-copy').onclick = (e) => {
                     e.stopPropagation();
                     copyContent(e.target, item.solusi);
                 };
-
                 container.appendChild(card);
             });
         }
 
-        // Search Logic
+        let searchDebounce;
         $('search').oninput = e => {
-            if(!dataReady) return;
-            const query = e.target.value.toLowerCase().trim();
-            if(!query) {
-                $('list').innerHTML = `<div style="text-align:center; padding:60px; color:#94a3b8;"><p>Masukkan kata kunci untuk mencari.</p></div>`;
-                return;
-            }
-            const filtered = issues.filter(i => i.issue.toLowerCase().includes(query) || i.solusi.toLowerCase().includes(query));
-            render(filtered, query);
-        };
-    
-        async function recordSearch(k) {
-    k = k.toLowerCase().trim();
-    if(k.length < 3) return; 
-    
-    try {
-        // Mengirim data ke Google Sheets (Global)
-        await fetch(APPS_SCRIPT_URL, {
-            method: 'POST',
-            mode: 'no-cors', 
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ keyword: k })
-        });
-        // Opsional: render ulang setelah jeda singkat untuk sinkronisasi
-        setTimeout(renderPopular, 2000); 
-    } catch (err) {
-        console.error("Gagal sinkronisasi pencarian global");
-    }
-    }  
-        async function renderPopular() {
-    const list = $('popular-list');
-    try {
-        // Mengambil data Top 6 dari Google Sheets
-        const response = await fetch(APPS_SCRIPT_URL);
-        const data = await response.json();
-        
-        list.innerHTML = "";
-        if(!data || data.length === 0) {
-            list.innerHTML = "<span style='font-size:11px; color:#94a3b8;'>Belum ada tren</span>";
-            return;
-        }
-
-        data.forEach(d => {
-            const item = document.createElement('div');
-            item.className = "popular-item";
-            item.textContent = d.key;
-            item.onclick = () => {
-                $('search').value = d.key;
-                $('search').dispatchEvent(new Event('input'));
-            };
-            list.appendChild(item);
-        });
-    } catch (err) {
-        console.error("Gagal memuat Top Pencarian");
-    }
-    }
-       let searchDebounce;
-        $('search').addEventListener('input', e => {
             if(!dataReady) return;
             const query = e.target.value.toLowerCase().trim();
             if(!query) {
@@ -527,14 +553,52 @@
                 const filtered = issues.filter(i => i.issue.toLowerCase().includes(query) || i.solusi.toLowerCase().includes(query));
                 render(filtered, query);
             }
-
             clearTimeout(searchDebounce);
             searchDebounce = setTimeout(() => recordSearch(e.target.value), 1500);
-        });
+        };
 
-        // Jalankan saat load pertama kali
-        window.onload = renderPopular;
-        
+        async function recordSearch(k) {
+            k = k.toLowerCase().trim();
+            if(k.length < 3) return; 
+            try {
+                await fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors', 
+                    body: JSON.stringify({ keyword: k })
+                });
+                setTimeout(renderPopular, 2000); 
+            } catch (err) {}
+        }
+
+        async function renderPopular() {
+            const list = $('popular-list');
+            try {
+                const response = await fetch(APPS_SCRIPT_URL);
+                const data = await response.json();
+                list.innerHTML = "";
+                if(!data || data.length === 0) {
+                    list.innerHTML = "<span style='font-size:11px; color:#94a3b8;'>Belum ada tren</span>";
+                    return;
+                }
+                data.forEach(d => {
+                    const item = document.createElement('div');
+                    item.className = "popular-item";
+                    item.textContent = d.key;
+                    item.onclick = () => {
+                        $('search').value = d.key;
+                        $('search').dispatchEvent(new Event('input'));
+                    };
+                    list.appendChild(item);
+                });
+            } catch (err) {}
+        }
+
+        window.onload = () => {
+            if (sessionStorage.getItem("helpdesk_auth")) {
+                $('login-overlay').style.display = 'none';
+                initData();
+            }
+        };
     </script>
 </body>
 </html>
