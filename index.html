@@ -70,6 +70,29 @@
         .btn-login:hover { background: var(--primary-dark); }
         .login-error { color: #ef4444; font-size: 12px; margin-top: 15px; display: none; font-weight: 600; }
 
+        /* --- LOGOUT BUTTON --- */
+        .btn-logout {
+            position: fixed;
+            top: 25px;
+            right: 40px;
+            z-index: 1000;
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+            display: none; /* Hidden by default, shown after login */
+        }
+        .btn-logout:hover {
+            background: #dc2626;
+            transform: translateY(-2px);
+        }
+
         /* Animations */
         @keyframes ani-bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
         @keyframes ani-pulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.05); opacity: 0.9; } 100% { transform: scale(1); opacity: 1; } }
@@ -277,6 +300,7 @@
             .main { margin-left: 0; width: 100%; padding: 100px 20px 40px; }
             .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; backdrop-filter: blur(4px); }
             .sidebar-overlay.active { display: block; }
+            .btn-logout { top: 15px; right: 80px; padding: 6px 12px; }
         }
 
         .footer { margin-top: 80px; padding: 40px 0; border-top: 1px solid #e2e8f0; }
@@ -298,6 +322,9 @@
             <div id="login-error" class="login-error">ID atau Password salah!</div>
         </div>
     </div>
+
+    <!-- TOMBOL LOGOUT -->
+    <button id="btnLogout" class="btn-logout">LOGOUT</button>
 
     <div class="sidebar-overlay" id="overlay"></div>
 
@@ -416,7 +443,6 @@
             btn.disabled = true;
 
             try {
-                // Verifikasi ke server (Apps Script)
                 const response = await fetch(APPS_SCRIPT_URL, {
                     method: 'POST',
                     body: JSON.stringify({ action: "login", id: idValue, pw: pwValue })
@@ -425,26 +451,37 @@
 
                 if (result.success) {
                     sessionStorage.setItem("helpdesk_auth", result.token);
-                    $('login-overlay').style.display = 'none';
-                    initData();
+                    loginSuccess();
                 } else {
-                    $('login-error').style.display = 'block';
-                    btn.textContent = "MASUK KE PORTAL";
-                    btn.disabled = false;
+                    showLoginError();
                 }
             } catch (err) {
-                // Fallback jika Apps Script belum diset up untuk login
-                // Hapus blok ini jika sudah menggunakan login di Apps Script
+                // Fallback Local Login
                 if(idValue === "admin123" && pwValue === "pass123") {
                      sessionStorage.setItem("helpdesk_auth", "local_active");
-                     $('login-overlay').style.display = 'none';
-                     initData();
+                     loginSuccess();
                 } else {
-                    $('login-error').style.display = 'block';
-                    btn.textContent = "MASUK KE PORTAL";
-                    btn.disabled = false;
+                    showLoginError();
                 }
             }
+        };
+
+        function loginSuccess() {
+            $('login-overlay').style.display = 'none';
+            $('btnLogout').style.display = 'block';
+            initData();
+        }
+
+        function showLoginError() {
+            $('login-error').style.display = 'block';
+            $('btnLogin').textContent = "MASUK KE PORTAL";
+            $('btnLogin').disabled = false;
+        }
+
+        // --- SISTEM LOGOUT ---
+        $('btnLogout').onclick = () => {
+            sessionStorage.removeItem("helpdesk_auth");
+            location.reload(); // Refresh halaman untuk kembali ke login
         };
 
         // --- CORE LOGIC ---
@@ -595,8 +632,7 @@
 
         window.onload = () => {
             if (sessionStorage.getItem("helpdesk_auth")) {
-                $('login-overlay').style.display = 'none';
-                initData();
+                loginSuccess();
             }
         };
     </script>
